@@ -29,7 +29,7 @@ public class Candidate extends Citizen {
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName()+" " + super.toString() + "party :" + this.partyBelong.getName()
+		return getClass().getSimpleName() + " " + super.toString() + "party :" + this.partyBelong.getName()
 				+ " num of votes PRIMERIZ : " + this.numOfVotes;
 	}
 }

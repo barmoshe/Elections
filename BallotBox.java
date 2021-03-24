@@ -61,7 +61,7 @@ public class BallotBox {
 
 	public void addCitizen(Citizen c) {
 		copyAndMultiplyCitizens();
-		if(cheakIfCitizenExist(c) != -1) {
+		if (cheakIfCitizenExist(c) != -1) {
 			citizenInBallotBox[cheakIfCitizenExist(c)] = c;
 		} else {
 			citizenInBallotBox[citizensCount] = c;
@@ -112,7 +112,7 @@ public class BallotBox {
 				}
 		}
 		if (this.citizensCount > 0)
-			return ((double)(this.citizensCount - nonVotersAmount) / this.citizensCount) * 100;
+			return ((double) (this.citizensCount - nonVotersAmount) / this.citizensCount) * 100;
 		else
 			return 0;
 	}

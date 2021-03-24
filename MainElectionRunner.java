@@ -3,6 +3,7 @@ package Elections;
 import java.util.Scanner;
 
 class MainElectionRunner {
+
 	public static void menu() {
 		System.out.println("-menu-");
 		System.out.println("chooes the option:");
@@ -29,7 +30,6 @@ class MainElectionRunner {
 	}
 
 	public static Citizen createCitizen() {
-
 		Scanner sc = new Scanner(System.in);
 		System.out.println("enter name ");
 		String name2 = sc.nextLine();
@@ -67,6 +67,7 @@ class MainElectionRunner {
 
 	public static Party createParty() {
 		Scanner sc = new Scanner(System.in);
+
 		System.out.println("enter name ");
 		String name3 = sc.nextLine();
 		PoliticalOpinion p;
