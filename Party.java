@@ -65,6 +65,8 @@ public class Party {
 		copyAndMultiplyCandidate();
 		if (cheakIfCandidateExist(c))
 			return;
+		if (c.ballotbox == null)
+			System.out.println("666");
 		this.candidates[candidateCounter] = c;
 		this.candidateCounter = this.candidateCounter + 1;
 	}
@@ -101,13 +103,23 @@ public class Party {
 			return false;
 	}
 
-	@Override
-	public String toString() {
-		return "Party [name=" + name + ", PoliticalOpinion=" + PoliticalOpinion + ", dateOfEstablishment="
-				+ dateOfEstablishment + ", candidateCounter=" + candidateCounter + ", resultCount=" + "]";
-	}
+	// @Override
+	// public String toString() {
+	// return "Party [name=" + name + ", PoliticalOpinion=" + PoliticalOpinion + ",
+	// dateOfEstablishment="
+	// + dateOfEstablishment + ", candidateCounter=" + candidateCounter + ",
+	// resultCount=" + "]";
+	// }
 
 	public void setNumOfVotes(int temp) {
 		this.numOfVotes = temp;
 	}
+
+	@Override
+	public String toString() {
+		return "Party [name=" + name + ", PoliticalOpinion=" + PoliticalOpinion + ", dateOfEstablishment="
+				+ dateOfEstablishment + ", candidates=" + Arrays.toString(candidates) + ", candidateCounter="
+				+ candidateCounter + ", numOfVotes=" + numOfVotes + "]";
+	}
+
 }

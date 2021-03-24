@@ -24,14 +24,14 @@ public class Election {
 
 	}
 
-	public boolean cheakIfCitizenExist(Citizen c) {
+	public int cheakIfCitizenExist(Citizen c) {
 		for (int i = 0; i < this.citizenCounter; i++) {
 			if (this.citizens[i].equals(c)) {
 				System.out.println("exist");// *
-				return true;
+				return i;
 			}
 		}
-		return false;
+		return -1;
 	}
 
 	private void copyAndMultiplyVoters() {
@@ -84,7 +84,7 @@ public class Election {
 		if (this.checkAge(c.getYearOfBirth()))
 			return;
 
-		if (cheakIfCitizenExist(c))
+		if (cheakIfCitizenExist(c) != -1)
 			return;
 		this.copyAndMultiplyVoters();
 		int age = this.yearOfElections - c.getYearOfBirth();
@@ -180,11 +180,11 @@ public class Election {
 		addBallotBox(b, choise);
 	}
 
-	private void replaceCitizenForCandidate(Candidate c) {
+	private void replaceCitizenForCandidate(Citizen c, Party p) {
 		for (int i = 0; i < this.citizenCounter; i++) {
 			if (c.id == this.citizens[i].id) {
 				citizens[i] = new Candidate(citizens[i]);
-				((Candidate) citizens[i]).setPartyBelong(c.partyBelong);
+				((Candidate) citizens[i]).setPartyBelong(p);
 				citizens[i].ballotbox.addCitizen(citizens[i]);
 				return;
 			}
@@ -195,10 +195,14 @@ public class Election {
 	public void addCandidate(Candidate c) {
 		if (checkAge(c.getYearOfBirth()))
 			return;
-		if (!cheakIfCitizenExist(c))
+		int temp = cheakIfCitizenExist(c);
+		if (temp != -1) {
+			replaceCitizenForCandidate(this.citizens[temp], c.partyBelong);
+			c.partyBelong.addCandidate((Candidate) this.citizens[temp]);
+		} else
 			addCitizens(c);
-		c.partyBelong.addCandidate(c);
-		replaceCitizenForCandidate(c);
+		replaceCitizenForCandidate(this.citizens[citizenCounter - 1], c.partyBelong);
+		c.partyBelong.addCandidate((Candidate) this.citizens[citizenCounter - 1]);
 
 	}
 

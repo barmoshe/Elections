@@ -20,6 +20,7 @@ public class Candidate extends Citizen {
 
 	public void setPartyBelong(Party partyBelong) {
 		this.partyBelong = partyBelong;
+
 	}
 
 	public void setNumOfVotes(int numberOfVotesForCand) {
