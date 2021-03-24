@@ -197,8 +197,8 @@ public class Election {
 			return;
 		if (!cheakIfCitizenExist(c))
 			addCitizens(c);
-		replaceCitizenForCandidate(c);
 		c.partyBelong.addCandidate(c);
+		replaceCitizenForCandidate(c);
 
 	}
 

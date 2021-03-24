@@ -60,8 +60,8 @@ public class Citizen {
 	@Override
 	public String toString() {
 		return "Citizen [name=" + name + ", id=" + id + ", yearOfBirth=" + yearOfBirth + ", isQuarentied="
-				+ isQuarentied + ", hasMask=" + hasMask + ", ballotbox= #" + ballotbox.getSerialnumber() + ", partyChosen=" + partyChosen
-				+ "]";
+				+ isQuarentied + ", hasMask=" + hasMask + ", ballotbox= #" + ballotbox.getSerialnumber()
+				+ ", partyChosen=" + partyChosen + "]";
 	}
 
 }
