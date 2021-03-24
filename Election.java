@@ -192,7 +192,7 @@ public class Election {
 
 	}
 
-	public void addCandidate(Candidate c) {hello
+	public void addCandidate(Candidate c) {hell
 		if (checkAge(c.getYearOfBirth()))
 			return;
 		int temp = cheakIfCitizenExist(c);
