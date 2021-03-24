@@ -96,8 +96,8 @@ public class Main {
 		e.addPartyHardCoded("likud", PoliticalOpinion.RIGHT);
 		e.addPartyHardCoded("yeshatid", PoliticalOpinion.CENTER);
 		e.addPartyHardCoded("benet", PoliticalOpinion.LEFT);
-		e.addBallotBoxHardCoded("kiryatono", 1);
 		e.addBallotBoxHardCoded("rishoon", 2);
+		e.addBallotBoxHardCoded("kiryatono", 1);
 		e.addBallotBoxHardCoded("telaviv", 3);
 		e.addCitizensHadCoded("shlomi", "332233333", true, true, 1993);
 		e.addCitizensHadCoded("shlomke", "342233333", false, true, 2002);
