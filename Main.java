@@ -101,7 +101,7 @@ public class Main {
 		e.addBallotBoxHardCoded("telaviv", 3);
 		e.addCitizensHadCoded("shlomi", "332233333", true, true, 1993);
 		e.addCitizensHadCoded("shlomke", "342233333", false, true, 2002);
-		e.addCandidateHardCoded("bar", "111111111", true, false, 1980, "likud");
+		e.addCandidateHardCoded("baruu", "111111111", true, false, 1980, "likud");
 		e.addCandidateHardCoded("ELKOUBI", "111113111", false, false, 1345, "likud");
 		e.addCandidateHardCoded("galya", "111111121", true, true, 1980, "yeshatid");
 		e.addCandidateHardCoded("gabi", "121113111", false, false, 1884, "yeshatid");
