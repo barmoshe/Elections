@@ -97,7 +97,7 @@ public class Main {
 		e.addPartyHardCoded("yeshatid", PoliticalOpinion.CENTER);
 		e.addPartyHardCoded("benet", PoliticalOpinion.LEFT);
 		e.addBallotBoxHardCoded("kiryatono", 1);
-		e.addBallotBoxHardCoded("rishon", 2);
+		e.addBallotBoxHardCoded("rishoon", 2);
 		e.addBallotBoxHardCoded("telaviv", 3);
 		e.addCitizensHadCoded("shlomi", "332233333", true, true, 1993);
 		e.addCitizensHadCoded("shlomke", "342233333", false, true, 2002);
@@ -146,10 +146,10 @@ public class Main {
 					System.out.println("choose your vote number if you do not want to vote please enter 0");
 					e.showParties();
 					int select = sc.nextInt() - 1;
-					if(select != -1)
+					if (select != -1)
 						e.citizens[i].partyChosen = e.parties[select].getName();
 				}
-					e.electionStart();
+				e.electionStart();
 				break;
 			case 9:
 				e.showResult();
