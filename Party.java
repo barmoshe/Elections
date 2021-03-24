@@ -27,7 +27,7 @@ public class Party {
 		this.name = name;
 		PoliticalOpinion = politicalOpinion;
 		this.dateOfEstablishment = LocalDate.now();
-		this.candidates = new Candidate[5];
+		this.candidates = new Candidate[10];
 		this.candidateCounter = 0;
 		this.numOfVotes = 0;
 	}
@@ -74,10 +74,10 @@ public class Party {
 	public void primeElectionForParty() {
 		int numberOfVotesForCand = 0;
 		for (int i = 0; i < candidateCounter; i++) {
-			numberOfVotesForCand = ((int) Math.random() * (candidateCounter - numberOfVotesForCand));
+			numberOfVotesForCand = ((int) (Math.random() * (candidateCounter - numberOfVotesForCand)));
 			candidates[i].setNumOfVotes(numberOfVotesForCand);
 		}
-		sortCandidates();
+		this.sortCandidates();
 	}
 
 	public void sortCandidates() {

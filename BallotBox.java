@@ -26,9 +26,9 @@ public class BallotBox {
 	public BallotBox(String address) {
 		this.serialNumber = serialCounter++;
 		this.address = address;
-		this.citizenInBallotBox = new Citizen[5];
+		this.citizenInBallotBox = new Citizen[10];
 		this.votePresentage = 0;
-		this.resultsForThisBallotBox = new Result[5];
+		this.resultsForThisBallotBox = new Result[10];
 		this.resultCount = 0;
 		this.citizensCount = 0;
 	}
