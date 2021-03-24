@@ -2,7 +2,7 @@ package Elections;
 
 import java.util.Scanner;
 
-public class Main {
+class MainElectionRunner {
 	public static void menu() {
 		System.out.println("-menu-");
 		System.out.println("chooes the option:");
