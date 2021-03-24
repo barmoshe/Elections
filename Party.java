@@ -27,7 +27,7 @@ public class Party {
 		this.name = name;
 		PoliticalOpinion = politicalOpinion;
 		this.dateOfEstablishment = LocalDate.now();
-		this.candidates = new Candidate[10];
+		this.candidates = new Candidate[5];
 		this.candidateCounter = 0;
 		this.numOfVotes = 0;
 	}
@@ -74,10 +74,10 @@ public class Party {
 	public void primeElectionForParty() {
 		int numberOfVotesForCand = 0;
 		for (int i = 0; i < candidateCounter; i++) {
-			numberOfVotesForCand = ((int) (Math.random() * (candidateCounter - numberOfVotesForCand)));
+			numberOfVotesForCand = ((int) Math.random() * (candidateCounter - numberOfVotesForCand));
 			candidates[i].setNumOfVotes(numberOfVotesForCand);
 		}
-		this.sortCandidates();
+		sortCandidates();
 	}
 
 	public void sortCandidates() {
@@ -118,7 +118,8 @@ public class Party {
 	@Override
 	public String toString() {
 		return "Party [name=" + name + ", PoliticalOpinion=" + PoliticalOpinion + ", dateOfEstablishment="
-				+ dateOfEstablishment + ", candidates=" + Arrays.toString(candidates) + ", candidateCounter="
+				+ dateOfEstablishment + ", candidates="
+				+ Arrays.toString(candidates) + ", candidateCounter="
 				+ candidateCounter + ", numOfVotes=" + numOfVotes + "]";
 	}
 

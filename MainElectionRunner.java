@@ -2,8 +2,7 @@ package Elections;
 
 import java.util.Scanner;
 
-class MainElectionRunner {
-
+public class MainElectionRunner {
 	public static void menu() {
 		System.out.println("-menu-");
 		System.out.println("chooes the option:");
@@ -30,6 +29,7 @@ class MainElectionRunner {
 	}
 
 	public static Citizen createCitizen() {
+
 		Scanner sc = new Scanner(System.in);
 		System.out.println("enter name ");
 		String name2 = sc.nextLine();
@@ -67,7 +67,6 @@ class MainElectionRunner {
 
 	public static Party createParty() {
 		Scanner sc = new Scanner(System.in);
-
 		System.out.println("enter name ");
 		String name3 = sc.nextLine();
 		PoliticalOpinion p;
@@ -97,12 +96,12 @@ class MainElectionRunner {
 		e.addPartyHardCoded("likud", PoliticalOpinion.RIGHT);
 		e.addPartyHardCoded("yeshatid", PoliticalOpinion.CENTER);
 		e.addPartyHardCoded("benet", PoliticalOpinion.LEFT);
-		e.addBallotBoxHardCoded("rishoon", 2);
 		e.addBallotBoxHardCoded("kiryatono", 1);
+		e.addBallotBoxHardCoded("rishon", 2);
 		e.addBallotBoxHardCoded("telaviv", 3);
 		e.addCitizensHadCoded("shlomi", "332233333", true, true, 1993);
-		e.addCitizensHadCoded("shlomke", "342233333", false, true, 2002);
-		e.addCandidateHardCoded("baruu", "111111111", true, false, 1980, "likud");
+		e.addCitizensHadCoded("shlomo", "342233333", false, true, 2002);
+		e.addCandidateHardCoded("bar", "111111111", true, false, 1980, "likud");
 		e.addCandidateHardCoded("ELKOUBI", "111113111", false, false, 1345, "likud");
 		e.addCandidateHardCoded("galya", "111111121", true, true, 1980, "yeshatid");
 		e.addCandidateHardCoded("gabi", "121113111", false, false, 1884, "yeshatid");

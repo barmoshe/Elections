@@ -15,16 +15,16 @@ public class Election {
 	public Election(int yearOfElections, int monthOfElections) {
 		this.monthOfElections = monthOfElections;
 		this.yearOfElections = yearOfElections;
-		this.citizens = new Citizen[10];
-		this.parties = new Party[10];
-		this.ballotBoxes = new BallotBox[10];
+		this.citizens = new Citizen[5];
+		this.parties = new Party[5];
+		this.ballotBoxes = new BallotBox[5];
 		this.citizenCounter = 0;
 		this.partyCounter = 0;
 		this.ballotBoxCounter = 0;
 
 	}
 
-	public int cheakIfCitizenExist(Citizen c) {
+	public int cheakIfCitizenExist(Object c) {
 		for (int i = 0; i < this.citizenCounter; i++) {
 			if (this.citizens[i].equals(c)) {
 				System.out.println("exist");// *
@@ -180,13 +180,16 @@ public class Election {
 		addBallotBox(b, choise);
 	}
 
-	private void replaceCitizenForCandidate(Citizen c, Party p, int i) {
-		if (c.id == this.citizens[i].id) {
-			citizens[i] = new Candidate(citizens[i]);
-			((Candidate) citizens[i]).setPartyBelong(p);
-			citizens[i].ballotbox.addCitizen(citizens[i]);
-			return;
+	private void replaceCitizenForCandidate(Citizen c, Party p) {
+		for (int i = 0; i < this.citizenCounter; i++) {
+			if (c.id == this.citizens[i].id) {
+				citizens[i] = new Candidate(citizens[i]);
+				((Candidate) citizens[i]).setPartyBelong(p);
+				citizens[i].ballotbox.addCitizen(citizens[i]);
+				return;
+			}
 		}
+
 	}
 
 	public void addCandidate(Candidate c) {
@@ -194,11 +197,11 @@ public class Election {
 			return;
 		int temp = cheakIfCitizenExist(c);
 		if (temp != -1) {
-			replaceCitizenForCandidate(this.citizens[temp], c.partyBelong, temp);
+			replaceCitizenForCandidate(this.citizens[temp], c.partyBelong);
 			c.partyBelong.addCandidate((Candidate) this.citizens[temp]);
 		} else {
 			addCitizens(c);
-			replaceCitizenForCandidate(this.citizens[citizenCounter - 1], c.partyBelong, citizenCounter - 1);
+			replaceCitizenForCandidate(this.citizens[citizenCounter - 1], c.partyBelong);
 			c.partyBelong.addCandidate((Candidate) this.citizens[citizenCounter - 1]);
 		}
 	}
