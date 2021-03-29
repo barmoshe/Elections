@@ -149,8 +149,6 @@ public class BallotBox {
 		BallotBox temp = (BallotBox) obj;
 		if (temp.serialNumber == this.serialNumber)
 			return true;
-
-
 		else
 			return false;
 	}
