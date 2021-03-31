@@ -29,9 +29,7 @@ public class Election {
 
 	public int cheakIfCitizenExist(Citizen c) {
 		for (int i = 0; i < this.citizenCounter; i++) {
-			System.out.println(c.id + "  , " + this.citizens[i].id);
 			if (c.equals(this.citizens[i])) {
-				System.out.println("exist");// *
 				return i;
 			}
 		}
