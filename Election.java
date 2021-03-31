@@ -12,9 +12,9 @@ public class Election {
 	private int partyCounter;
 	private int ballotBoxCounter;
 
-	public Election(int yearOfElections, int monthOfElections) {
-		this.monthOfElections = monthOfElections;
-		this.yearOfElections = yearOfElections;
+	public Election(int yearOfElections, int monthOfElections) throws Exception {
+		setMonthOfElections(monthOfElections);
+		setYearOfElections(yearOfElections);
 		this.citizens = new Citizen[5];
 		this.parties = new Party[5];
 		this.ballotBoxes = new BallotBox[5];
@@ -22,6 +22,9 @@ public class Election {
 		this.partyCounter = 0;
 		this.ballotBoxCounter = 0;
 
+	}
+
+	public Election() {
 	}
 
 	public int cheakIfCitizenExist(Object c) {
@@ -32,6 +35,20 @@ public class Election {
 			}
 		}
 		return -1;
+	}
+
+	public void setYearOfElections(int year) throws Exception {
+		if (year >= 1900 && year < 2100) {
+			this.yearOfElections = year;
+		} else
+			throw new Exception("year must be between 1900-2100");
+	}
+
+	public void setMonthOfElections(int year) throws Exception {
+		if (year > 0 && year < 13) {
+			this.yearOfElections = year;
+		} else
+			throw new Exception("Month must be between 1-12");
 	}
 
 	private void copyAndMultiplyVoters() {
@@ -73,17 +90,16 @@ public class Election {
 
 	public boolean checkAge(int YearOfBirth) {
 		int age = this.yearOfElections - YearOfBirth;
-		if (age < 18) {// TODO: exception throw.
-			System.out.println("not old enoght");
+		if (age < 18) {
 			return true;
 		}
 		return false;
 	}
 
-	public void addCitizens(Citizen c) {
-		if (this.checkAge(c.getYearOfBirth()))
-			return;
-
+	public void addCitizens(Citizen c) throws Exception {
+		if (this.checkAge(c.getYearOfBirth())) {
+			throw new Exception("too young");
+		}
 		if (cheakIfCitizenExist(c) != -1)
 			return;
 		this.copyAndMultiplyVoters();
@@ -97,7 +113,8 @@ public class Election {
 
 	}
 
-	public void addCitizensHadCoded(String name, String id, boolean isQuarentied, boolean hasMask, int yearOfBirth) {
+	public void addCitizensHadCoded(String name, String id, boolean isQuarentied, boolean hasMask, int yearOfBirth)
+			throws Exception {
 		Citizen c = new Citizen(name, id, isQuarentied, hasMask, yearOfBirth);
 		this.addCitizens(c);
 	}
@@ -123,7 +140,7 @@ public class Election {
 		}
 	}
 
-	public void addParty(Party p) {
+	public void addParty(Party p) throws Exception {
 		if (cheakIfPartyExist(p))
 			return;
 		copyAndMultiplyParties();
@@ -135,7 +152,7 @@ public class Election {
 		this.partyCounter = this.partyCounter + 1;
 	}
 
-	public void addPartyHardCoded(String name, PoliticalOpinion politicalOpinion) {
+	public void addPartyHardCoded(String name, PoliticalOpinion politicalOpinion) throws Exception {
 		Party p = new Party(name, politicalOpinion);
 		this.addParty(p);
 	}
@@ -180,7 +197,7 @@ public class Election {
 		addBallotBox(b, choise);
 	}
 
-	private void replaceCitizenForCandidate(Citizen c, Party p) {
+	private void replaceCitizenForCandidate(Citizen c, Party p) throws Exception {
 		for (int i = 0; i < this.citizenCounter; i++) {
 			if (c.id == this.citizens[i].id) {
 				citizens[i] = new Candidate(citizens[i]);
@@ -192,7 +209,7 @@ public class Election {
 
 	}
 
-	public void addCandidate(Candidate c) {
+	public void addCandidate(Candidate c) throws Exception {
 		if (checkAge(c.getYearOfBirth()))
 			return;
 		int temp = cheakIfCitizenExist(c);
@@ -207,7 +224,7 @@ public class Election {
 	}
 
 	public void addCandidateHardCoded(String name, String id, boolean isQuarentied, boolean hasMask, int yearOfBirth,
-			String partyname) {
+			String partyname) throws Exception {
 		Party p = null;
 		for (int i = 0; i < this.partyCounter; i++) {
 			if (this.parties[i].getName() == partyname)

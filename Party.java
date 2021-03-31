@@ -11,8 +11,8 @@ public class Party {
 	protected int candidateCounter;
 	protected int numOfVotes;
 
-	public Party(Party p) {
-		this.name = p.getName();
+	public Party(Party p) throws Exception {
+		setName(p.getName());
 		this.PoliticalOpinion = p.PoliticalOpinion;
 		this.dateOfEstablishment = p.dateOfEstablishment;
 		this.candidates = new Candidate[p.candidates.length];
@@ -23,8 +23,8 @@ public class Party {
 		this.numOfVotes = p.numOfVotes;
 	}
 
-	public Party(String name, PoliticalOpinion politicalOpinion) {
-		this.name = name;
+	public Party(String name, PoliticalOpinion politicalOpinion) throws Exception {
+		setName(name);
 		PoliticalOpinion = politicalOpinion;
 		this.dateOfEstablishment = LocalDate.now();
 		this.candidates = new Candidate[5];
@@ -38,6 +38,16 @@ public class Party {
 	public String getName() {
 		return name;
 
+	}
+
+	public void setName(String name) throws Exception {
+		for (int i = 0; i < name.length(); i++) {
+			char c = name.charAt(i);
+			if (!((c <= 'Z' && c >= 'A') || (c <= 'z' && c >= 'a')))
+				throw new Exception(" name must be chars between a-z or A-Z");
+			break;
+		}
+		this.name = name;
 	}
 
 	public void copyAndMultiplyCandidate() {
@@ -118,8 +128,7 @@ public class Party {
 	@Override
 	public String toString() {
 		return "Party [name=" + name + ", PoliticalOpinion=" + PoliticalOpinion + ", dateOfEstablishment="
-				+ dateOfEstablishment + ", candidates="
-				+ Arrays.toString(candidates) + ", candidateCounter="
+				+ dateOfEstablishment + ", candidates=" + Arrays.toString(candidates) + ", candidateCounter="
 				+ candidateCounter + ", numOfVotes=" + numOfVotes + "]";
 	}
 

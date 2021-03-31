@@ -2,7 +2,7 @@ package Elections;
 
 public class Solider extends Citizen {
 
-	public Solider(Citizen c) {
+	public Solider(Citizen c) throws Exception {
 		super(c);
 	}
 

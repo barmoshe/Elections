@@ -10,33 +10,55 @@ public class Citizen {
 	protected BallotBox ballotbox;
 	protected String partyChosen;
 
-	public Citizen(String name, String id, boolean isQuarentied, boolean hasMask, int yearOfBirth) {
+	public Citizen(String name, String id, boolean isQuarentied, boolean hasMask, int yearOfBirth) throws Exception {
 		this.hasMask = hasMask;
-		this.name = name;
-		this.id = setId(id);
+		setName(name);
+		setId(id);
 		this.isQuarentied = isQuarentied;
-		this.yearOfBirth = yearOfBirth;
+		setYearOfbirth(yearOfBirth);
 		this.partyChosen = null;
 		this.ballotbox = null;
 	}
 
-	public Citizen(Citizen c) {
-		this.name = c.name;
+	public Citizen(Citizen c) throws Exception {
+		setName(c.name);
 		this.hasMask = c.hasMask;
-		this.id = setId(c.id);
+		setId(c.id);
 		this.isQuarentied = c.isQuarentied;
-		this.yearOfBirth = c.yearOfBirth;
+		setYearOfbirth(c.yearOfBirth);
 		this.partyChosen = null;
 		this.ballotbox = c.ballotbox;
 
 	}
 
-	public String setId(String id) {
-		if (id.length() == 9)// exeptions
-			return id;
-		else
-			System.out.println("id is not correct");
-		return null;
+	public void setName(String name) throws Exception {
+		for (int i = 0; i < name.length(); i++) {
+			char c = name.charAt(i);
+			if (!((c <= 'Z' && c >= 'A') || (c <= 'z' && c >= 'a')))
+				throw new Exception("must be char between a-z or A-Z");
+			break;
+		}
+		this.name = name;
+	}
+
+	public void setId(String id) throws Exception {
+		if (id.length() == 9) {
+			for (int i = 0; i < id.length(); i++) {
+				if (!(id.charAt(i) >= '0' && id.charAt(i) <= '9'))
+					throw new Exception(" id must be numbers only ");
+
+			}
+			this.id = id;
+		} else
+			throw new Exception("must be 9 numbers for id");
+
+	}
+
+	public void setYearOfbirth(int year) throws Exception {
+		if (year >= 1900 && year < 2100) {
+			this.yearOfBirth = year;
+		} else
+			throw new Exception("year must be between 1900-2100");
 	}
 
 	public int getYearOfBirth() {
@@ -64,6 +86,10 @@ public class Citizen {
 
 				+ isQuarentied + ", hasMask=" + hasMask + ", ballotbox= #" + ballotbox.getSerialnumber()
 				+ ", partyChosen=" + partyChosen + "]";
+	}
+
+	public void setPartyChosen(String party) {
+		this.partyChosen = party;
 	}
 
 }
