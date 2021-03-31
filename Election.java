@@ -57,7 +57,6 @@ public class Election {
 				temp[i] = this.citizens[i];
 			}
 			this.citizens = temp;
-			System.out.println("the arry is doubled");
 		}
 	}
 
@@ -132,7 +131,6 @@ public class Election {
 	public boolean cheakIfPartyExist(Party p) {
 		for (int i = 0; i < this.partyCounter; i++) {
 			if (this.parties[i].equals(p)) {
-				System.out.println("exist");// *
 				return true;
 			}
 		}
@@ -146,7 +144,6 @@ public class Election {
 				temp[i] = this.parties[i];
 			}
 			this.parties = temp;
-			System.out.println("the arry is doubled");
 		}
 	}
 
@@ -174,7 +171,6 @@ public class Election {
 				temp[i] = this.ballotBoxes[i];
 			}
 			this.ballotBoxes = temp;
-			System.out.println("the arry is doubled");
 		}
 	}
 

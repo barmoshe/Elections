@@ -82,10 +82,10 @@ public class Party {
 	}
 
 	public void primeElectionForParty() {
-		
+
 		int numberOfVotesForCand = 0;
 		for (int i = 0; i < candidateCounter; i++) {
-			numberOfVotesForCand = (int)( Math.random() * (candidateCounter - numberOfVotesForCand));
+			numberOfVotesForCand = (int) (Math.random() * (candidateCounter - numberOfVotesForCand));
 			candidates[i].setNumOfVotes(numberOfVotesForCand);
 		}
 		sortCandidates();
@@ -113,14 +113,6 @@ public class Party {
 		else
 			return false;
 	}
-
-	// @Override
-	// public String toString() {
-	// return "Party [name=" + name + ", PoliticalOpinion=" + PoliticalOpinion + ",
-	// dateOfEstablishment="
-	// + dateOfEstablishment + ", candidateCounter=" + candidateCounter + ",
-	// resultCount=" + "]";
-	// }
 
 	public void setNumOfVotes(int temp) {
 		this.numOfVotes = temp;
