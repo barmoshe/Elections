@@ -82,9 +82,10 @@ public class Party {
 	}
 
 	public void primeElectionForParty() {
+		
 		int numberOfVotesForCand = 0;
 		for (int i = 0; i < candidateCounter; i++) {
-			numberOfVotesForCand = ((int) Math.random() * (candidateCounter - numberOfVotesForCand));
+			numberOfVotesForCand = (int)( Math.random() * (candidateCounter - numberOfVotesForCand));
 			candidates[i].setNumOfVotes(numberOfVotesForCand);
 		}
 		sortCandidates();

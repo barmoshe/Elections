@@ -124,12 +124,18 @@ public class MainElectionRunner {
 			e.addCandidateHardCoded("Galya", "111111121", true, true, 1980, "Yesh Atid");
 			e.addCandidateHardCoded("Gabi", "121113111", false, false, 1984, "Yesh Atid");
 			e.addCandidateHardCoded("Ori", "111113331", false, false, 1980, "Yamina");
-			e.addCandidateHardCoded("Ella", "121113221", false, false, 1984, "Yamina");
+			e.addCandidateHardCoded("Ella", "121999921", false, false, 1984, "Yamina");
+			e.addCandidateHardCoded("Yossi", "111111911", true, false, 1980, "Likud");
+			e.addCandidateHardCoded("Mor", "111113191", false, false, 1945, "Likud");
+			e.addCandidateHardCoded("Itay", "111111199", true, true, 1980, "Yesh Atid");
+			e.addCandidateHardCoded("Yotam", "121993111", false, false, 1984, "Yesh Atid");
+			e.addCandidateHardCoded("Elor", "111993331", false, false, 1980, "Yamina");
+			e.addCandidateHardCoded("Ofir", "19913221", false, false, 1984, "Yamina");
 		} catch (Exception x) {
 			System.out.println(x.getMessage());
 
 		}
-		
+
 		menu();
 		int choise = sc.nextInt();
 		while (choise != 10) {
