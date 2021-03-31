@@ -27,9 +27,10 @@ public class Election {
 	public Election() {
 	}
 
-	public int cheakIfCitizenExist(Object c) {
+	public int cheakIfCitizenExist(Citizen c) {
 		for (int i = 0; i < this.citizenCounter; i++) {
-			if (this.citizens[i].equals(c)) {
+			System.out.println(c.id + "  , " + this.citizens[i].id);
+			if (c.equals(this.citizens[i])) {
 				System.out.println("exist");// *
 				return i;
 			}
@@ -100,8 +101,11 @@ public class Election {
 		if (this.checkAge(c.getYearOfBirth())) {
 			throw new Exception("too young");
 		}
-		if (cheakIfCitizenExist(c) != -1)
+		int indexOfCitizen = cheakIfCitizenExist(c);
+		if (indexOfCitizen != -1) {
+			updateCitizen(c, indexOfCitizen);
 			return;
+		}
 		this.copyAndMultiplyVoters();
 		int age = this.yearOfElections - c.getYearOfBirth();
 		if (age <= 21)
@@ -110,6 +114,14 @@ public class Election {
 			this.citizens[citizenCounter] = new Citizen(c);
 		this.setVoterToBallotBox(this.citizens[citizenCounter]);
 		this.citizenCounter = this.citizenCounter + 1;
+
+	}
+
+	private void updateCitizen(Citizen c, int i) throws Exception {
+		Citizen temp = this.citizens[i];
+		temp.setName(c.name);
+		temp.hasMask = c.hasMask;
+		temp.isQuarentied = c.isQuarentied;
 
 	}
 

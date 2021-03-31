@@ -129,6 +129,7 @@ public class MainElectionRunner {
 			System.out.println(x.getMessage());
 
 		}
+		
 		menu();
 		int choise = sc.nextInt();
 		while (choise != 10) {

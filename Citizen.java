@@ -26,7 +26,7 @@ public class Citizen {
 		setId(c.id);
 		this.isQuarentied = c.isQuarentied;
 		setYearOfbirth(c.yearOfBirth);
-		this.partyChosen = null;
+		this.partyChosen = c.partyChosen;
 		this.ballotbox = c.ballotbox;
 
 	}
@@ -73,11 +73,8 @@ public class Citizen {
 	public boolean equals(Object obj) {
 		if (!(obj instanceof Citizen))
 			return false;
-		Citizen temp = (Citizen) obj;
-		if (temp.id == this.id)
-			return true;
-		else
-			return false;
+		Citizen temp = ((Citizen) obj);
+		return this.id.equals(temp.getId());
 	}
 
 	@Override
@@ -86,6 +83,10 @@ public class Citizen {
 
 				+ isQuarentied + ", hasMask=" + hasMask + ", ballotbox= #" + ballotbox.getSerialnumber()
 				+ ", partyChosen=" + partyChosen + "]";
+	}
+
+	public String getId() {
+		return id;
 	}
 
 	public void setPartyChosen(String party) {

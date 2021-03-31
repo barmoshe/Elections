@@ -11,7 +11,8 @@ public class Candidate extends Citizen {
 
 	}
 
-	public Candidate(String name, String id, boolean isQuarentied, boolean hasMask, int yearOfBirth, Party party) throws Exception {
+	public Candidate(String name, String id, boolean isQuarentied, boolean hasMask, int yearOfBirth, Party party)
+			throws Exception {
 		super(name, id, isQuarentied, hasMask, yearOfBirth);
 		this.partyBelong = party;
 		this.numOfVotes = 0;
