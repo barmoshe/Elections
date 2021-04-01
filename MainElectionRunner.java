@@ -199,7 +199,12 @@ public class MainElectionRunner {
 					e.showParties();
 					int select = sc.nextInt() - 1;
 					if (select != -1)
-						e.citizens[i].setPartyChosen(e.parties[select].getName());
+						if (!(e.citizens[i].ballotbox instanceof BallotBoxForCovid))
+							e.citizens[i].setPartyChosen(e.parties[select].getName());
+						else if (e.citizens[i].hasMask)
+							e.citizens[i].setPartyChosen(e.parties[select].getName());
+						else
+							e.citizens[i].setPartyChosen(null);
 				}
 				e.electionStart();
 				break;
