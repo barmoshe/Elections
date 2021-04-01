@@ -97,13 +97,14 @@ public class MainElectionRunner {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		Election e = new Election();
-		/*
-		 * System.out.println("enter year for elections"); int year = sc.nextInt();
-		 * System.out.println("enter month for elections"); int month = sc.nextInt();
-		 */boolean isValid1 = false;
+		
+		 System.out.println("enter year for elections"); int year = sc.nextInt();
+			System.out.println("enter month for elections");
+			int month = sc.nextInt();
+		boolean isValid1 = false;
 		while (!isValid1) {
 			try {
-				e = new Election(2020, 2);
+				e = new Election(year, month);
 				isValid1 = true;
 			} catch (Exception x) {
 				System.out.println(x.getMessage());
@@ -130,7 +131,7 @@ public class MainElectionRunner {
 			e.addCandidateHardCoded("Itay", "111111199", true, true, 1980, "Yesh Atid");
 			e.addCandidateHardCoded("Yotam", "121993111", false, false, 1984, "Yesh Atid");
 			e.addCandidateHardCoded("Elor", "111993331", false, false, 1980, "Yamina");
-			e.addCandidateHardCoded("Ofir", "19913221", false, false, 1984, "Yamina");
+			e.addCandidateHardCoded("Ofir", "199132212", false, false, 1984, "Yamina");
 		} catch (Exception x) {
 			System.out.println(x.getMessage());
 

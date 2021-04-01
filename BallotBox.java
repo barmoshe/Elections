@@ -53,7 +53,6 @@ public class BallotBox {
 	public int cheakIfCitizenExist(Citizen c) {
 		for (int i = 0; i < this.citizensCount; i++) {
 			if (this.citizenInBallotBox[i].equals(c)) {
-				System.out.println("exist");// *
 				return i;
 			}
 		}

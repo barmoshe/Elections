@@ -57,14 +57,12 @@ public class Party {
 				temp[i] = this.candidates[i];
 			}
 			this.candidates = temp;
-			System.out.println("the arry is doubled");
 		}
 	}
 
 	public boolean cheakIfCandidateExist(Candidate c) {
 		for (int i = 0; i < this.candidateCounter; i++) {
 			if (this.candidates[i].equals(c)) {
-				System.out.println("exist");// *
 				return true;
 			}
 		}
