@@ -46,7 +46,6 @@ public class BallotBox {
 				temp[i] = this.citizenInBallotBox[i];
 			}
 			this.citizenInBallotBox = temp;
-			System.out.println("the arry is doubled");
 		}
 	}
 
