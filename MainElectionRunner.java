@@ -69,6 +69,23 @@ public class MainElectionRunner {
 		}
 	}
 
+	private static void citizensChoose(Election e) {
+		Scanner sc = new Scanner(System.in);
+
+		for (int i = 0; i < e.citizenCounter; i++) {
+			System.out.println("choose your vote number if you do not want to vote please enter 0");
+			e.showParties();
+			int select = sc.nextInt() - 1;
+			if (select != -1)
+				if (!(e.citizens[i].ballotbox instanceof BallotBoxForCovid))
+					e.citizens[i].setPartyChosen(e.parties[select].getName());
+				else if (e.citizens[i].hasMask) {
+					e.citizens[i].setPartyChosen(e.parties[select].getName());
+					System.out.println("not mask");
+				}
+		}
+	}
+
 	public static Party createParty() throws Exception {
 		Scanner sc = new Scanner(System.in);
 
@@ -97,12 +114,13 @@ public class MainElectionRunner {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		Election e = new Election();
-		
-		 System.out.println("enter year for elections"); int year = sc.nextInt();
-			System.out.println("enter month for elections");
-			int month = sc.nextInt();
+
 		boolean isValid1 = false;
 		while (!isValid1) {
+			System.out.println("enter year for elections");
+			int year = sc.nextInt();
+			System.out.println("enter month for elections");
+			int month = sc.nextInt();
 			try {
 				e = new Election(year, month);
 				isValid1 = true;
@@ -195,18 +213,7 @@ public class MainElectionRunner {
 				e.showParties();
 				break;
 			case 8:
-				for (int i = 0; i < e.citizenCounter; i++) {
-					System.out.println("choose your vote number if you do not want to vote please enter 0");
-					e.showParties();
-					int select = sc.nextInt() - 1;
-					if (select != -1)
-						if (!(e.citizens[i].ballotbox instanceof BallotBoxForCovid))
-							e.citizens[i].setPartyChosen(e.parties[select].getName());
-						else if (e.citizens[i].hasMask)
-							e.citizens[i].setPartyChosen(e.parties[select].getName());
-						else
-							e.citizens[i].setPartyChosen(null);
-				}
+				citizensChoose(e);
 				e.electionStart();
 				break;
 			case 9:
