@@ -88,7 +88,6 @@ public class MainElectionRunner {
 
 	public static Party createParty() throws Exception {
 		Scanner sc = new Scanner(System.in);
-
 		System.out.println("enter name ");
 		String name3 = sc.nextLine();
 		PoliticalOpinion p;
@@ -105,7 +104,6 @@ public class MainElectionRunner {
 	}
 
 	public static Candidate createCandidate(Party p) throws Exception {
-
 		Candidate c = new Candidate(createCitizen());
 		c.setPartyBelong(p);
 		return c;
