@@ -125,11 +125,11 @@ public class BallotBox {
 	}
 
 	public void showResult() {
-		System.out.println("result fo ballotbox #" + this.serialNumber);
+		System.out.println("________#" + this.serialNumber + "#________");
 		for (int i = 0; i < resultCount; i++) {
 			resultsForThisBallotBox[i].showResult();
 		}
-		System.out.println("vote precentage : " + voteResultsAndPercentage());
+		System.out.println("vote precentage: " + voteResultsAndPercentage() + "\n");
 	}
 
 	@Override

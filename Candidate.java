@@ -30,6 +30,6 @@ public class Candidate extends Citizen {
 	@Override
 	public String toString() {
 		return super.toString() + "\nparty: " + this.partyBelong.getName() + "\nnum of votes PRIMERIZ: "
-				+ this.numOfVotes;
+				+ this.numOfVotes + "\n";
 	}
 }

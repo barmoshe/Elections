@@ -4,17 +4,17 @@ import java.util.Scanner;
 
 public class MainElectionRunner {
 	public static void menu() {
-		System.out.println("-menu-");
+		System.out.println("\n" + "________-menu-________");
 		System.out.println("chooes the option:");
-		System.out.println("1- add ballot box");
-		System.out.println("2- add citizen");
-		System.out.println("3- add party");
-		System.out.println("4- add candidate");
-		System.out.println("5- show all ballot boxes");
-		System.out.println("6- show all citizens");
-		System.out.println("7- show all parties");
-		System.out.println("8- election start");
-		System.out.println("9- show results");
+		System.out.println("-1- add ballot box");
+		System.out.println("-2- add citizen");
+		System.out.println("-3- add party");
+		System.out.println("-4- add candidate");
+		System.out.println("-5- show all ballot boxes");
+		System.out.println("-6- show all citizens");
+		System.out.println("-7- show all parties");
+		System.out.println("-8- election start");
+		System.out.println("-9- show results");
 		System.out.println("10- exit");
 	}
 
@@ -74,15 +74,29 @@ public class MainElectionRunner {
 
 		for (int i = 0; i < e.citizenCounter; i++) {
 			System.out.println("choose your vote number if you do not want to vote please enter 0");
-			e.showParties();
+			e.showPartiesNames();
 			int select = sc.nextInt() - 1;
-			if (select != -1)
-				if (!(e.citizens[i].ballotbox instanceof BallotBoxForCovid))
-					e.citizens[i].setPartyChosen(e.parties[select].getName());
-				else if (e.citizens[i].hasMask) {
-					e.citizens[i].setPartyChosen(e.parties[select].getName());
-					System.out.println("not mask");
+			if (select != -1) {
+				boolean isValid = false;
+				while (!isValid) {
+					try {
+
+						if (!(e.citizens[i].ballotbox instanceof BallotBoxForCovid))
+							e.citizens[i].setPartyChosen(e.parties[select].getName());
+						else if (e.citizens[i].hasMask) {
+							e.citizens[i].setPartyChosen(e.parties[select].getName());
+							System.out.println("not mask");
+
+						}
+						isValid = true;
+					} catch (Exception y) {
+						System.out.println("enter choise again! ");
+						System.out.println("choose your vote number if you do not want to vote please enter 0");
+
+						select = sc.nextInt() - 1;
+					}
 				}
+			}
 		}
 	}
 

@@ -248,6 +248,13 @@ public class Election {
 		}
 	}
 
+	public void showPartiesNames() {
+		for (int i = 0; i < this.partyCounter; i++) {
+			System.out.println("Party" + (i + 1) + " " + parties[i].getName());
+
+		}
+	}
+
 	public void showCitizens() {
 		for (int i = 0; i < this.citizenCounter; i++) {
 			System.out.println("________-" + (i + 1) + "-________\n" + citizens[i].toString() + "\n");
@@ -278,11 +285,11 @@ public class Election {
 	}
 
 	public void showResult() {
-		calculateResultInEachparty();
 
 		for (int i = 0; i < this.ballotBoxCounter; i++) {
 			this.ballotBoxes[i].showResult();
 		}
+		System.out.println();
 		for (int i = 0; i < this.partyCounter; i++) {
 			System.out.println(this.parties[i].getName() + ":  " + this.parties[i].numOfVotes);
 		}
