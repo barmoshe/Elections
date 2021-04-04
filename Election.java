@@ -250,7 +250,7 @@ public class Election {
 
 	public void showCitizens() {
 		for (int i = 0; i < this.citizenCounter; i++) {
-			System.out.println("Citizen" + (i + 1) + " " + citizens[i].toString());
+			System.out.println("________-" + (i + 1) + "-________\n" + citizens[i].toString() + "\n");
 		}
 	}
 
@@ -299,10 +299,22 @@ public class Election {
 
 	@Override
 	public String toString() {
-		return "Elections [yearOfElections=" + yearOfElections + ", monthOfElections=" + monthOfElections + ", voters="
-				+ Arrays.toString(citizens) + ", parties=" + Arrays.toString(parties) + ", ballotBoxes="
-				+ Arrays.toString(ballotBoxes) + ", citizenCounter=" + citizenCounter + ", partyCounter=" + partyCounter
-				+ ", ballotBoxCounter=" + ballotBoxCounter + "]";
+		StringBuffer str = new StringBuffer(
+				"The elections in 0" + this.monthOfElections + "/" + this.yearOfElections + " info : \n" + "\n");
+		str.append("The citizens: " + "\n");
+		for (int i = 0; i < this.citizenCounter; i++) {
+			str.append((i + 1) + ") " + this.citizens[i].toString() + "\n");
+		}
+		str.append("The parties: " + "\n");
+		for (int i = 0; i < this.partyCounter; i++) {
+			str.append((i + 1) + ") " + this.parties[i].toString() + "\n");
+		}
+		str.append("The ballotboxes: " + "\n");
+		for (int i = 0; i < this.ballotBoxCounter; i++) {
+			str.append((i + 1) + ") " + this.ballotBoxes[i].toString() + "\n");
+		}
+		return str.toString();
+
 	}
 
 	@Override

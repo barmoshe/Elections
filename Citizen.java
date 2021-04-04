@@ -79,10 +79,14 @@ public class Citizen {
 
 	@Override
 	public String toString() {
-		return "Citizen [name=" + name + ", id=" + id + ", yearOfBirth=" + yearOfBirth + ", isQuarentied="
+		StringBuffer str = new StringBuffer(this.getClass().getSimpleName() + " " + this.name + " info:" + "\n");
 
-				+ isQuarentied + ", hasMask=" + hasMask + ", ballotbox= #" + ballotbox.getSerialnumber()
-				+ ", partyChosen=" + partyChosen + "]";
+		str.append("id: " + this.id + "\nyear of Birth: " + this.yearOfBirth + "\nballotbox: #"
+				+ ballotbox.getSerialnumber() + "\nis in Quarentine: " + this.isQuarentied + "\nhas mask?: "
+				+ this.hasMask + "\nparty Chosen: " + this.partyChosen);
+
+		return str.toString();
+
 	}
 
 	public String getId() {
