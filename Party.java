@@ -93,7 +93,7 @@ public class Party {
 		int n = candidateCounter;
 		for (int i = 0; i < n - 1; i++)
 			for (int j = 0; j < n - i - 1; j++)
-				if (candidates[j].numOfVotes > candidates[j + 1].numOfVotes) {
+				if (candidates[j].numOfVotes <candidates[j + 1].numOfVotes) {
 					Candidate temp = candidates[j];
 					candidates[j] = candidates[j + 1];
 					candidates[j + 1] = temp;
@@ -118,9 +118,17 @@ public class Party {
 
 	@Override
 	public String toString() {
-		return "Party [name=" + name + ", PoliticalOpinion=" + PoliticalOpinion + ", dateOfEstablishment="
-				+ dateOfEstablishment + ", candidates=" + Arrays.toString(candidates) + ", candidateCounter="
-				+ candidateCounter + ", numOfVotes=" + numOfVotes + "]";
+		StringBuffer str = new StringBuffer(this.getClass().getSimpleName() + " " + this.name + " info:" + "\n");
+		str.append("the date of Establishment: " + this.dateOfEstablishment.toString() + "\n"
+				+ "the party Political Opinion: " + this.PoliticalOpinion + "\n" + "the party num of votes"
+				+ this.numOfVotes + "\n");
+		str.append("the candidates in the party: \n\n");
+		for (int i = 0; i < this.candidateCounter; i++) {
+			str.append(this.candidates[i].toString() + "\n");
+		}
+
+		return str.toString();
+
 	}
 
 }

@@ -28,7 +28,7 @@ public class Result {
 
 	@Override
 	public String toString() {
-		return "Result [numOfvotes=" + numOfvotes + ", idOrName=" + idOrName + "]";
+		return ("Result  for " + this.idOrName + "=" + this.numOfvotes + "\n");
 	}
 
 	public void showResult() {

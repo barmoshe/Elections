@@ -13,7 +13,7 @@ public class BallotBoxForCovid extends BallotBox {
 
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ": " + super.toString();
+		return super.toString();
 	}
 
 }

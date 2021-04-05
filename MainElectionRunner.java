@@ -129,13 +129,14 @@ public class MainElectionRunner {
 
 		boolean isValid1 = false;
 		while (!isValid1) {
-			System.out.println("enter year for elections");
-			int year = sc.nextInt();
-			System.out.println("enter month for elections");
-			int month = sc.nextInt();
 			try {
+				System.out.println("enter year for elections");
+				int year = sc.nextInt();
+				System.out.println("enter month for elections");
+				int month = sc.nextInt();
 				e = new Election(year, month);
 				isValid1 = true;
+
 			} catch (Exception x) {
 				System.out.println(x.getMessage());
 
@@ -172,12 +173,11 @@ public class MainElectionRunner {
 		while (choise != 10) {
 			switch (choise) {
 			case 1:
-				System.out.println("enter address");
-				String address = sc.next();
 				menuForAddBallotBox();
 				int choise1 = sc.nextInt();
+				System.out.println("enter address");
 
-				e.addBallotBoxHardCoded(address, choise1 - 1);
+				e.addBallotBoxHardCoded(sc.next(), choise1);
 				break;
 			case 2:
 				isValid1 = false;
@@ -207,7 +207,7 @@ public class MainElectionRunner {
 				while (!isValid1) {
 					try {
 						System.out.println("choose your party number");// *
-						e.showParties();
+						e.showPartiesNames();
 						e.addCandidate(createCandidate(e.parties[sc.nextInt() - 1]));
 						isValid1 = true;
 					} catch (Exception x) {

@@ -188,7 +188,7 @@ public class Election {
 			break;
 		default:
 			System.out.println("ok bye");
-			break;
+			return;
 		}
 		for (int i = 0; i < this.partyCounter; i++) {
 			String current = this.parties[i].getName();
@@ -263,7 +263,7 @@ public class Election {
 
 	public void showBallotBoxes() {
 		for (int i = 0; i < ballotBoxCounter; i++) {
-			System.out.println("ballot box " + (i + 1) + " " + ballotBoxes[i].toString());
+			System.out.println((i + 1) + ") " + ballotBoxes[i].toString() + "\n");
 		}
 	}
 

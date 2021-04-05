@@ -134,10 +134,19 @@ public class BallotBox {
 
 	@Override
 	public String toString() {
-		return "BallotBox [serialNumber=" + serialNumber + ", address=" + address + ", citizenInBallotBox="
-				+ Arrays.toString(citizenInBallotBox) + ", votePresentage=" + votePresentage
-				+ ", resultsForThisBallotBox=" + Arrays.toString(resultsForThisBallotBox) + ", resultCount="
-				+ resultCount + ", votersCount=" + citizensCount + "]";
+		StringBuffer str = new StringBuffer(
+				this.getClass().getSimpleName() + " #" + this.serialNumber + " info:" + "\n");
+		str.append("location: " + this.address + "\n\n");
+		str.append("the citizens in the ballotbox: \n\n");
+		for (int i = 0; i < this.citizensCount; i++) {
+			str.append(citizenInBallotBox[i].toString() + "\n");
+		}
+		str.append("vote precentage: " + this.votePresentage + "\n" + "\nresults in this ballotbox: \n");
+		for (int i = 0; i < this.resultCount; i++) {
+			str.append(resultsForThisBallotBox[i].toString());// *
+		}
+		return str.toString();
+
 	}
 
 	@Override
