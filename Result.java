@@ -5,8 +5,9 @@ public class Result {
 	protected int numOfvotes;
 	private String idOrName;
 
-	public void setIdOrName(String idOrName) {
+	public boolean setIdOrName(String idOrName) {
 		this.idOrName = idOrName;
+		return true;
 	}
 
 	public int getNumOfvotes() {

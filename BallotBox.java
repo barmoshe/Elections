@@ -5,14 +5,14 @@ import java.util.Arrays;
 
 public class BallotBox {
 
-	protected int serialNumber;
-	protected static int serialCounter = 1000;
-	protected String address;
-	protected Citizen[] citizenInBallotBox;
-	protected double votePresentage;
-	protected Result[] resultsForThisBallotBox;
-	protected int resultCount;
-	protected int citizensCount;
+	private int serialNumber;
+	private static int serialCounter = 1000;
+	private String address;
+	private Citizen[] citizenInBallotBox;
+	private double votePresentage;
+	private Result[] resultsForThisBallotBox;
+	private int resultCount;
+	private int citizensCount;
 
 	public BallotBox(BallotBox b) {
 		this.serialNumber = b.getSerialnumber();
@@ -102,11 +102,11 @@ public class BallotBox {
 	public double voteResultsAndPercentage() {// returns percentage of votes and calculate votes for each party
 		int nonVotersAmount = 0;
 		for (int i = 0; i < this.citizensCount; i++) {
-			if (citizenInBallotBox[i].partyChosen == null)
+			if (citizenInBallotBox[i].getPartyChosen() == null)
 				nonVotersAmount++;
 			else
 				for (int j = 0; j < resultCount; j++) {
-					if (citizenInBallotBox[i].partyChosen == resultsForThisBallotBox[j].getIdOrName())
+					if (citizenInBallotBox[i].getPartyChosen() == resultsForThisBallotBox[j].getIdOrName())
 						resultsForThisBallotBox[j].addVote();
 				}
 		}

@@ -5,10 +5,10 @@ import java.util.Arrays;
 public class Election {
 	private int yearOfElections;
 	private int monthOfElections;
-	protected Citizen[] citizens;
-	protected Party[] parties;
+	private Citizen[] citizens;
+	private Party[] parties;
 	private BallotBox[] ballotBoxes;
-	protected int citizenCounter;
+	private int citizenCounter;
 	private int partyCounter;
 	private int ballotBoxCounter;
 
@@ -24,6 +24,38 @@ public class Election {
 
 	}
 
+	public int getYearOfElections() {
+		return yearOfElections;
+	}
+
+	public int getMonthOfElections() {
+		return monthOfElections;
+	}
+
+	public Citizen[] getCitizens() {
+		return citizens;
+	}
+
+	public Party[] getParties() {
+		return parties;
+	}
+
+	public BallotBox[] getBallotBoxes() {
+		return ballotBoxes;
+	}
+
+	public int getCitizenCounter() {
+		return citizenCounter;
+	}
+
+	public int getPartyCounter() {
+		return partyCounter;
+	}
+
+	public int getBallotBoxCounter() {
+		return ballotBoxCounter;
+	}
+
 	public Election() {
 	}
 
@@ -36,18 +68,21 @@ public class Election {
 		return -1;
 	}
 
-	public void setYearOfElections(int year) throws Exception {
+	public boolean setYearOfElections(int year) throws Exception {
 		if (year >= 1900 && year < 2100) {
 			this.yearOfElections = year;
 		} else
 			throw new Exception("year must be between 1900-2100");
+		return true;
+
 	}
 
-	public void setMonthOfElections(int year) throws Exception {
+	public boolean setMonthOfElections(int year) throws Exception {
 		if (year > 0 && year < 13) {
 			this.yearOfElections = year;
 		} else
 			throw new Exception("Month must be between 1-12");
+		return true;
 	}
 
 	private void copyAndMultiplyVoters() {
@@ -60,30 +95,32 @@ public class Election {
 		}
 	}
 
-	private void setVoterToBallotBox(Citizen c) {
+	private boolean setVoterToBallotBox(Citizen c) {
 		for (int i = 0; i < this.ballotBoxCounter; i++) {
-			if (c.isQuarentied) {
+			if (c.getIsQuarentied()) {
 				if (this.ballotBoxes[i] instanceof BallotBoxForCovid) {
 					this.ballotBoxes[i].addCitizen(c);
 					c.setBallotBox(ballotBoxes[i]);
-					return;
+					return true;
 				}
 			} else if (c instanceof Solider) {
 				if (!(this.ballotBoxes[i] instanceof BallotBoxForCovid)) {
 					this.ballotBoxes[i].addCitizen(c);
 					c.setBallotBox(ballotBoxes[i]);
-					return;
+					return true;
 				}
 			} else if (c instanceof Citizen) {
 				if ((!(this.ballotBoxes[i] instanceof BallotBoxForCovid))
 						&& (!(this.ballotBoxes[i] instanceof BallotBoxForSoliders))) {
 					this.ballotBoxes[i].addCitizen(c);
 					c.setBallotBox(ballotBoxes[i]);
-					return;
+					return true;
 				}
 			}
+
 		}
 		System.out.println(" error setVoterToBallotBox ");
+		return false;
 	}
 
 	public boolean checkAge(int YearOfBirth) {
@@ -94,14 +131,14 @@ public class Election {
 		return false;
 	}
 
-	public void addCitizens(Citizen c) throws Exception {
+	public boolean addCitizens(Citizen c) throws Exception {
 		if (this.checkAge(c.getYearOfBirth())) {
 			throw new Exception("too young");
 		}
 		int indexOfCitizen = cheakIfCitizenExist(c);
 		if (indexOfCitizen != -1) {
 			updateCitizen(c, indexOfCitizen);
-			return;
+			return true;
 		}
 		this.copyAndMultiplyVoters();
 		int age = this.yearOfElections - c.getYearOfBirth();
@@ -111,14 +148,14 @@ public class Election {
 			this.citizens[citizenCounter] = new Citizen(c);
 		this.setVoterToBallotBox(this.citizens[citizenCounter]);
 		this.citizenCounter = this.citizenCounter + 1;
-
+		return true;
 	}
 
 	private void updateCitizen(Citizen c, int i) throws Exception {
 		Citizen temp = this.citizens[i];
-		temp.setName(c.name);
-		temp.hasMask = c.hasMask;
-		temp.isQuarentied = c.isQuarentied;
+		temp.setName(c.getName());
+		temp.setHasMask(c.getHasMask());
+		temp.setIsQuarentied(c.getIsQuarentied());
 
 	}
 
@@ -205,10 +242,10 @@ public class Election {
 
 	private void replaceCitizenForCandidate(Citizen c, Party p) throws Exception {
 		for (int i = 0; i < this.citizenCounter; i++) {
-			if (c.id == this.citizens[i].id) {
+			if (c.getId() == this.citizens[i].getId()) {
 				citizens[i] = new Candidate(citizens[i]);
 				((Candidate) citizens[i]).setPartyBelong(p);
-				citizens[i].ballotbox.addCitizen(citizens[i]);
+				citizens[i].getBallotbox().addCitizen(citizens[i]);
 				return;
 			}
 		}
@@ -291,7 +328,7 @@ public class Election {
 		}
 		System.out.println();
 		for (int i = 0; i < this.partyCounter; i++) {
-			System.out.println(this.parties[i].getName() + ":  " + this.parties[i].numOfVotes);
+			System.out.println(this.parties[i].getName() + ":  " + this.parties[i].getNumOfVotes());
 		}
 	}
 

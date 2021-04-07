@@ -2,13 +2,13 @@
 package Elections;
 
 public class Citizen {
-	protected String name;
-	protected String id;
-	protected int yearOfBirth;
-	protected boolean isQuarentied;
-	protected boolean hasMask;
-	protected BallotBox ballotbox;
-	protected String partyChosen;
+	private String name;
+	private String id;
+	private int yearOfBirth;
+	private boolean isQuarentied;
+	private boolean hasMask;
+	private BallotBox ballotbox;
+	private String partyChosen;
 
 	public Citizen(String name, String id, boolean isQuarentied, boolean hasMask, int yearOfBirth) throws Exception {
 		this.hasMask = hasMask;
@@ -31,7 +31,7 @@ public class Citizen {
 
 	}
 
-	public void setName(String name) throws Exception {
+	public boolean setName(String name) throws Exception {
 		for (int i = 0; i < name.length(); i++) {
 			char c = name.charAt(i);
 			if (!((c <= 'Z' && c >= 'A') || (c <= 'z' && c >= 'a')))
@@ -39,9 +39,10 @@ public class Citizen {
 			break;
 		}
 		this.name = name;
+		return true;
 	}
 
-	public void setId(String id) throws Exception {
+	public boolean setId(String id) throws Exception {
 		if (id.length() == 9) {
 			for (int i = 0; i < id.length(); i++) {
 				if (!(id.charAt(i) >= '0' && id.charAt(i) <= '9'))
@@ -51,22 +52,25 @@ public class Citizen {
 			this.id = id;
 		} else
 			throw new Exception("must be 9 numbers for id");
+		return true;
 
 	}
 
-	public void setYearOfbirth(int year) throws Exception {
+	public boolean setYearOfbirth(int year) throws Exception {
 		if (year >= 1900 && year < 2100) {
 			this.yearOfBirth = year;
 		} else
 			throw new Exception("year must be between 1900-2100");
+		return true;
 	}
 
 	public int getYearOfBirth() {
 		return this.yearOfBirth;
 	}
 
-	public void setBallotBox(BallotBox ballotBox) {
+	public boolean setBallotBox(BallotBox ballotBox) {
 		this.ballotbox = ballotBox;
+		return true;
 	}
 
 	@Override
@@ -93,8 +97,39 @@ public class Citizen {
 		return id;
 	}
 
-	public void setPartyChosen(String party) {
+	public boolean setPartyChosen(String party) {
 		this.partyChosen = party;
+		return true;
+	}
+
+	public boolean getIsQuarentied() {
+		return this.isQuarentied;
+	}
+
+	public boolean getHasMask() {
+		return this.hasMask;
+	}
+
+	public boolean setHasMask(boolean hasMask) {
+		this.hasMask = hasMask;
+		return true;
+	}
+
+	public boolean setIsQuarentied(boolean isQuarentied2) {
+		this.isQuarentied = isQuarentied2;
+		return true;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public BallotBox getBallotbox() {
+		return ballotbox;
+	}
+
+	public String getPartyChosen() {
+		return partyChosen;
 	}
 
 }

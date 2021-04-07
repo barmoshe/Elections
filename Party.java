@@ -4,12 +4,12 @@ import java.time.LocalDate;
 import java.util.Arrays;
 
 public class Party {
-	protected String name;
-	protected PoliticalOpinion PoliticalOpinion;
-	protected LocalDate dateOfEstablishment;
-	protected Candidate[] candidates;
-	protected int candidateCounter;
-	protected int numOfVotes;
+	private String name;
+	private PoliticalOpinion PoliticalOpinion;
+	private LocalDate dateOfEstablishment;
+	private Candidate[] candidates;
+	private int candidateCounter;
+	private int numOfVotes;
 
 	public Party(Party p) throws Exception {
 		setName(p.getName());
@@ -40,7 +40,7 @@ public class Party {
 
 	}
 
-	public void setName(String name) throws Exception {
+	public boolean setName(String name) throws Exception {
 		for (int i = 0; i < name.length(); i++) {
 			char c = name.charAt(i);
 			if (!((c <= 'Z' && c >= 'A') || (c <= 'z' && c >= 'a')))
@@ -48,6 +48,7 @@ public class Party {
 			break;
 		}
 		this.name = name;
+		return true;
 	}
 
 	public void copyAndMultiplyCandidate() {
@@ -73,8 +74,6 @@ public class Party {
 		copyAndMultiplyCandidate();
 		if (cheakIfCandidateExist(c))
 			return;
-		if (c.ballotbox == null)
-			System.out.println("666");
 		this.candidates[candidateCounter] = c;
 		this.candidateCounter = this.candidateCounter + 1;
 	}
@@ -93,7 +92,7 @@ public class Party {
 		int n = candidateCounter;
 		for (int i = 0; i < n - 1; i++)
 			for (int j = 0; j < n - i - 1; j++)
-				if (candidates[j].numOfVotes <candidates[j + 1].numOfVotes) {
+				if (candidates[j].numOfVotes < candidates[j + 1].numOfVotes) {
 					Candidate temp = candidates[j];
 					candidates[j] = candidates[j + 1];
 					candidates[j + 1] = temp;
@@ -112,8 +111,9 @@ public class Party {
 			return false;
 	}
 
-	public void setNumOfVotes(int temp) {
+	public boolean setNumOfVotes(int temp) {
 		this.numOfVotes = temp;
+		return true;
 	}
 
 	@Override
@@ -129,6 +129,26 @@ public class Party {
 
 		return str.toString();
 
+	}
+
+	public PoliticalOpinion getPoliticalOpinion() {
+		return PoliticalOpinion;
+	}
+
+	public LocalDate getDateOfEstablishment() {
+		return dateOfEstablishment;
+	}
+
+	public Candidate[] getCandidates() {
+		return candidates;
+	}
+
+	public int getCandidateCounter() {
+		return candidateCounter;
+	}
+
+	public int getNumOfVotes() {
+		return numOfVotes;
 	}
 
 }

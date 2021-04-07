@@ -72,7 +72,7 @@ public class MainElectionRunner {
 	private static void citizensChoose(Election e) {
 		Scanner sc = new Scanner(System.in);
 
-		for (int i = 0; i < e.citizenCounter; i++) {
+		for (int i = 0; i < e.getCitizenCounter(); i++) {
 			System.out.println("choose your vote number if you do not want to vote please enter 0");
 			e.showPartiesNames();
 			int select = sc.nextInt() - 1;
@@ -81,10 +81,10 @@ public class MainElectionRunner {
 				while (!isValid) {
 					try {
 
-						if (!(e.citizens[i].ballotbox instanceof BallotBoxForCovid))
-							e.citizens[i].setPartyChosen(e.parties[select].getName());
-						else if (e.citizens[i].hasMask) {
-							e.citizens[i].setPartyChosen(e.parties[select].getName());
+						if (!(e.getCitizens()[i].getBallotbox() instanceof BallotBoxForCovid))
+							e.getCitizens()[i].setPartyChosen(e.getParties()[select].getName());
+						else if (e.getCitizens()[i].getHasMask()) {
+							e.getCitizens()[i].setPartyChosen(e.getParties()[select].getName());
 							System.out.println("not mask");
 
 						}
@@ -208,7 +208,7 @@ public class MainElectionRunner {
 					try {
 						System.out.println("choose your party number");// *
 						e.showPartiesNames();
-						e.addCandidate(createCandidate(e.parties[sc.nextInt() - 1]));
+						e.addCandidate(createCandidate(e.getParties()[sc.nextInt() - 1]));
 						isValid1 = true;
 					} catch (Exception x) {
 						System.out.println(x.getMessage());

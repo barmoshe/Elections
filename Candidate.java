@@ -19,12 +19,15 @@ public class Candidate extends Citizen {
 
 	}
 
-	public void setPartyBelong(Party partyBelong) {
+	public boolean setPartyBelong(Party partyBelong) {
 		this.partyBelong = partyBelong;
+		return true;
 	}
 
-	public void setNumOfVotes(int numberOfVotesForCand) {
+	public boolean setNumOfVotes(int numberOfVotesForCand) {
 		this.numOfVotes = numberOfVotesForCand;
+		return true;
+
 	}
 
 	@Override
