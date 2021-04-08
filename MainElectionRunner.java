@@ -88,7 +88,7 @@ public class MainElectionRunner {
 							e.getCitizens()[i].setPartyChosen(e.getParties()[select].getName());
 						else if (e.getCitizens()[i].getHasMask()) {
 							e.getCitizens()[i].setPartyChosen(e.getParties()[select].getName());
-							System.out.println("not mask");
+							System.out.println("can't vote without mask");
 
 						}
 						isValid = true;

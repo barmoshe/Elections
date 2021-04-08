@@ -3,10 +3,10 @@ package id314022914_id206921777;
 public class Result {
 
 	protected int numOfvotes;
-	private String idOrName;
+	private String partyName;
 
-	public boolean setIdOrName(String idOrName) {
-		this.idOrName = idOrName;
+	public boolean setPartyName(String partyName) {
+		this.partyName = partyName;
 		return true;
 	}
 
@@ -14,13 +14,13 @@ public class Result {
 		return numOfvotes;
 	}
 
-	public String getIdOrName() {
-		return idOrName;
+	public String getPartyName() {
+		return partyName;
 	}
 
-	public Result(String idOrName) {
+	public Result(String partyName) {
 		this.numOfvotes = 0;
-		this.idOrName = idOrName;
+		this.partyName = partyName;
 	}
 
 	public void addVote() {
@@ -29,11 +29,11 @@ public class Result {
 
 	@Override
 	public String toString() {
-		return ("Result  for " + this.idOrName + "=" + this.numOfvotes + "\n");
+		return ("Result  for " + this.partyName + "=" + this.numOfvotes + "\n");
 	}
 
 	public void showResult() {
-		System.out.println("num of votes for " + this.idOrName + " is : " + this.numOfvotes);
+		System.out.println("num of votes for " + this.partyName + " is : " + this.numOfvotes);
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class Result {
 		if (!(obj instanceof Result))
 			return false;
 		Result temp = (Result) obj;
-		if (temp.idOrName == this.idOrName)
+		if (temp.partyName == this.partyName)
 			return true;
 		else
 			return false;

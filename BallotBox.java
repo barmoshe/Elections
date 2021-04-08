@@ -104,7 +104,7 @@ public class BallotBox {
 				nonVotersAmount++;
 			else
 				for (int j = 0; j < resultCount; j++) {
-					if (citizenInBallotBox[i].getPartyChosen() == resultsForThisBallotBox[j].getIdOrName())
+					if (citizenInBallotBox[i].getPartyChosen() == resultsForThisBallotBox[j].getPartyName())
 						resultsForThisBallotBox[j].addVote();
 				}
 		}
@@ -116,7 +116,7 @@ public class BallotBox {
 
 	public int getResultForParty(String name) {
 		for (int i = 0; i < resultsForThisBallotBox.length; i++) {
-			if (name == resultsForThisBallotBox[i].getIdOrName())
+			if (name == resultsForThisBallotBox[i].getPartyName())
 				return resultsForThisBallotBox[i].getNumOfvotes();
 		}
 		return 0;
@@ -132,9 +132,8 @@ public class BallotBox {
 
 	@Override
 	public String toString() {
-		StringBuffer str = new StringBuffer(
-				this.getClass().getSimpleName() + " #" + this.serialNumber + " info:" + "\n");
-		str.append("location: " + this.address + "\n\n");
+		StringBuffer str = new StringBuffer(this.getClass().getSimpleName() + " #" + this.serialNumber + " info:" + "\n"
+				+ "location: " + this.address + "\n\n");
 		str.append("the citizens in the ballotbox: \n");
 		for (int i = 0; i < this.citizensCount; i++) {
 			str.append((i + 1) + ") " + this.citizenInBallotBox[i].getName() + "\n");
