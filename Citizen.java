@@ -32,12 +32,7 @@ public class Citizen {
 	}
 
 	public boolean setName(String name) throws Exception {
-		for (int i = 0; i < name.length(); i++) {
-			char c = name.charAt(i);
-			if (!((c <= 'Z' && c >= 'A') || (c <= 'z' && c >= 'a')))
-				throw new Exception("must be char between a-z or A-Z");
-			break;
-		}
+
 		this.name = name;
 		return true;
 	}

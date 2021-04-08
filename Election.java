@@ -288,7 +288,7 @@ public class Election {
 
 	public void showPartiesNames() {
 		for (int i = 0; i < this.partyCounter; i++) {
-			System.out.println("Party" + (i + 1) + " " + parties[i].getName());
+			System.out.println("Party number " + (i + 1) + "- " + parties[i].getName());
 
 		}
 	}

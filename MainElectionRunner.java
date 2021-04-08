@@ -3,7 +3,8 @@ package id314022914_id206921777;
 import java.util.Scanner;
 
 public class MainElectionRunner {
-	public static void menu() {
+	public static int menu() {
+		Scanner sc = new Scanner(System.in);
 		System.out.println("\n" + "________-menu-________");
 		System.out.println("chooes the option:");
 		System.out.println("-1- add ballot box");
@@ -16,6 +17,8 @@ public class MainElectionRunner {
 		System.out.println("-8- election start");
 		System.out.println("-9- show results");
 		System.out.println("10- exit");
+		return sc.nextInt();
+
 	}
 
 	public static void menuForAddBallotBox() {
@@ -71,9 +74,9 @@ public class MainElectionRunner {
 
 	private static void citizensChoose(Election e) {
 		Scanner sc = new Scanner(System.in);
-
 		for (int i = 0; i < e.getCitizenCounter(); i++) {
-			System.out.println("choose your vote number if you do not want to vote please enter 0");
+			System.out.println("Dear " + e.getCitizens()[i].getName()
+					+ " choose your vote number.\nIf you do not want to vote please enter 0");
 			e.showPartiesNames();
 			int select = sc.nextInt() - 1;
 			if (select != -1) {
@@ -91,14 +94,14 @@ public class MainElectionRunner {
 						isValid = true;
 					} catch (Exception y) {
 						System.out.println("enter choise again! ");
-						System.out.println("choose your vote number if you do not want to vote please enter 0");
+						System.out.println("Dear " + e.getCitizens()[i].getName()
+								+ " choose your vote number.\nIf you do not want to vote please enter 0");
 
 						select = sc.nextInt() - 1;
 					}
 				}
 			}
 		}
-		sc.close();
 	}
 
 	public static Party createParty() throws Exception {
@@ -151,27 +154,26 @@ public class MainElectionRunner {
 			e.addBallotBoxHardCoded("Rishon Le Zion", 2);
 			e.addBallotBoxHardCoded("Kiryat Ono", 1);
 			e.addBallotBoxHardCoded("Tel Aviv", 3);
-			e.addCitizensHadCoded("Shlomi", "332233333", true, true, 1993);
-			e.addCitizensHadCoded("Shlomo", "342233333", false, true, 2002);
-			e.addCandidateHardCoded("Bar", "111111111", true, false, 1980, "Likud");
-			e.addCandidateHardCoded("Elkoubi", "111113111", false, false, 1945, "Likud");
-			e.addCandidateHardCoded("Galya", "111111121", true, true, 1980, "Yesh Atid");
-			e.addCandidateHardCoded("Gabi", "121113111", false, false, 1984, "Yesh Atid");
-			e.addCandidateHardCoded("Ori", "111113331", false, false, 1980, "Yamina");
-			e.addCandidateHardCoded("Ella", "121999921", false, false, 1984, "Yamina");
-			e.addCandidateHardCoded("Yossi", "111111911", true, false, 1980, "Likud");
-			e.addCandidateHardCoded("Mor", "111113191", false, false, 1945, "Likud");
-			e.addCandidateHardCoded("Itay", "111111199", true, true, 1980, "Yesh Atid");
-			e.addCandidateHardCoded("Yotam", "121993111", false, false, 1984, "Yesh Atid");
-			e.addCandidateHardCoded("Elor", "111993331", false, false, 1980, "Yamina");
-			e.addCandidateHardCoded("Ofir", "199132212", false, false, 1984, "Yamina");
+			e.addCitizensHadCoded("Adi Himembloi", "332233333", true, true, 1993);
+			e.addCitizensHadCoded("Shlomo Artzi", "342233333", false, true, 2002);
+			e.addCandidateHardCoded("Bar Refaeli", "111111111", true, false, 1980, "Likud");
+			e.addCandidateHardCoded("Gal Gadot", "111113111", false, false, 1945, "Likud");
+			e.addCandidateHardCoded("Galya Micheli", "111111121", true, true, 1980, "Yesh Atid");
+			e.addCandidateHardCoded("Noa Kirel", "121113111", false, false, 1984, "Yesh Atid");
+			e.addCandidateHardCoded("Benjamin Netanyaho", "111113331", false, false, 1980, "Yamina");
+			e.addCandidateHardCoded("Ella Levi ", "121999921", false, false, 1984, "Yamina");
+			e.addCandidateHardCoded("Yossi Benayoun", "111111911", true, false, 1980, "Likud");
+			e.addCandidateHardCoded("Mor Silver", "111113191", false, false, 1945, "Likud");
+			e.addCandidateHardCoded("Itay Hason", "111111199", true, true, 1980, "Yesh Atid");
+			e.addCandidateHardCoded("Yotam Keren", "121993111", false, false, 1984, "Yesh Atid");
+			e.addCandidateHardCoded("Elor Koren", "111993331", false, false, 1980, "Yamina");
+			e.addCandidateHardCoded("Ofri Maane", "199132212", false, false, 1984, "Yamina");
 		} catch (Exception x) {
 			System.out.println(x.getMessage());
 
 		}
 
-		menu();
-		int choise = sc.nextInt();
+		int choise = menu();
 		while (choise != 10) {
 			switch (choise) {
 			case 1:
@@ -245,8 +247,8 @@ public class MainElectionRunner {
 				System.out.println("wrong input ,again");
 				break;
 			}
-			menu();
-			choise = sc.nextInt();
+
+			choise = menu();
 		}
 		sc.close();
 	}

@@ -39,13 +39,8 @@ public class Party {
 
 	}
 
-	public boolean setName(String name) throws Exception {
-		for (int i = 0; i < name.length(); i++) {
-			char c = name.charAt(i);
-			if (!((c <= 'Z' && c >= 'A') || (c <= 'z' && c >= 'a')))
-				throw new Exception(" name must be chars between a-z or A-Z");
-			break;
-		}
+	public boolean setName(String name) {
+
 		this.name = name;
 		return true;
 	}
@@ -117,13 +112,13 @@ public class Party {
 
 	@Override
 	public String toString() {
-		StringBuffer str = new StringBuffer(this.getClass().getSimpleName() + " " + this.name + " info:" + "\n");
+		StringBuffer str = new StringBuffer(" " + this.name + " info:" + "\n");
 		str.append("the date of Establishment: " + this.dateOfEstablishment.toString() + "\n"
-				+ "the party Political Opinion: " + this.PoliticalOpinion + "\n" + "the party num of votes"
+				+ "the party Political Opinion: " + this.PoliticalOpinion + "\n" + "the party num of votes: "
 				+ this.numOfVotes + "\n");
-		str.append("the candidates in the party: \n\n");
+		str.append("the candidates in the party: \n");
 		for (int i = 0; i < this.candidateCounter; i++) {
-			str.append(this.candidates[i].toString() + "\n");
+			str.append((i + 1) + ") " + this.candidates[i].getName() + "\n");
 		}
 
 		return str.toString();
