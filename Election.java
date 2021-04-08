@@ -1,7 +1,5 @@
 package id314022914_id206921777;
 
-import java.util.Arrays;
-
 public class Election {
 	private int yearOfElections;
 	private int monthOfElections;
@@ -184,9 +182,9 @@ public class Election {
 		}
 	}
 
-	public void addParty(Party p) throws Exception {
+	public boolean addParty(Party p) throws Exception {
 		if (cheakIfPartyExist(p))
-			return;
+			return false;
 		copyAndMultiplyParties();
 		this.parties[partyCounter] = new Party(p);
 		for (int i = 0; i < this.ballotBoxCounter; i++) {
@@ -194,6 +192,7 @@ public class Election {
 			current.addToResult(p.getName());// *
 		}
 		this.partyCounter = this.partyCounter + 1;
+		return true;
 	}
 
 	public void addPartyHardCoded(String name, PoliticalOpinion politicalOpinion) throws Exception {
@@ -211,7 +210,7 @@ public class Election {
 		}
 	}
 
-	public void addBallotBox(BallotBox b, int choise) {
+	public boolean addBallotBox(BallotBox b, int choise) {
 		copyAndMultiplyBallotBox();
 		switch (choise) {
 		case 1:
@@ -225,19 +224,20 @@ public class Election {
 			break;
 		default:
 			System.out.println("ok bye");
-			return;
+			return false;
 		}
 		for (int i = 0; i < this.partyCounter; i++) {
 			String current = this.parties[i].getName();
 			this.ballotBoxes[ballotBoxCounter].addToResult(current);// *
 		}
 		this.ballotBoxCounter = this.ballotBoxCounter + 1;
-		;
+		return true;
+
 	}
 
-	public void addBallotBoxHardCoded(String address, int choise) {
+	public boolean addBallotBoxHardCoded(String address, int choise) {
 		BallotBox b = new BallotBox(address);
-		addBallotBox(b, choise);
+		return addBallotBox(b, choise);
 	}
 
 	private void replaceCitizenForCandidate(Citizen c, Party p) throws Exception {
@@ -252,9 +252,9 @@ public class Election {
 
 	}
 
-	public void addCandidate(Candidate c) throws Exception {
+	public boolean addCandidate(Candidate c) throws Exception {
 		if (checkAge(c.getYearOfBirth()))
-			return;
+			return false;
 		int temp = cheakIfCitizenExist(c);
 		if (temp != -1) {
 			replaceCitizenForCandidate(this.citizens[temp], c.partyBelong);
@@ -264,6 +264,7 @@ public class Election {
 			replaceCitizenForCandidate(this.citizens[citizenCounter - 1], c.partyBelong);
 			c.partyBelong.addCandidate((Candidate) this.citizens[citizenCounter - 1]);
 		}
+		return true;
 	}
 
 	public void addCandidateHardCoded(String name, String id, boolean isQuarentied, boolean hasMask, int yearOfBirth,

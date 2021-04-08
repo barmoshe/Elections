@@ -33,7 +33,7 @@ public class MainElectionRunner {
 		System.out.println("enter name ");
 		String name2 = sc.nextLine();
 		System.out.println("enter id ");
-		String id2 = sc.nextLine();
+		String id2 = sc.next();
 		System.out.println("enter 1 if you qurentined else 0 ");
 		int boolchoose1 = sc.nextInt();
 		if (boolchoose1 != 1 && boolchoose1 != 0)
@@ -98,6 +98,7 @@ public class MainElectionRunner {
 				}
 			}
 		}
+		sc.close();
 	}
 
 	public static Party createParty() throws Exception {
@@ -113,6 +114,7 @@ public class MainElectionRunner {
 		p = switchOpinion(choise);
 
 		Party p1 = new Party(name3, p);
+
 		return p1;
 
 	}
@@ -176,26 +178,30 @@ public class MainElectionRunner {
 				menuForAddBallotBox();
 				int choise1 = sc.nextInt();
 				System.out.println("enter address");
+				sc.nextLine();
+				String address = sc.nextLine();
 
-				e.addBallotBoxHardCoded(sc.next(), choise1);
+				if (e.addBallotBoxHardCoded(address, choise1))
+					System.out.println("added succsessfully");
 				break;
 			case 2:
 				isValid1 = false;
 				while (!isValid1) {
 					try {
-						e.addCitizens(createCitizen());
+						if (e.addCitizens(createCitizen()))
+							System.out.println("added succsessfully");
 						isValid1 = true;
 					} catch (Exception x) {
 						System.out.println(x.getMessage());
 					}
-
 				}
 				break;
 			case 3:
 				isValid1 = false;
 				while (!isValid1) {
 					try {
-						e.addParty(createParty());
+						if (e.addParty(createParty()))
+							System.out.println("added succsessfully");
 						isValid1 = true;
 					} catch (Exception x) {
 						System.out.println(x.getMessage());
@@ -208,7 +214,8 @@ public class MainElectionRunner {
 					try {
 						System.out.println("choose your party number");// *
 						e.showPartiesNames();
-						e.addCandidate(createCandidate(e.getParties()[sc.nextInt() - 1]));
+						if (e.addCandidate(createCandidate(e.getParties()[sc.nextInt() - 1])))
+							System.out.println("added succsessfully");
 						isValid1 = true;
 					} catch (Exception x) {
 						System.out.println(x.getMessage());
@@ -241,7 +248,7 @@ public class MainElectionRunner {
 			menu();
 			choise = sc.nextInt();
 		}
-
+		sc.close();
 	}
 
 }
