@@ -1,5 +1,5 @@
 
-package Elections;
+package id314022914_id206921777;
 
 public class Citizen {
 	private String name;
