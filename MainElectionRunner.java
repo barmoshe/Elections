@@ -214,7 +214,7 @@ public class MainElectionRunner {
 				isValid1 = false;
 				while (!isValid1) {
 					try {
-						System.out.println("choose your party number");// *
+						System.out.println("choose your party number");
 						e.showPartiesNames();
 						if (e.addCandidate(createCandidate(e.getParties()[sc.nextInt() - 1])))
 							System.out.println("added succsessfully");
