@@ -16,7 +16,9 @@ public class MainElectionRunner {
 		System.out.println("-7- show all parties");
 		System.out.println("-8- election start");
 		System.out.println("-9- show results");
-		System.out.println("10- exit");
+		System.out.println("10- end current election and start new one");
+		System.out.println("11- end program");
+
 		return sc.nextInt();
 
 	}
@@ -128,53 +130,82 @@ public class MainElectionRunner {
 		return c;
 	}
 
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		Election e = new Election();
-
-		boolean isValid1 = false;
-		while (!isValid1) {
-			try {
-				System.out.println("enter year for elections");
-				int year = sc.nextInt();
-				System.out.println("enter month for elections");
-				int month = sc.nextInt();
-				e = new Election(year, month);
-				isValid1 = true;
-
-			} catch (Exception x) {
-				System.out.println(x.getMessage());
+	public static Election[] copyAndMultiplyElections(Election[] elections, int electionCounter) {
+		Election[] temp = null;
+		if (elections.length <= electionCounter) {
+			temp = new Election[elections.length * 2];
+			for (int i = 0; i < elections.length; i++) {
+				temp[i] = elections[i];
 
 			}
-		}
+			return temp;
+		} else
+			return elections;
+
+	}
+
+	public static void resetElections(Election[] elections, Election currentElection, int electionCounter) {
+
+		System.out.println("reset elections \n.\n.\n.\n.");
+		elections = copyAndMultiplyElections(elections, electionCounter);
+		elections[electionCounter] = currentElection;
+	}
+
+	public static void main(String[] args) {
+		ElectionsSystem systemE = new ElectionsSystem();
+		Scanner sc = new Scanner(System.in);
+		int currentElectionIndex = 0;
+		boolean isValid1 = false;
+
+		System.out.println("enter year for elections");
+		int year = sc.nextInt();
+		System.out.println("enter month for elections");
+		int month = sc.nextInt();
+		systemE.createElection(year, month);
+		isValid1 = true;
+
 		try {
-			e.addPartyHardCoded("Likud", PoliticalOpinion.RIGHT);
-			e.addPartyHardCoded("Yesh Atid", PoliticalOpinion.CENTER);
-			e.addPartyHardCoded("Yamina", PoliticalOpinion.LEFT);
-			e.addBallotBoxHardCoded("Rishon Le Zion", 2);
-			e.addBallotBoxHardCoded("Kiryat Ono", 1);
-			e.addBallotBoxHardCoded("Tel Aviv", 3);
-			e.addCitizensHadCoded("Adi Himembloi", "332233333", true, true, 1993);
-			e.addCitizensHadCoded("Shlomo Artzi", "342233333", false, true, 2002);
-			e.addCandidateHardCoded("Bar Refaeli", "111111111", true, false, 1980, "Likud");
-			e.addCandidateHardCoded("Gal Gadot", "111113111", false, false, 1945, "Likud");
-			e.addCandidateHardCoded("Galya Micheli", "111111121", true, true, 1980, "Yesh Atid");
-			e.addCandidateHardCoded("Noa Kirel", "121113111", false, false, 1984, "Yesh Atid");
-			e.addCandidateHardCoded("Benjamin Netanyaho", "111113331", false, false, 1980, "Yamina");
-			e.addCandidateHardCoded("Ella Levi ", "121999921", false, false, 1984, "Yamina");
-			e.addCandidateHardCoded("Yossi Benayoun", "111111911", true, false, 1980, "Likud");
-			e.addCandidateHardCoded("Mor Silver", "111113191", false, false, 1945, "Likud");
-			e.addCandidateHardCoded("Itay Hason", "111111199", true, true, 1980, "Yesh Atid");
-			e.addCandidateHardCoded("Yotam Keren", "121993111", false, false, 1984, "Yesh Atid");
-			e.addCandidateHardCoded("Elor Koren", "111993331", false, false, 1980, "Yamina");
-			e.addCandidateHardCoded("Ofri Maane", "199132212", false, false, 1984, "Yamina");
+			systemE.getElections()[currentElectionIndex].addPartyHardCoded("Likud", PoliticalOpinion.RIGHT);
+			systemE.getElections()[currentElectionIndex].addPartyHardCoded("Yesh Atid", PoliticalOpinion.CENTER);
+			systemE.getElections()[currentElectionIndex].addPartyHardCoded("Yamina", PoliticalOpinion.LEFT);
+			systemE.getElections()[currentElectionIndex].addBallotBoxHardCoded("Rishon Le Zion", 2);
+			systemE.getElections()[currentElectionIndex].addBallotBoxHardCoded("Kiryat Ono", 1);
+			systemE.getElections()[currentElectionIndex].addBallotBoxHardCoded("Tel Aviv", 3);
+			systemE.getElections()[currentElectionIndex].addCitizensHadCoded("Adi Himembloi", "332233333", true, true,
+					1993);
+			systemE.getElections()[currentElectionIndex].addCitizensHadCoded("Shlomo Artzi", "342233333", false, true,
+					2002);
+			systemE.getElections()[currentElectionIndex].addCandidateHardCoded("Bar Refaeli", "111111111", true, false,
+					1980, "Likud");
+			systemE.getElections()[currentElectionIndex].addCandidateHardCoded("Gal Gadot", "111113111", false, false,
+					1945, "Likud");
+			systemE.getElections()[currentElectionIndex].addCandidateHardCoded("Galya Micheli", "111111121", true, true,
+					1980, "Yesh Atid");
+			systemE.getElections()[currentElectionIndex].addCandidateHardCoded("Noa Kirel", "121113111", false, false,
+					1984, "Yesh Atid");
+			systemE.getElections()[currentElectionIndex].addCandidateHardCoded("Benjamin Netanyaho", "111113331", false,
+					false, 1980, "Yamina");
+			systemE.getElections()[currentElectionIndex].addCandidateHardCoded("Ella Levi ", "121999921", false, false,
+					1984, "Yamina");
+			systemE.getElections()[currentElectionIndex].addCandidateHardCoded("Yossi Benayoun", "111111911", true,
+					false, 1980, "Likud");
+			systemE.getElections()[currentElectionIndex].addCandidateHardCoded("Mor Silver", "111113191", false, false,
+					1945, "Likud");
+			systemE.getElections()[currentElectionIndex].addCandidateHardCoded("Itay Hason", "111111199", true, true,
+					1980, "Yesh Atid");
+			systemE.getElections()[currentElectionIndex].addCandidateHardCoded("Yotam Keren", "121993111", false, false,
+					1984, "Yesh Atid");
+			systemE.getElections()[currentElectionIndex].addCandidateHardCoded("Elor Koren", "111993331", false, false,
+					1980, "Yamina");
+			systemE.getElections()[currentElectionIndex].addCandidateHardCoded("Ofri Maane", "199132212", false, false,
+					1984, "Yamina");
 		} catch (Exception x) {
 			System.out.println(x.getMessage());
 
 		}
 
 		int choise = menu();
-		while (choise != 10) {
+		while (choise != 11) {
 			switch (choise) {
 			case 1:
 				menuForAddBallotBox();
@@ -183,14 +214,14 @@ public class MainElectionRunner {
 				sc.nextLine();
 				String address = sc.nextLine();
 
-				if (e.addBallotBoxHardCoded(address, choise1))
+				if (systemE.getElections()[currentElectionIndex].addBallotBoxHardCoded(address, choise1))
 					System.out.println("added succsessfully");
 				break;
 			case 2:
 				isValid1 = false;
 				while (!isValid1) {
 					try {
-						if (e.addCitizens(createCitizen()))
+						if (systemE.getElections()[currentElectionIndex].addCitizens(createCitizen()))
 							System.out.println("added succsessfully");
 						isValid1 = true;
 					} catch (Exception x) {
@@ -202,7 +233,7 @@ public class MainElectionRunner {
 				isValid1 = false;
 				while (!isValid1) {
 					try {
-						if (e.addParty(createParty()))
+						if (systemE.getElections()[currentElectionIndex].addParty(createParty()))
 							System.out.println("added succsessfully");
 						isValid1 = true;
 					} catch (Exception x) {
@@ -215,8 +246,9 @@ public class MainElectionRunner {
 				while (!isValid1) {
 					try {
 						System.out.println("choose your party number");
-						e.showPartiesNames();
-						if (e.addCandidate(createCandidate(e.getParties()[sc.nextInt() - 1])))
+						systemE.getElections()[currentElectionIndex].showPartiesNames();
+						if (systemE.getElections()[currentElectionIndex].addCandidate(createCandidate(
+								systemE.getElections()[currentElectionIndex].getParties()[sc.nextInt() - 1])))
 							System.out.println("added succsessfully");
 						isValid1 = true;
 					} catch (Exception x) {
@@ -225,23 +257,32 @@ public class MainElectionRunner {
 				}
 				break;
 			case 5:
-				e.showBallotBoxes();
+				systemE.getElections()[currentElectionIndex].showBallotBoxes();
 				break;
 			case 6:
-				e.showCitizens();
+				systemE.getElections()[currentElectionIndex].showCitizens();
 				break;
 			case 7:
-				e.showParties();
+				systemE.getElections()[currentElectionIndex].showParties();
 				break;
 			case 8:
-				citizensChoose(e);
-				e.electionStart();
+				citizensChoose(systemE.getElections()[currentElectionIndex]);
+				systemE.getElections()[currentElectionIndex].electionStart();
 				break;
 			case 9:
-				e.showResult();
+				systemE.getElections()[currentElectionIndex].showResult();
 				break;
 			case 10:
-				System.out.println("thank you bye.");
+				System.out.println("enter estimate year of next elections");
+				year = sc.nextInt();
+				System.out.println("enter estimate month of next elections");
+				month = sc.nextInt();
+				currentElectionIndex = systemE.getElectionCounter();
+				systemE.createElection(year, month);
+
+				break;
+			case 11:
+				System.out.println("end program");
 				break;
 			default:
 				System.out.println("wrong input ,again");
