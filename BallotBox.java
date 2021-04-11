@@ -3,14 +3,14 @@ package id314022914_id206921777;
 
 public class BallotBox {
 
-	private int serialNumber;
-	private static int serialCounter = 1000;
-	private String address;
-	private Citizen[] citizenInBallotBox;
-	private double votePresentage;
-	private Result[] resultsForThisBallotBox;
-	private int resultCount;
-	private int citizensCount;
+	protected int serialNumber;
+	protected static int serialCounter = 1000;
+	protected String address;
+	protected Citizen[] citizenInBallotBox;
+	protected double votePresentage;
+	protected Result[] resultsForThisBallotBox;
+	protected int resultCount;
+	protected int citizensCount;
 
 	public BallotBox(BallotBox b) {
 		this.serialNumber = b.getSerialnumber();

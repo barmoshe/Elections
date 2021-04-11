@@ -86,7 +86,7 @@ public class Party {
 		int n = candidateCounter;
 		for (int i = 0; i < n - 1; i++)
 			for (int j = 0; j < n - i - 1; j++)
-				if (candidates[j].numOfVotes < candidates[j + 1].numOfVotes) {
+				if (candidates[j].getNumOfVotes() < candidates[j + 1].getNumOfVotes()) {
 					Candidate temp = candidates[j];
 					candidates[j] = candidates[j + 1];
 					candidates[j + 1] = temp;
@@ -118,7 +118,7 @@ public class Party {
 				+ this.numOfVotes + "\n");
 		str.append("the candidates in the party: \n");
 		for (int i = 0; i < this.candidateCounter; i++) {
-			str.append((i + 1) + ") " + this.candidates[i].getName() + ", " + this.candidates[i].numOfVotes
+			str.append((i + 1) + ") " + this.candidates[i].getName() + ", " + this.candidates[i].getNumOfVotes()
 					+ " candidates voted for him/her\n");
 		}
 

@@ -2,8 +2,8 @@ package id314022914_id206921777;
 
 public class Candidate extends Citizen {
 
-	protected Party partyBelong;
-	protected int numOfVotes;
+	private Party partyBelong;
+	private int numOfVotes;
 
 	public Candidate(Citizen c) throws Exception {
 		super(c);
@@ -34,5 +34,13 @@ public class Candidate extends Citizen {
 	public String toString() {
 		return super.toString() + "\nparty: " + this.partyBelong.getName() + "\nnum of votes PRIMERIZ: "
 				+ this.numOfVotes + "\n";
+	}
+
+	public Party getPartyBelong() {
+		return this.partyBelong;
+	}
+
+	public int getNumOfVotes() {
+		return this.numOfVotes;
 	}
 }

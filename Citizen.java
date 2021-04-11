@@ -2,13 +2,13 @@
 package id314022914_id206921777;
 
 public class Citizen {
-	private String name;
-	private String id;
-	private int yearOfBirth;
-	private boolean isQuarentied;
-	private boolean hasMask;
-	private BallotBox ballotbox;
-	private String partyChosen;
+	protected String name;
+	protected String id;
+	protected int yearOfBirth;
+	protected boolean isQuarentied;
+	protected boolean hasMask;
+	protected BallotBox ballotbox;
+	protected String partyChosen;
 
 	public Citizen(String name, String id, boolean isQuarentied, boolean hasMask, int yearOfBirth) throws Exception {
 		this.hasMask = hasMask;

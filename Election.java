@@ -93,7 +93,7 @@ public class Election {
 		}
 	}
 
-	private boolean setVoterToBallotBox(Citizen c) {
+	private boolean setVoterToBallotBox(Citizen c) throws Exception {
 		for (int i = 0; i < this.ballotBoxCounter; i++) {
 			if (c.getIsQuarentied()) {
 				if (this.ballotBoxes[i] instanceof BallotBoxForCovid) {
@@ -117,8 +117,8 @@ public class Election {
 			}
 
 		}
-		System.out.println(" error setVoterToBallotBox ");
-		return false;
+		System.out.println("error svtbb");
+		throw new Exception("error set voter to ballot box");
 	}
 
 	public boolean checkAge(int YearOfBirth) {
@@ -140,6 +140,7 @@ public class Election {
 		}
 		this.copyAndMultiplyVoters();
 		int age = this.yearOfElections - c.getYearOfBirth();
+
 		if (age <= 21)
 			this.citizens[citizenCounter] = new Solider(c);
 		else
@@ -147,6 +148,7 @@ public class Election {
 		this.setVoterToBallotBox(this.citizens[citizenCounter]);
 		this.citizenCounter = this.citizenCounter + 1;
 		return true;
+
 	}
 
 	private void updateCitizen(Citizen c, int i) throws Exception {
@@ -257,12 +259,12 @@ public class Election {
 			return false;
 		int temp = cheakIfCitizenExist(c);
 		if (temp != -1) {
-			replaceCitizenForCandidate(this.citizens[temp], c.partyBelong);
-			c.partyBelong.addCandidate((Candidate) this.citizens[temp]);
+			replaceCitizenForCandidate(this.citizens[temp], c.getPartyBelong());
+			c.getPartyBelong().addCandidate((Candidate) this.citizens[temp]);
 		} else {
 			addCitizens(c);
-			replaceCitizenForCandidate(this.citizens[citizenCounter - 1], c.partyBelong);
-			c.partyBelong.addCandidate((Candidate) this.citizens[citizenCounter - 1]);
+			replaceCitizenForCandidate(this.citizens[citizenCounter - 1], c.getPartyBelong());
+			c.getPartyBelong().addCandidate((Candidate) this.citizens[citizenCounter - 1]);
 		}
 		return true;
 	}

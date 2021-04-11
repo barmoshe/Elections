@@ -2,7 +2,7 @@ package id314022914_id206921777;
 
 public class Result {
 
-	protected int numOfvotes;
+	private int numOfvotes;
 	private String partyName;
 
 	public boolean setPartyName(String partyName) {
