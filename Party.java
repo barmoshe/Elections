@@ -118,7 +118,8 @@ public class Party {
 				+ this.numOfVotes + "\n");
 		str.append("the candidates in the party: \n");
 		for (int i = 0; i < this.candidateCounter; i++) {
-			str.append((i + 1) + ") " + this.candidates[i].getName() + "\n");
+			str.append((i + 1) + ") " + this.candidates[i].getName() + ", " + this.candidates[i].numOfVotes
+					+ " candidates voted for him/her\n");
 		}
 
 		return str.toString();

@@ -130,27 +130,6 @@ public class MainElectionRunner {
 		return c;
 	}
 
-	public static Election[] copyAndMultiplyElections(Election[] elections, int electionCounter) {
-		Election[] temp = null;
-		if (elections.length <= electionCounter) {
-			temp = new Election[elections.length * 2];
-			for (int i = 0; i < elections.length; i++) {
-				temp[i] = elections[i];
-
-			}
-			return temp;
-		} else
-			return elections;
-
-	}
-
-	public static void resetElections(Election[] elections, Election currentElection, int electionCounter) {
-
-		System.out.println("reset elections \n.\n.\n.\n.");
-		elections = copyAndMultiplyElections(elections, electionCounter);
-		elections[electionCounter] = currentElection;
-	}
-
 	public static void main(String[] args) {
 		ElectionsSystem systemE = new ElectionsSystem();
 		Scanner sc = new Scanner(System.in);
@@ -185,7 +164,7 @@ public class MainElectionRunner {
 					1984, "Yesh Atid");
 			systemE.getElections()[currentElectionIndex].addCandidateHardCoded("Benjamin Netanyaho", "111113331", false,
 					false, 1980, "Yamina");
-			systemE.getElections()[currentElectionIndex].addCandidateHardCoded("Ella Levi ", "121999921", false, false,
+			systemE.getElections()[currentElectionIndex].addCandidateHardCoded("Ella Levi", "121999921", false, false,
 					1984, "Yamina");
 			systemE.getElections()[currentElectionIndex].addCandidateHardCoded("Yossi Benayoun", "111111911", true,
 					false, 1980, "Likud");
