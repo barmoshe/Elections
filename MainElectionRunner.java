@@ -48,7 +48,7 @@ public class MainElectionRunner {
 			e.addCandidateHardCoded("Galya Micheli", "111111121", true, true, 1980, "Yesh Atid");
 			e.addCandidateHardCoded("Noa Kirel", "121113111", false, false, 1984, "Yesh Atid");
 			e.addCandidateHardCoded("Benjamin Netanyaho", "111113331", false, false, 1980, "Yamina");
-			e.addCandidateHardCoded("Ella Levi", "121999921", false, false, 1984, "Yamina");
+			e.addCandidateHardCoded("yossi Levi", "121999921", false, false, 1984, "Yamina");
 			e.addCandidateHardCoded("Yossi Benayoun", "111111911", true, false, 1980, "Likud");
 			e.addCandidateHardCoded("Mor Silver", "111113191", false, false, 1945, "Likud");
 			e.addCandidateHardCoded("Itay Hason", "111111199", true, true, 1980, "Yesh Atid");
