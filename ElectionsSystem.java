@@ -1,7 +1,5 @@
 package id314022914_id206921777;
 
-import java.util.Arrays;
-
 public class ElectionsSystem {
 
 	private Election[] elections;
@@ -30,15 +28,14 @@ public class ElectionsSystem {
 		return electionCounter;
 	}
 
-	public boolean createElection(int year, int month) {
+	public void createElection(int year, int month) throws Exception {
 		copyAndMultiplyBallotBox();
 		try {
 			this.elections[this.electionCounter] = new Election(year, month);
 		} catch (Exception e) {
-			e.getMessage();
+			throw e;
 		}
 		this.electionCounter++;
-		return true;
 	}
 
 	public void setElectionCounter(int electionCounter) {

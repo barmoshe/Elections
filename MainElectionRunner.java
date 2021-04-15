@@ -160,16 +160,23 @@ public class MainElectionRunner {
 	}
 
 	public static void main(String[] args) {
+		int year, month;
 		ElectionsSystem systemE = new ElectionsSystem();
 		Scanner sc = new Scanner(System.in);
 		int currentElectionIndex = 0;
 		boolean isValid1 = false;
-
-		System.out.println("enter year for elections");
-		int year = sc.nextInt();
-		System.out.println("enter month for elections");
-		int month = sc.nextInt();
-		systemE.createElection(year, month);
+		while (!isValid1) {
+			System.out.println("enter year for elections");
+			year = sc.nextInt();
+			System.out.println("enter month for elections");
+			month = sc.nextInt();
+			try {
+				systemE.createElection(year, month);
+				isValid1 = true;
+			} catch (Exception ex) {
+				System.out.println(ex.getMessage());
+			}
+		}
 		isValid1 = true;
 		addHardCoded(systemE.getElections()[currentElectionIndex]);
 		int choise = menu();
@@ -249,7 +256,19 @@ public class MainElectionRunner {
 				System.out.println("enter estimate month of next elections");
 				month = sc.nextInt();
 				currentElectionIndex = systemE.getElectionCounter();
-				systemE.createElection(year, month);
+				isValid1 = false;
+				while (!isValid1) {
+					System.out.println("enter year for elections");
+					year = sc.nextInt();
+					System.out.println("enter month for elections");
+					month = sc.nextInt();
+					try {
+						systemE.createElection(year, month);
+						isValid1 = true;
+					} catch (Exception ex) {
+						ex.getMessage();
+					}
+				}
 				addHardCoded(systemE.getElections()[currentElectionIndex]);
 
 				break;
