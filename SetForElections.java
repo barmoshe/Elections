@@ -29,8 +29,8 @@ public class SetForElections<T extends Citizen> {
 			}
 			System.out.println("already exist");
 			return false;
-		}
-		throw new Exception("wrong object type");
+		} else
+			throw new Exception("wrong object type");
 	}
 
 	private int exist(T t) {
