@@ -45,4 +45,9 @@ public class SetForElections<T> {
 	public int getCurrentSize() {
 		return this.currentSize;
 	}
+
+	public int getCapacitiySize() {
+		return this.set.length;
+
+	}
 }
