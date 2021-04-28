@@ -19,9 +19,9 @@ public class SetForElections<T> {
 		}
 	}
 
-	public boolean add(T t) {
+	public boolean add(T t) throws Exception {
 		enlargeArray();
-		if (!(this.exist(t))) {
+		if (exist(t) == -1) {
 			this.set[this.currentSize] = t;
 			this.currentSize++;
 			return true;
