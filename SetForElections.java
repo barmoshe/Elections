@@ -30,12 +30,12 @@ public class SetForElections<T> {
 		return false;
 	}
 
-	private boolean exist(T t) {
+	private int exist(T t) {
 		for (int i = 0; i < this.currentSize; i++) {
 			if (t.equals(this.set[i]))
-				return true;
+				return i;
 		}
-		return false;
+		return -1;
 	}
 
 	public T get(int index) {
