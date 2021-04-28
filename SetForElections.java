@@ -1,6 +1,6 @@
 package id314022914_id206921777;
 
-public class SetForElections<T> {
+public class SetForElections<T extends Citizen> {
 	private final int ENLARGE_FACTOR = 2;
 	private T[] set;
 	private int currentSize;
@@ -20,14 +20,17 @@ public class SetForElections<T> {
 	}
 
 	public boolean add(T t) throws Exception {
-		enlargeArray();
-		if (exist(t) == -1) {
-			this.set[this.currentSize] = t;
-			this.currentSize++;
-			return true;
+		if (!(t instanceof Citizen)) {
+			enlargeArray();
+			if (exist(t) == -1) {
+				this.set[this.currentSize] = t;
+				this.currentSize++;
+				return true;
+			}
+			System.out.println("already exist");
+			return false;
 		}
-		System.out.println("already exist");
-		return false;
+		throw new Exception("wrong object type");
 	}
 
 	private int exist(T t) {
