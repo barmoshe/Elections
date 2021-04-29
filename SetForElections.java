@@ -1,6 +1,8 @@
 package id314022914_id206921777;
 
-public class SetForElections<T extends Citizen> {
+import java.util.Arrays;
+
+public class SetForElections<T> {
 	private final int ENLARGE_FACTOR = 2;
 	private T[] set;
 	private int currentSize;
@@ -20,7 +22,7 @@ public class SetForElections<T extends Citizen> {
 	}
 
 	public boolean add(T t) throws Exception {
-		if (!(t instanceof Citizen)) {
+		if (t instanceof Citizen) {
 			enlargeArray();
 			if (exist(t) == -1) {
 				this.set[this.currentSize] = t;
@@ -33,7 +35,15 @@ public class SetForElections<T extends Citizen> {
 			throw new Exception("wrong object type");
 	}
 
-	private int exist(T t) {
+	public void replace(int index, T t) throws Exception {
+		if (t instanceof Citizen)
+			this.set[index] = t;
+		else
+			throw new Exception("wrong object type");
+
+	}
+
+	public int exist(T t) {
 		for (int i = 0; i < this.currentSize; i++) {
 			if (t.equals(this.set[i]))
 				return i;
@@ -49,8 +59,26 @@ public class SetForElections<T extends Citizen> {
 		return this.currentSize;
 	}
 
-	public int getCapacitiySize() {
+	public int getCurrentCapacitiySize() {
 		return this.set.length;
 
 	}
+
+	public int existById(String id) {
+		for (int i = 0; i < this.currentSize; i++) {
+			if (((Citizen) this.set[i]).getId() == id)
+				return i;
+		}
+		return -1;
+	}
+
+	@Override
+	public String toString() {
+		StringBuffer str = new StringBuffer("The citizens are :  " + ": \n" + "\n");
+		for (int i = 0; i < this.currentSize; i++) {
+			str.append("________-" + (i + 1) + "-________\n" + this.set[i].toString() + "\n\n");
+		}
+		return str.toString();
+	}
+
 }

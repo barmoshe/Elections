@@ -106,7 +106,7 @@ public class MainElectionRunner {
 	private static void citizensChoose(Election e) {
 		Scanner sc = new Scanner(System.in);
 		for (int i = 0; i < e.getCitizenCounter(); i++) {
-			System.out.println("Dear " + e.getCitizens()[i].getName()
+			System.out.println("Dear " + e.getCitizens().get(i).getName()
 					+ " choose your vote number.\nIf you do not want to vote please enter 0");
 			e.showPartiesNames();
 			int select = sc.nextInt() - 1;
@@ -115,17 +115,17 @@ public class MainElectionRunner {
 				while (!isValid) {
 					try {
 
-						if (!(e.getCitizens()[i].getBallotbox() instanceof BallotBoxForCovid))
-							e.getCitizens()[i].setPartyChosen(e.getParties()[select].getName());
-						else if (e.getCitizens()[i].getHasMask()) {
-							e.getCitizens()[i].setPartyChosen(e.getParties()[select].getName());
+						if (!(e.getCitizens().get(i).getBallotbox() instanceof BallotBoxForCovid))
+							e.getCitizens().get(i).setPartyChosen(e.getParties()[select].getName());
+						else if (e.getCitizens().get(i).getHasMask()) {
+							e.getCitizens().get(i).setPartyChosen(e.getParties()[select].getName());
 							System.out.println("can't vote without mask");
 
 						}
 						isValid = true;
 					} catch (Exception y) {
 						System.out.println("enter choise again! ");
-						System.out.println("Dear " + e.getCitizens()[i].getName()
+						System.out.println("Dear " + e.getCitizens().get(i).getName()
 								+ " choose your vote number.\nIf you do not want to vote please enter 0");
 
 						select = sc.nextInt() - 1;

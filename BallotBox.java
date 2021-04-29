@@ -162,4 +162,8 @@ public class BallotBox {
 		return this.serialNumber;
 	}
 
+	public void replace(Citizen tempC, Citizen citizen) {
+		
+	}
+
 }
