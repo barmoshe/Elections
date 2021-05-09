@@ -1,11 +1,13 @@
 package id314022914_id206921777;
 
+import java.util.ArrayList;
+
 public class Election {
 	private int yearOfElections;
 	private int monthOfElections;
 	private SetForElections<Citizen> citizens;
-	private Party[] parties;
-	private BallotBox[] ballotBoxes;
+	private ArrayList<Party> parties;
+	private ArrayList<BallotBox> ballotBoxes;
 	private int citizenCounter;
 	private int partyCounter;
 	private int ballotBoxCounter;
@@ -14,8 +16,8 @@ public class Election {
 		setMonthOfElections(monthOfElections);
 		setYearOfElections(yearOfElections);
 		this.citizens = new SetForElections<Citizen>();
-		this.parties = new Party[5];
-		this.ballotBoxes = new BallotBox[5];
+		this.parties = new ArrayList<Party>();
+		this.ballotBoxes = new ArrayList<BallotBox>();
 		this.citizenCounter = 0;
 		this.partyCounter = 0;
 		this.ballotBoxCounter = 0;
@@ -34,11 +36,11 @@ public class Election {
 		return citizens;
 	}
 
-	public Party[] getParties() {
+	public ArrayList<Party> getParties() {
 		return parties;
 	}
 
-	public BallotBox[] getBallotBoxes() {
+	public ArrayList<BallotBox> getBallotBoxes() {
 		return ballotBoxes;
 	}
 
@@ -85,23 +87,29 @@ public class Election {
 
 	private boolean setVoterToBallotBox(Citizen c) throws Exception {
 		for (int i = 0; i < this.ballotBoxCounter; i++) {
-			if (c.getIsQuarentied()) {
-				if (this.ballotBoxes[i] instanceof BallotBoxForCovid) {
-					this.ballotBoxes[i].addCitizen(c);
-					c.setBallotBox(ballotBoxes[i]);
+			if (c.isQuarentied()) {
+				if (c instanceof Solider) {
+					if (this.ballotBoxes.get(i).getType() == BallotType.FOR_SICK_SOLIDERS) {
+						this.ballotBoxes.get(i).addCitizen(c);
+						c.setBallotBox(ballotBoxes.get(i));
+						return true;
+					}
+				} else if (this.ballotBoxes.get(i).getType() == BallotType.FOR_SICK) {
+					this.ballotBoxes.get(i).addCitizen(c);
+					c.setBallotBox(ballotBoxes.get(i));
 					return true;
 				}
+
 			} else if (c instanceof Solider) {
-				if (!(this.ballotBoxes[i] instanceof BallotBoxForCovid)) {
-					this.ballotBoxes[i].addCitizen(c);
-					c.setBallotBox(ballotBoxes[i]);
+				if (this.ballotBoxes.get(i).getType() == BallotType.FOR_SOLIDERS) {
+					this.ballotBoxes.get(i).addCitizen(c);
+					c.setBallotBox(ballotBoxes.get(i));
 					return true;
 				}
 			} else if (c instanceof Citizen) {
-				if ((!(this.ballotBoxes[i] instanceof BallotBoxForCovid))
-						&& (!(this.ballotBoxes[i] instanceof BallotBoxForSoliders))) {
-					this.ballotBoxes[i].addCitizen(c);
-					c.setBallotBox(ballotBoxes[i]);
+				if (this.ballotBoxes.get(i).getType() == BallotType.REGULAR) {
+					this.ballotBoxes.get(i).addCitizen(c);
+					c.setBallotBox(ballotBoxes.get(i));
 					return true;
 				}
 			}
@@ -130,7 +138,7 @@ public class Election {
 			return true;
 		}
 		if (age <= 21) {
-			Solider temp = new Solider(c);
+			Solider temp = new Solider(c, false);
 			this.citizens.add(temp);
 		} else {
 			temp1 = new Citizen(c);
@@ -149,32 +157,16 @@ public class Election {
 	}
 
 	public boolean cheakIfPartyExist(Party p) {
-		for (int i = 0; i < this.partyCounter; i++) {
-			if (this.parties[i].equals(p)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public void copyAndMultiplyParties() {
-		if (this.parties[this.parties.length - 1] != null) {
-			Party[] temp = new Party[this.parties.length * 2];
-			for (int i = 0; i < this.parties.length; i++) {
-				temp[i] = this.parties[i];
-			}
-			this.parties = temp;
-		}
+		return this.parties.contains(p);
 	}
 
 	public boolean addParty(Party p) throws Exception {
 		if (cheakIfPartyExist(p))
 			return false;
-		copyAndMultiplyParties();
-		this.parties[partyCounter] = new Party(p);
+		this.parties.add(p);
 		for (int i = 0; i < this.ballotBoxCounter; i++) {
-			BallotBox current = this.ballotBoxes[i];
-			current.addToResult(p.getName());// *
+			BallotBox current = this.ballotBoxes.get(i);
+			current.addToResult(p.getName());
 		}
 		this.partyCounter = this.partyCounter + 1;
 		return true;
@@ -185,52 +177,16 @@ public class Election {
 		this.addParty(p);
 	}
 
-	public void copyAndMultiplyBallotBox() {
-		if (this.ballotBoxes[this.ballotBoxes.length - 1] != null) {
-			BallotBox[] temp = new BallotBox[this.ballotBoxes.length * 2];
-			for (int i = 0; i < this.ballotBoxes.length; i++) {
-				temp[i] = this.ballotBoxes[i];
-			}
-			this.ballotBoxes = temp;
-		}
-	}
+	public boolean addBallotBox(String address, BallotType bType) throws Exception {
+		BallotBox b = new BallotBox(address, bType);
 
-	public boolean addBallotBox(BallotBox b, int choise) {
-		copyAndMultiplyBallotBox();
-		switch (choise) {
-		case 1:
-			this.ballotBoxes[ballotBoxCounter] = new BallotBox(b);
-			break;
-		case 2:
-			this.ballotBoxes[ballotBoxCounter] = new BallotBoxForSoliders(b);
-			break;
-		case 3:
-			this.ballotBoxes[ballotBoxCounter] = new BallotBoxForCovid(b);
-			break;
-		default:
-			System.out.println("ok bye");
-			return false;
-		}
 		for (int i = 0; i < this.partyCounter; i++) {
-			String current = this.parties[i].getName();
-			this.ballotBoxes[ballotBoxCounter].addToResult(current);// *
+			String current = this.parties.get(i).getName();
+			b.addToResult(current);
 		}
+		this.ballotBoxes.add(b);
 		this.ballotBoxCounter = this.ballotBoxCounter + 1;
 		return true;
-
-	}
-
-	public boolean addBallotBoxHardCoded(String address, int choise) {
-		BallotBox b = new BallotBox(address);
-		return addBallotBox(b, choise);
-	}
-
-	private void replaceCitizenForCandidate(int index, Candidate c) throws Exception {
-		Citizen tempC = citizens.get(index);
-		citizens.replace(index, c);
-		citizens.get(index).setBallotBox(tempC.ballotbox);
-		tempC.ballotbox.replace(tempC, citizens.get(index));
-
 	}
 
 	public boolean addCandidate(Candidate c) throws Exception {
@@ -239,13 +195,15 @@ public class Election {
 		int temp = citizens.existById(c.getId());
 		if (temp != -1) {
 			c.setBallotBox(citizens.get(temp).ballotbox);
+			c.ballotbox.replace(citizens.get(temp), c);
 			citizens.replace(temp, c);
-			c.getPartyBelong().addCandidate((Candidate) this.citizens.get(temp));
+
+			((Candidate) citizens.get(temp)).getPartyBelong().addCandidate((Candidate) this.citizens.get(temp));
 		} else {
 			addCitizens(c);
-			c.setBallotBox(citizens.get(citizenCounter - 1).ballotbox);
+			c.setBallotBox(citizens.get(this.citizenCounter - 1).ballotbox);
+			c.ballotbox.replace(citizens.get(citizenCounter - 1), c);
 			citizens.replace(citizenCounter - 1, c);
-			c.getPartyBelong().addCandidate((Candidate) this.citizens.get(citizenCounter - 1));
 		}
 		return true;
 	}
@@ -254,24 +212,25 @@ public class Election {
 			String partyname) throws Exception {
 		Party p = null;
 		for (int i = 0; i < this.partyCounter; i++) {
-			if (this.parties[i].getName() == partyname)
-				p = this.parties[i];
+			if (this.parties.get(i).getName() == partyname) {
+				p = this.parties.get(i);
+				break;
+			}
 		}
-
 		Candidate c = new Candidate(name, id, isQuarentied, hasMask, yearOfBirth, p);
 		this.addCandidate(c);
 	}
 
 	public void showParties() {
 		for (int i = 0; i < this.partyCounter; i++) {
-			System.out.println("Party" + (i + 1) + " " + parties[i].toString());
+			System.out.println("Party" + (i + 1) + " " + parties.get(i).toString());
 
 		}
 	}
 
 	public void showPartiesNames() {
 		for (int i = 0; i < this.partyCounter; i++) {
-			System.out.println("Party number " + (i + 1) + "- " + parties[i].getName());
+			System.out.println("Party number " + (i + 1) + "- " + parties.get(i).getName());
 
 		}
 	}
@@ -283,13 +242,13 @@ public class Election {
 
 	public void showBallotBoxes() {
 		for (int i = 0; i < ballotBoxCounter; i++) {
-			System.out.println((i + 1) + ") " + ballotBoxes[i].toString() + "\n");
+			System.out.println((i + 1) + ") " + ballotBoxes.get(i).toString() + "\n");
 		}
 	}
 
 	public void calculateResultInEachBallotbox() {
 		for (int i = 0; i < this.ballotBoxCounter; i++) {// calculate result in each ballotbox
-			this.ballotBoxes[i].voteResultsAndPercentage();
+			this.ballotBoxes.get(i).voteResultsAndPercentage();
 		}
 	}
 
@@ -298,26 +257,26 @@ public class Election {
 			int temp = 0;
 			for (int i = 0; i < this.ballotBoxCounter; i++) {
 
-				temp = temp + this.ballotBoxes[i].getResultForParty(this.parties[j].getName());
+				temp = temp + this.ballotBoxes.get(i).getResultForParty(this.parties.get(j).getName());
 			}
-			this.parties[j].setNumOfVotes(temp);
+			this.parties.get(j).setNumOfVotes(temp);
 		}
 	}
 
 	public void showResult() {
 
 		for (int i = 0; i < this.ballotBoxCounter; i++) {
-			this.ballotBoxes[i].showResult();
+			this.ballotBoxes.get(i).showResult();
 		}
 		System.out.println();
 		for (int i = 0; i < this.partyCounter; i++) {
-			System.out.println(this.parties[i].getName() + ":  " + this.parties[i].getNumOfVotes());
+			System.out.println(this.parties.get(i).getName() + ":  " + this.parties.get(i).getNumOfVotes());
 		}
 	}
 
 	public void electionStart() {
 		for (int i = 0; i < this.partyCounter; i++) {// prime Election For Party
-			this.parties[i].primeElectionForParty();
+			this.parties.get(i).primeElectionForParty();
 		}
 		this.calculateResultInEachBallotbox();
 		this.calculateResultInEachparty();
@@ -334,11 +293,11 @@ public class Election {
 		}
 		str.append("The parties: " + "\n");
 		for (int i = 0; i < this.partyCounter; i++) {
-			str.append((i + 1) + ") " + this.parties[i].toString() + "\n");
+			str.append((i + 1) + ") " + this.parties.get(i).toString() + "\n");
 		}
 		str.append("The ballotboxes: " + "\n");
 		for (int i = 0; i < this.ballotBoxCounter; i++) {
-			str.append((i + 1) + ") " + this.ballotBoxes[i].toString() + "\n");
+			str.append((i + 1) + ") " + this.ballotBoxes.get(i).toString() + "\n");
 		}
 		return str.toString();
 

@@ -1,5 +1,4 @@
 package id314022914_id206921777;
-
 import java.util.Scanner;
 
 public class MainElectionRunner {
@@ -38,11 +37,13 @@ public class MainElectionRunner {
 			e.addPartyHardCoded("Likud", PoliticalOpinion.RIGHT);
 			e.addPartyHardCoded("Yesh Atid", PoliticalOpinion.CENTER);
 			e.addPartyHardCoded("Yamina", PoliticalOpinion.LEFT);
-			e.addBallotBoxHardCoded("Rishon Le Zion", 2);
-			e.addBallotBoxHardCoded("Kiryat Ono", 1);
-			e.addBallotBoxHardCoded("Tel Aviv", 3);
+			e.addBallotBox("Rishon Le Zion", BallotType.FOR_SOLIDERS);
+			e.addBallotBox("jaffa", BallotType.REGULAR);
+			e.addBallotBox("Kiryat Ono", BallotType.FOR_SICK);
+			e.addBallotBox("Tel Aviv", BallotType.FOR_SICK_SOLIDERS);
 			e.addCitizensHadCoded("Adi Himembloi", "332233333", true, true, 1993);
 			e.addCitizensHadCoded("Shlomo Artzi", "342233333", false, true, 2002);
+			e.addCitizensHadCoded("Shlomi Shabat", "344443333", true, true, 2002);
 			e.addCandidateHardCoded("Bar Refaeli", "111111111", true, false, 1980, "Likud");
 			e.addCandidateHardCoded("Gal Gadot", "111113111", false, false, 1945, "Likud");
 			e.addCandidateHardCoded("Galya Micheli", "111111121", true, true, 1980, "Yesh Atid");
@@ -114,11 +115,11 @@ public class MainElectionRunner {
 				boolean isValid = false;
 				while (!isValid) {
 					try {
-
-						if (!(e.getCitizens().get(i).getBallotbox() instanceof BallotBoxForCovid))
-							e.getCitizens().get(i).setPartyChosen(e.getParties()[select].getName());
-						else if (e.getCitizens().get(i).getHasMask()) {
-							e.getCitizens().get(i).setPartyChosen(e.getParties()[select].getName());
+						BallotType tempT = e.getCitizens().get(i).getBallotbox().getType();
+						if ((tempT != BallotType.FOR_SICK) && (tempT != BallotType.FOR_SICK_SOLIDERS))
+							e.getCitizens().get(i).setPartyChosen(e.getParties().get(select).getName());
+						else if (e.getCitizens().get(i).hasMask()) {
+							e.getCitizens().get(i).setPartyChosen(e.getParties().get(select).getName());
 							System.out.println("can't vote without mask");
 
 						}
@@ -183,14 +184,21 @@ public class MainElectionRunner {
 		while (choise != 11) {
 			switch (choise) {
 			case 1:
-				menuForAddBallotBox();
-				int choise1 = sc.nextInt();
 				System.out.println("enter address");
 				sc.nextLine();
 				String address = sc.nextLine();
+				BallotType[] types = BallotType.values();
+				for (int i = 0; i < types.length; i++) {
+					System.out.println((types[i].ordinal() + 1) + ") " + types[i].name());
+				}
+				System.out.println("enter number of type from the menu above:");
 
-				if (systemE.getElections()[currentElectionIndex].addBallotBoxHardCoded(address, choise1))
-					System.out.println("added succsessfully");
+				try {
+					if (systemE.getElections()[currentElectionIndex].addBallotBox(address, types[sc.nextInt() - 1]))
+						System.out.println("added succsessfully");
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
 				break;
 			case 2:
 				isValid1 = false;
@@ -224,7 +232,7 @@ public class MainElectionRunner {
 							System.out.println("choose your party number");
 							systemE.getElections()[currentElectionIndex].showPartiesNames();
 							if (systemE.getElections()[currentElectionIndex].addCandidate(createCandidate(
-									systemE.getElections()[currentElectionIndex].getParties()[sc.nextInt() - 1])))
+									systemE.getElections()[currentElectionIndex].getParties().get(sc.nextInt() - 1))))
 								System.out.println("added succsessfully");
 							isValid1 = true;
 						} catch (Exception x) {
@@ -251,10 +259,6 @@ public class MainElectionRunner {
 				systemE.getElections()[currentElectionIndex].showResult();
 				break;
 			case 10:
-				System.out.println("enter estimate year of next elections");
-				year = sc.nextInt();
-				System.out.println("enter estimate month of next elections");
-				month = sc.nextInt();
 				currentElectionIndex = systemE.getElectionCounter();
 				isValid1 = false;
 				while (!isValid1) {

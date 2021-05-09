@@ -1,16 +1,18 @@
 
 package id314022914_id206921777;
 
-public class BallotBox {
+import java.util.ArrayList;
 
-	protected int serialNumber;
-	protected static int serialCounter = 1000;
-	protected String address;
-	protected Citizen[] citizenInBallotBox;
-	protected double votePresentage;
-	protected Result[] resultsForThisBallotBox;
-	protected int resultCount;
-	protected int citizensCount;
+public class BallotBox {
+	private BallotType ballotType;
+	private int serialNumber;
+	private static int serialCounter = 1000;
+	private String address;
+	private SetForElections<Citizen> citizenInBallotBox;
+	private double votePresentage;
+	private ArrayList<Result> resultsForThisBallotBox;
+	private int resultCount;
+	private int citizensCount;
 
 	public BallotBox(BallotBox b) {
 		this.serialNumber = b.getSerialnumber();
@@ -22,14 +24,15 @@ public class BallotBox {
 		this.citizensCount = 0;
 	}
 
-	public BallotBox(String address) {
+	public BallotBox(String address, BallotType ballotType) {
 		this.serialNumber = serialCounter++;
 		this.address = address;
-		this.citizenInBallotBox = new Citizen[5];
+		this.citizenInBallotBox = new SetForElections<Citizen>();
 		this.votePresentage = 0;
-		this.resultsForThisBallotBox = new Result[5];
+		this.resultsForThisBallotBox = new ArrayList<Result>();
 		this.resultCount = 0;
 		this.citizensCount = 0;
+		this.ballotType = ballotType;
 	}
 
 	public BallotBox() {
@@ -37,50 +40,33 @@ public class BallotBox {
 		this.address = null;
 	}
 
-	public void copyAndMultiplyCitizens() {
-		if (citizenInBallotBox[citizenInBallotBox.length - 1] != null) {
-			Citizen[] temp = new Citizen[this.citizenInBallotBox.length * 2];
-			for (int i = 0; i < this.citizenInBallotBox.length; i++) {
-				temp[i] = this.citizenInBallotBox[i];
-			}
-			this.citizenInBallotBox = temp;
-		}
+	public BallotBox(BallotBox b, BallotType bType) {
+
 	}
 
 	public int cheakIfCitizenExist(Citizen c) {
-		for (int i = 0; i < this.citizensCount; i++) {
-			if (this.citizenInBallotBox[i].equals(c)) {
-				return i;
-			}
-		}
-		return -1;
+		return this.citizenInBallotBox.exist(c);
+
 	}
 
-	public void addCitizen(Citizen c) {
-		copyAndMultiplyCitizens();
-		if (cheakIfCitizenExist(c) != -1) {
-			citizenInBallotBox[cheakIfCitizenExist(c)] = c;
+	public BallotType getType() {
+		return this.ballotType;
+	}
+
+	public void addCitizen(Citizen c) throws Exception {
+		int index = cheakIfCitizenExist(c);
+		if (index != -1) {
+			citizenInBallotBox.replace(index, c);
 		} else {
-			citizenInBallotBox[citizensCount] = c;
+			citizenInBallotBox.add(c);
 			this.citizensCount = this.citizensCount + 1;
 		}
 
 	}
 
-	public void copyAndMultiplyResult() {
-		if (resultsForThisBallotBox[resultsForThisBallotBox.length - 1] != null) {
-			Result[] temp = new Result[this.resultsForThisBallotBox.length * 2];
-			for (int i = 0; i < resultCount; i++) {
-				temp[i] = this.resultsForThisBallotBox[i];
-			}
-			this.resultsForThisBallotBox = temp;
-			System.out.println("the arry is doubled");
-		}
-	}
-
 	public boolean cheakIfresultExist(Result r) {
 		for (int i = 0; i < this.resultCount; i++) {
-			if (this.resultsForThisBallotBox[i].equals(r)) {
+			if (this.resultsForThisBallotBox.get(i).equals(r)) {
 				System.out.println("exist");// *
 				return true;
 			}
@@ -89,24 +75,27 @@ public class BallotBox {
 	}
 
 	public void addToResult(String name) {
-		copyAndMultiplyResult();
 		Result r = new Result(name);
 		if (cheakIfresultExist(r))
 			return;
-		resultsForThisBallotBox[resultCount] = r;
+		resultsForThisBallotBox.add(r);
 		this.resultCount = this.resultCount + 1;
 	}
 
 	public double voteResultsAndPercentage() {// returns percentage of votes and calculate votes for each party
 		int nonVotersAmount = 0;
 		for (int i = 0; i < this.citizensCount; i++) {
-			if (citizenInBallotBox[i].getPartyChosen() == null)
+			Citizen current = citizenInBallotBox.get(i);
+			if (current.getPartyChosen() == null)
 				nonVotersAmount++;
 			else
 				for (int j = 0; j < resultCount; j++) {
-					if (citizenInBallotBox[i].getPartyChosen() == resultsForThisBallotBox[j].getPartyName())
-						resultsForThisBallotBox[j].addVote();
+					if (current.getPartyChosen().equals(resultsForThisBallotBox.get(j).getPartyName())) {
+						resultsForThisBallotBox.get(j).addVote();
+						
+					}
 				}
+
 		}
 		if (this.citizensCount > 0)
 			return ((double) (this.citizensCount - nonVotersAmount) / this.citizensCount) * 100;
@@ -115,9 +104,9 @@ public class BallotBox {
 	}
 
 	public int getResultForParty(String name) {
-		for (int i = 0; i < resultsForThisBallotBox.length; i++) {
-			if (name == resultsForThisBallotBox[i].getPartyName())
-				return resultsForThisBallotBox[i].getNumOfvotes();
+		for (int i = 0; i < this.resultCount; i++) {
+			if (name == resultsForThisBallotBox.get(i).getPartyName())
+				return resultsForThisBallotBox.get(i).getNumOfvotes();
 		}
 		return 0;
 	}
@@ -125,7 +114,7 @@ public class BallotBox {
 	public void showResult() {
 		System.out.println("________#" + this.serialNumber + "#________");
 		for (int i = 0; i < resultCount; i++) {
-			resultsForThisBallotBox[i].showResult();
+			resultsForThisBallotBox.get(i).showResult();
 		}
 		System.out.println("vote precentage: " + voteResultsAndPercentage() + "\n");
 	}
@@ -133,15 +122,15 @@ public class BallotBox {
 	@Override
 	public String toString() {
 		StringBuffer str = new StringBuffer(this.getClass().getSimpleName() + " #" + this.serialNumber + " info:" + "\n"
-				+ "location: " + this.address + "\n\n");
+				+ "location: " + this.address + "\n ballot type : " + this.ballotType.toString() + "\n\n");
 		str.append("the citizens in the ballotbox: \n");
 		for (int i = 0; i < this.citizensCount; i++) {
-			str.append((i + 1) + ") " + this.citizenInBallotBox[i].getName() + "\n");
+			str.append((i + 1) + ") " + this.citizenInBallotBox.get(i).getName() + "\n");
 		}
 
 		str.append("\nvote precentage: " + this.votePresentage + "\n" + "\nresults in this ballotbox: \n");
 		for (int i = 0; i < this.resultCount; i++) {
-			str.append(resultsForThisBallotBox[i].toString());// *
+			str.append(resultsForThisBallotBox.get(i).toString());// *
 		}
 		return str.toString();
 
@@ -162,8 +151,9 @@ public class BallotBox {
 		return this.serialNumber;
 	}
 
-	public void replace(Citizen tempC, Citizen citizen) {
-		
+	public void replace(Citizen tempC, Candidate c) throws Exception {
+		String currentId = tempC.getId();
+		this.citizenInBallotBox.replace(this.citizenInBallotBox.existById(currentId), c);
 	}
 
 }
