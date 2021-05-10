@@ -1,12 +1,14 @@
 package id314022914_id206921777;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Party {
 	private String name;
 	private PoliticalOpinion PoliticalOpinion;
 	private LocalDate dateOfEstablishment;
-	private Candidate[] candidates;
+	private ArrayList<Candidate> candidates;
 	private int candidateCounter;
 	private int numOfVotes;
 
@@ -14,9 +16,9 @@ public class Party {
 		setName(p.getName());
 		this.PoliticalOpinion = p.PoliticalOpinion;
 		this.dateOfEstablishment = p.dateOfEstablishment;
-		this.candidates = new Candidate[p.candidates.length];
+		this.candidates = new ArrayList<Candidate>();
 		for (int i = 0; i < candidateCounter; i++) {
-			this.candidates[i] = new Candidate(p.candidates[i]);
+			this.candidates.add(new Candidate(p.candidates.get(i)));
 		}
 		this.candidateCounter = p.candidateCounter;
 		this.numOfVotes = p.numOfVotes;
@@ -26,7 +28,7 @@ public class Party {
 		setName(name);
 		PoliticalOpinion = politicalOpinion;
 		this.dateOfEstablishment = LocalDate.now();
-		this.candidates = new Candidate[5];
+		this.candidates = new ArrayList<Candidate>();
 		this.candidateCounter = 0;
 		this.numOfVotes = 0;
 	}
@@ -45,19 +47,9 @@ public class Party {
 		return true;
 	}
 
-	public void copyAndMultiplyCandidate() {
-		if (candidates[candidates.length - 1] != null) {
-			Candidate[] temp = new Candidate[this.candidates.length * 2];
-			for (int i = 0; i < this.candidates.length; i++) {
-				temp[i] = this.candidates[i];
-			}
-			this.candidates = temp;
-		}
-	}
-
 	public boolean cheakIfCandidateExist(Candidate c) {
 		for (int i = 0; i < this.candidateCounter; i++) {
-			if (this.candidates[i].equals(c)) {
+			if (this.candidates.get(i).equals(c)) {
 				return true;
 			}
 		}
@@ -65,11 +57,11 @@ public class Party {
 	}
 
 	public void addCandidate(Candidate c) {
-		copyAndMultiplyCandidate();
 		if (cheakIfCandidateExist(c))
 			return;
-		this.candidates[candidateCounter] = c;
+		this.candidates.add(c);
 		this.candidateCounter = this.candidateCounter + 1;
+		this.primeElectionForParty();
 	}
 
 	public void primeElectionForParty() {
@@ -77,21 +69,10 @@ public class Party {
 		int numberOfVotesForCand = 0;
 		for (int i = 0; i < candidateCounter; i++) {
 			numberOfVotesForCand = (int) (Math.random() * (candidateCounter - numberOfVotesForCand));
-			candidates[i].setNumOfVotes(numberOfVotesForCand);
+			candidates.get(i).setNumOfVotes(numberOfVotesForCand);
 		}
-		sortCandidates();
-	}
-
-	public void sortCandidates() {
-		int n = candidateCounter;
-		for (int i = 0; i < n - 1; i++)
-			for (int j = 0; j < n - i - 1; j++)
-				if (candidates[j].getNumOfVotes() < candidates[j + 1].getNumOfVotes()) {
-					Candidate temp = candidates[j];
-					candidates[j] = candidates[j + 1];
-					candidates[j + 1] = temp;
-				}
-
+		Collections.sort(this.candidates);
+		
 	}
 
 	@Override
@@ -118,7 +99,7 @@ public class Party {
 				+ this.numOfVotes + "\n");
 		str.append("the candidates in the party: \n");
 		for (int i = 0; i < this.candidateCounter; i++) {
-			str.append((i + 1) + ") " + this.candidates[i].getName() + ", " + this.candidates[i].getNumOfVotes()
+			str.append((i + 1) + ") " + this.candidates.get(i).getName() + ", " + this.candidates.get(i).getNumOfVotes()
 					+ " candidates voted for him/her\n");
 		}
 
@@ -134,7 +115,7 @@ public class Party {
 		return dateOfEstablishment;
 	}
 
-	public Candidate[] getCandidates() {
+	public ArrayList<Candidate> getCandidates() {
 		return candidates;
 	}
 

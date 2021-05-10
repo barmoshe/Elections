@@ -1,6 +1,6 @@
 package id314022914_id206921777;
 
-public class Candidate extends Citizen {
+public class Candidate extends Citizen implements Comparable<Candidate> {
 
 	private Party partyBelong;
 	private int numOfVotes;
@@ -42,5 +42,16 @@ public class Candidate extends Citizen {
 
 	public int getNumOfVotes() {
 		return this.numOfVotes;
+	}
+
+	@Override
+	public int compareTo(Candidate o) {
+		if (this.numOfVotes > o.numOfVotes)
+			return -1;
+		else if (this.numOfVotes > o.numOfVotes)
+			return 1;
+		else
+			return 0;
+
 	}
 }

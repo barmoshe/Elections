@@ -192,19 +192,19 @@ public class Election {
 	public boolean addCandidate(Candidate c) throws Exception {
 		if (checkAge(c.getYearOfBirth()) == -1)
 			return false;
+
 		int temp = citizens.existById(c.getId());
 		if (temp != -1) {
 			c.setBallotBox(citizens.get(temp).ballotbox);
 			c.ballotbox.replace(citizens.get(temp), c);
 			citizens.replace(temp, c);
-
-			((Candidate) citizens.get(temp)).getPartyBelong().addCandidate((Candidate) this.citizens.get(temp));
 		} else {
 			addCitizens(c);
 			c.setBallotBox(citizens.get(this.citizenCounter - 1).ballotbox);
 			c.ballotbox.replace(citizens.get(citizenCounter - 1), c);
 			citizens.replace(citizenCounter - 1, c);
 		}
+		c.getPartyBelong().addCandidate(c);
 		return true;
 	}
 
