@@ -32,7 +32,7 @@ public class Candidate extends Citizen implements Comparable<Candidate> {
 	@Override
 	public String toString() {
 		return super.toString() + "\nparty: " + this.partyBelong.getName() + "\nnum of votes PRIMERIZ: "
-				+ this.numOfVotes + "\n";
+				+ this.numOfVotes ;
 	}
 
 	public Party getPartyBelong() {

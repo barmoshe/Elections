@@ -2,6 +2,10 @@ package id314022914_id206921777;
 
 import java.util.Scanner;
 
+import id314022914_id206921777.exceptions.BoolCheakException;
+import id314022914_id206921777.exceptions.MaskException;
+import id314022914_id206921777.exceptions.OutOfBoundException;
+
 public class MainElectionRunner {
 
 	public static int menu() {
@@ -43,9 +47,10 @@ public class MainElectionRunner {
 			e.addBallotBox("jaffa", BallotType.REGULAR);
 			e.addBallotBox("Kiryat Ono", BallotType.FOR_SICK);
 			e.addBallotBox("Tel Aviv", BallotType.FOR_SICK_SOLIDERS);
-			e.addCitizensHadCoded("Adi Himembloi", "332233333", 1993);
-			e.addCitizensHadCoded("Shlomo Artzi", "342233333", 2002);
-			e.addCitizensHadCoded("Shlomi Shabat", "344443333", 2002);
+			e.addCitizenHadCoded("Adi Himembloi", "332233333", 1993);
+			e.addSickCitizenHadCoded("Shlomo Artzi", "342233333", 1996, 3);
+			e.addSickSoliderHadCoded("Shlomi Shabat", "344443333", 2002, 7);
+			e.addSoliderHadCoded("Morgan Shabat", "277723332", 2002);
 			e.addCandidateHardCoded("Bar Refaeli", "111111111", 1980, "Likud");
 			e.addCandidateHardCoded("Gal Gadot", "111113111", 1945, "Likud");
 			e.addCandidateHardCoded("Galya Micheli", "111111121", 1980, "Yesh Atid");
@@ -53,8 +58,6 @@ public class MainElectionRunner {
 			e.addCandidateHardCoded("Benjamin Netanyaho", "111113331", 1980, "Yamina");
 			e.addSickCandidateHardCoded("yossi Levi", "121999921", 1984, "Yamina", 5);
 			e.addSickCandidateHardCoded("Yossi Benayoun", "111111911", 1980, "Likud", 3);
-			e.addSickCandidateHardCoded("Mor Silver", "111113191", 1945, "Likud", 3);
-			e.addSickCandidateHardCoded("Itay Hason", "111111199", 1980, "Yesh Atid", 2);
 			e.addSickCandidateHardCoded("Yotam Keren", "121993111", 1984, "Yesh Atid", 0);
 			e.addSickCandidateHardCoded("Elor Koren", "111993331", 1980, "Yamina", 8);
 			e.addSickCandidateHardCoded("Ofri Maane", "199132212", 1984, "Yamina", 7);
@@ -128,40 +131,48 @@ public class MainElectionRunner {
 	private static void citizensChoose(Election e) {
 		Scanner sc = new Scanner(System.in);
 		for (int i = 0; i < e.getCitizenCounter(); i++) {
-			System.out.println("Dear " + e.getCitizens().get(i).getName()
-					+ " choose your vote number.\nIf you do not want to vote please enter 0");
-			e.showPartiesNames();
-			int select = sc.nextInt() - 1;
-			if (select != -1) {
-				boolean isValid = false;
-				while (!isValid) {
+			boolean isValid = false;
+			int boolchoose2 = 0;
+			int select = 0;
+			while (!isValid) {
+				try {
+					if (e.getCitizens().get(i) instanceof Sickable) {
+						System.out.println(
+								"Dear " + e.getCitizens().get(i).getName() + " enter 1 if you have mask else 0 ");
+						boolchoose2 = sc.nextInt();
+						if (boolchoose2 != 1 && boolchoose2 != 0)
+							throw new BoolCheakException();
+					} else
+						boolchoose2 = 1;
+				} catch (BoolCheakException x) {
+					System.out.println(x.getMessage());
+				}
+				try {
+					System.out.println("Dear " + e.getCitizens().get(i).getName()
+							+ " choose your vote number.\nIf you do not want to vote please enter 0");
+					e.showPartiesNames();
+					select = sc.nextInt() - 1;
+					if ((select <= -1) || (select >= e.getPartyCounter()))
+						throw new OutOfBoundException();
+
 					try {
-						BallotType tempT = e.getCitizens().get(i).getBallotbox().getType();
-						if ((tempT != BallotType.FOR_SICK) && (tempT != BallotType.FOR_SICK_SOLIDERS))
-							e.getCitizens().get(i).setPartyChosen(e.getParties().get(select).getName());
-						else {
-							System.out.println("enter 1 if you have mask else 0 ");
-							int boolchoose2 = sc.nextInt();
-							if (boolchoose2 != 1 && boolchoose2 != 0)
-								throw new Exception("must be 1 or 0 ");
-							if (boolchoose2 == 1 && e.getCitizens().get(i) instanceof Sickable) {
+						if (boolchoose2 == 1) {
+							if (e.getCitizens().get(i) instanceof Sickable)
 								((Sickable) e.getCitizens().get(i)).setHasMask(true);
-								e.getCitizens().get(i).setPartyChosen(e.getParties().get(select).getName());
-							}
-							System.out.println("can't vote without mask");
+							e.getCitizens().get(i).setPartyChosen(e.getParties().get(select).getName());
+						} else if (select != -1 || boolchoose2 == 0)
+							throw new MaskException();
 
-						}
 						isValid = true;
-					} catch (Exception y) {
-						System.out.println("enter choise again! ");
-						System.out.println("Dear " + e.getCitizens().get(i).getName()
-								+ " choose your vote number.\nIf you do not want to vote please enter 0");
-
-						select = sc.nextInt() - 1;
+					} catch (MaskException x) {
+						System.out.println(x.getMessage());
 					}
+				} catch (OutOfBoundException x) {
+					System.out.println(x.getMessage());
 				}
 			}
 		}
+
 	}
 
 	public static Party createParty() throws Exception {
@@ -173,7 +184,7 @@ public class MainElectionRunner {
 
 		int choise = sc.nextInt();
 		if (choise != 1 && choise != 2 && choise != 3)
-			throw new Exception("political opinion must be 1 ,2 or 3 ");
+			throw new OutOfBoundException();
 		p = switchOpinion(choise);
 
 		Party p1 = new Party(name3, p);

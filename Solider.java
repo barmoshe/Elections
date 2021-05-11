@@ -22,15 +22,15 @@ public class Solider extends Citizen {
 
 	}
 
-	public void CarryWeapon() {
+	public String CarryWeapon() {
 		if (this.typeOfWeapon != null)
-			System.out.println(this.typeOfWeapon);
+			return this.typeOfWeapon;
 		else
-			System.out.println("has no weapon");
+			return " no weapon";
 	}
 
 	@Override
 	public String toString() {
-		return super.toString();
+		return super.toString() + "\nweapon: " + this.CarryWeapon();
 	}
 }

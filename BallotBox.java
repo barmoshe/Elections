@@ -3,18 +3,18 @@ package id314022914_id206921777;
 
 import java.util.ArrayList;
 
-public class BallotBox<T extends Citizen> {
+public class BallotBox<T> {
 	private BallotType ballotType;
 	private int serialNumber;
 	private static int serialCounter = 1000;
 	private String address;
-	private SetForElections<Citizen> citizenInBallotBox;
+	private SetForElections<T> citizenInBallotBox;
 	private double votePresentage;
 	private ArrayList<Result> resultsForThisBallotBox;
 	private int resultCount;
 	private int citizensCount;
 
-	public BallotBox(BallotBox b) {
+	public BallotBox(BallotBox<T> b) {
 		this.serialNumber = b.getSerialnumber();
 		this.address = b.address;
 		this.citizenInBallotBox = b.citizenInBallotBox;
@@ -27,7 +27,7 @@ public class BallotBox<T extends Citizen> {
 	public BallotBox(String address, BallotType ballotType) {
 		this.serialNumber = serialCounter++;
 		this.address = address;
-		this.citizenInBallotBox = new SetForElections<Citizen>();
+		this.citizenInBallotBox = new SetForElections<T>();
 		this.votePresentage = 0;
 		this.resultsForThisBallotBox = new ArrayList<Result>();
 		this.resultCount = 0;
@@ -40,11 +40,11 @@ public class BallotBox<T extends Citizen> {
 		this.address = null;
 	}
 
-	public BallotBox(BallotBox b, BallotType bType) {
+	public BallotBox(BallotBox<T> b, BallotType bType) {
 
 	}
 
-	public int cheakIfCitizenExist(Citizen c) {
+	public int cheakIfCitizenExist(T c) {
 		return this.citizenInBallotBox.exist(c);
 
 	}
@@ -53,7 +53,7 @@ public class BallotBox<T extends Citizen> {
 		return this.ballotType;
 	}
 
-	public void addCitizen(Citizen c) throws Exception {
+	public void addCitizen(T c) throws Exception {
 		int index = cheakIfCitizenExist(c);
 		if (index != -1) {
 			citizenInBallotBox.replace(index, c);
@@ -85,14 +85,14 @@ public class BallotBox<T extends Citizen> {
 	public double voteResultsAndPercentage() {// returns percentage of votes and calculate votes for each party
 		int nonVotersAmount = 0;
 		for (int i = 0; i < this.citizensCount; i++) {
-			Citizen current = citizenInBallotBox.get(i);
-			if (current.getPartyChosen() == null)
+			T current = citizenInBallotBox.get(i);
+			if (((Citizen) current).getPartyChosen() == null)
 				nonVotersAmount++;
 			else
 				for (int j = 0; j < resultCount; j++) {
-					if (current.getPartyChosen().equals(resultsForThisBallotBox.get(j).getPartyName())) {
+					if (((Citizen) current).getPartyChosen().equals(resultsForThisBallotBox.get(j).getPartyName())) {
 						resultsForThisBallotBox.get(j).addVote();
-						
+
 					}
 				}
 
@@ -125,7 +125,7 @@ public class BallotBox<T extends Citizen> {
 				+ "location: " + this.address + "\n ballot type : " + this.ballotType.toString() + "\n\n");
 		str.append("the citizens in the ballotbox: \n");
 		for (int i = 0; i < this.citizensCount; i++) {
-			str.append((i + 1) + ") " + this.citizenInBallotBox.get(i).getName() + "\n");
+			str.append((i + 1) + ") " + ((Citizen) this.citizenInBallotBox.get(i)).getName() + "\n");
 		}
 
 		str.append("\nvote precentage: " + this.votePresentage + "\n" + "\nresults in this ballotbox: \n");
@@ -151,9 +151,9 @@ public class BallotBox<T extends Citizen> {
 		return this.serialNumber;
 	}
 
-	public void replace(Citizen tempC, Candidate c) throws Exception {
+	public void PromotCitizenToCand(Citizen tempC, Candidate c) throws Exception {
 		String currentId = tempC.getId();
-		this.citizenInBallotBox.replace(this.citizenInBallotBox.existById(currentId), c);
+		this.citizenInBallotBox.replace(this.citizenInBallotBox.existById(currentId), ((T) c));
 	}
 
 }

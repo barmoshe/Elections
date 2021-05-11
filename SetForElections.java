@@ -35,7 +35,7 @@ public class SetForElections<T> {
 
 	public void replace(int index, T t) throws Exception {
 		if (t instanceof Citizen)
-			this.set[index] = t;
+			this.set[index] =(T) t;
 		else
 			throw new Exception("wrong object type");
 
@@ -72,7 +72,7 @@ public class SetForElections<T> {
 
 	@Override
 	public String toString() {
-		StringBuffer str = new StringBuffer("The citizens are :  " + ": \n" + "\n");
+		StringBuffer str = new StringBuffer("The " + this.getClass().getSimpleName() + " are :  " + ": \n" + "\n");
 		for (int i = 0; i < this.currentSize; i++) {
 			str.append("________-" + (i + 1) + "-________\n" + this.set[i].toString() + "\n\n");
 		}

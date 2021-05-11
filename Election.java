@@ -89,25 +89,25 @@ public class Election {
 		for (int i = 0; i < this.ballotBoxCounter; i++) {
 			if (c instanceof Sickable) {
 				if (c instanceof SickSolider) {
-					if (this.ballotBoxes.get(i).getType() == BallotType.FOR_SICK_SOLIDERS) {
+					if (this.ballotBoxes.get(i).getType().equals(BallotType.FOR_SICK_SOLIDERS)) {
 						this.ballotBoxes.get(i).addCitizen(c);
 						c.setBallotBox(ballotBoxes.get(i));
 						return true;
 					}
-				} else if (this.ballotBoxes.get(i).getType() == BallotType.FOR_SICK) {
+				} else if (this.ballotBoxes.get(i).getType().equals(BallotType.FOR_SICK)) {
 					this.ballotBoxes.get(i).addCitizen(c);
 					c.setBallotBox(ballotBoxes.get(i));
 					return true;
 				}
 
 			} else if (c instanceof Solider) {
-				if (this.ballotBoxes.get(i).getType() == BallotType.FOR_SOLIDERS) {
+				if (this.ballotBoxes.get(i).getType().equals(BallotType.FOR_SOLIDERS)) {
 					this.ballotBoxes.get(i).addCitizen(c);
 					c.setBallotBox(ballotBoxes.get(i));
 					return true;
 				}
-			} else if (c instanceof Citizen) {
-				if (this.ballotBoxes.get(i).getType() == BallotType.REGULAR) {
+			} else {
+				if (this.ballotBoxes.get(i).getType().equals(BallotType.REGULAR)) {
 					this.ballotBoxes.get(i).addCitizen(c);
 					c.setBallotBox(ballotBoxes.get(i));
 					return true;
@@ -118,16 +118,8 @@ public class Election {
 		throw new Exception("error set voter to ballot box");
 	}
 
-	public int checkAge(int YearOfBirth) {
-		int age = this.yearOfElections - YearOfBirth;
-		if (age < 18) {
-			return -1;
-		}
-		return age;
-	}
-
 	public boolean addCitizens(Citizen c) throws Exception {
-		int indexOfCitizen = this.citizens.exist(c);
+		int indexOfCitizen = this.citizens.existById(c.getId());
 		if (indexOfCitizen != -1) {
 			this.citizens.replace(indexOfCitizen, c);
 			return true;
@@ -140,8 +132,23 @@ public class Election {
 
 	}
 
-	public void addCitizensHadCoded(String name, String id, int yearOfBirth) throws Exception {
+	public void addSoliderHadCoded(String name, String id, int yearOfBirth) throws Exception {
+		Solider s = new Solider(name, id, yearOfBirth);
+		this.addCitizens(s);
+	}
+
+	public void addCitizenHadCoded(String name, String id, int yearOfBirth) throws Exception {
 		Citizen c = new Citizen(name, id, yearOfBirth);
+		this.addCitizens(c);
+	}
+
+	public void addSickCitizenHadCoded(String name, String id, int yearOfBirth, int daysOfSickness) throws Exception {
+		SickCitizen c = new SickCitizen(name, id, yearOfBirth, daysOfSickness);
+		this.addCitizens(c);
+	}
+
+	public void addSickSoliderHadCoded(String name, String id, int yearOfBirth, int daysOfSickness) throws Exception {
+		SickSolider c = new SickSolider(name, id, yearOfBirth, daysOfSickness);
 		this.addCitizens(c);
 	}
 
@@ -211,18 +218,16 @@ public class Election {
 	}
 
 	public boolean addCandidate(Candidate c) throws Exception {
-		if (checkAge(c.getYearOfBirth()) == -1)
-			return false;
-
+	
 		int temp = citizens.existById(c.getId());
 		if (temp != -1) {
 			c.setBallotBox(citizens.get(temp).ballotbox);
-			c.ballotbox.replace(citizens.get(temp), c);
+			c.ballotbox.PromotCitizenToCand(citizens.get(temp), c);
 			citizens.replace(temp, c);
 		} else {
 			addCitizens(c);
 			c.setBallotBox(citizens.get(this.citizenCounter - 1).ballotbox);
-			c.ballotbox.replace(citizens.get(citizenCounter - 1), c);
+			c.ballotbox.PromotCitizenToCand(citizens.get(citizenCounter - 1), c);
 			citizens.replace(citizenCounter - 1, c);
 		}
 		c.getPartyBelong().addCandidate(c);
@@ -347,4 +352,5 @@ public class Election {
 			return false;
 
 	}
+
 }

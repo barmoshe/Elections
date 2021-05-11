@@ -29,4 +29,8 @@ public class SickSolider extends Solider implements Sickable {
 	public int getdaysOfSickness() {
 		return this.daysOfSickness;
 	}
+	@Override
+	public String toString() {
+		return super.toString() + "\ndays of sickness: " + this.daysOfSickness;
+	}
 }
