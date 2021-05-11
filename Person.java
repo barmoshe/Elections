@@ -1,6 +1,6 @@
 package id314022914_id206921777;
 
-public abstract class Person implements Quarentieable{
+public abstract class Person {
 	protected String name;
 	protected String id;
 	protected int yearOfBirth;

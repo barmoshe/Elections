@@ -1,7 +1,9 @@
 package id314022914_id206921777;
+
 import java.util.Scanner;
 
 public class MainElectionRunner {
+
 	public static int menu() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("\n" + "________-menu-________");
@@ -41,21 +43,21 @@ public class MainElectionRunner {
 			e.addBallotBox("jaffa", BallotType.REGULAR);
 			e.addBallotBox("Kiryat Ono", BallotType.FOR_SICK);
 			e.addBallotBox("Tel Aviv", BallotType.FOR_SICK_SOLIDERS);
-			e.addCitizensHadCoded("Adi Himembloi", "332233333", true, true, 1993);
-			e.addCitizensHadCoded("Shlomo Artzi", "342233333", false, true, 2002);
-			e.addCitizensHadCoded("Shlomi Shabat", "344443333", true, true, 2002);
-			e.addCandidateHardCoded("Bar Refaeli", "111111111", true, false, 1980, "Likud");
-			e.addCandidateHardCoded("Gal Gadot", "111113111", false, false, 1945, "Likud");
-			e.addCandidateHardCoded("Galya Micheli", "111111121", true, true, 1980, "Yesh Atid");
-			e.addCandidateHardCoded("Noa Kirel", "121113111", false, false, 1984, "Yesh Atid");
-			e.addCandidateHardCoded("Benjamin Netanyaho", "111113331", false, false, 1980, "Yamina");
-			e.addCandidateHardCoded("yossi Levi", "121999921", false, false, 1984, "Yamina");
-			e.addCandidateHardCoded("Yossi Benayoun", "111111911", true, false, 1980, "Likud");
-			e.addCandidateHardCoded("Mor Silver", "111113191", false, false, 1945, "Likud");
-			e.addCandidateHardCoded("Itay Hason", "111111199", true, true, 1980, "Yesh Atid");
-			e.addCandidateHardCoded("Yotam Keren", "121993111", false, false, 1984, "Yesh Atid");
-			e.addCandidateHardCoded("Elor Koren", "111993331", false, false, 1980, "Yamina");
-			e.addCandidateHardCoded("Ofri Maane", "199132212", false, false, 1984, "Yamina");
+			e.addCitizensHadCoded("Adi Himembloi", "332233333", 1993);
+			e.addCitizensHadCoded("Shlomo Artzi", "342233333", 2002);
+			e.addCitizensHadCoded("Shlomi Shabat", "344443333", 2002);
+			e.addCandidateHardCoded("Bar Refaeli", "111111111", 1980, "Likud");
+			e.addCandidateHardCoded("Gal Gadot", "111113111", 1945, "Likud");
+			e.addCandidateHardCoded("Galya Micheli", "111111121", 1980, "Yesh Atid");
+			e.addCandidateHardCoded("Noa Kirel", "121113111", 1984, "Yesh Atid");
+			e.addCandidateHardCoded("Benjamin Netanyaho", "111113331", 1980, "Yamina");
+			e.addCandidateHardCoded("yossi Levi", "121999921", 1984, "Yamina");
+			e.addCandidateHardCoded("Yossi Benayoun", "111111911", 1980, "Likud");
+			e.addCandidateHardCoded("Mor Silver", "111113191", 1945, "Likud");
+			e.addCandidateHardCoded("Itay Hason", "111111199", 1980, "Yesh Atid");
+			e.addCandidateHardCoded("Yotam Keren", "121993111", 1984, "Yesh Atid");
+			e.addCandidateHardCoded("Elor Koren", "111993331", 1980, "Yamina");
+			e.addCandidateHardCoded("Ofri Maane", "199132212", 1984, "Yamina");
 		} catch (Exception x) {
 			System.out.println(x.getMessage());
 
@@ -63,31 +65,50 @@ public class MainElectionRunner {
 
 	}
 
-	public static Citizen createCitizen() throws Exception {
+	public static Citizen createCitizen(int yearOfElections) throws Exception {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("enter name ");
 		String name2 = sc.nextLine();
 		System.out.println("enter id ");
 		String id2 = sc.next();
-		System.out.println("enter 1 if you qurentined else 0 ");
-		int boolchoose1 = sc.nextInt();
-		if (boolchoose1 != 1 && boolchoose1 != 0)
-			throw new Exception("must be 1 or 0 ");
-		boolean isQuarentined = false;
-		if (boolchoose1 == 1)
-			isQuarentined = true;
-		System.out.println("enter 1 if you have mask else 0 ");
-		int boolchoose2 = sc.nextInt();
-		if (boolchoose2 != 1 && boolchoose2 != 0)
-			throw new Exception("must be 1 or 0 ");
-		boolean hasMask = false;
-		if (boolchoose2 == 1)
-			hasMask = true;
 		System.out.println("enter year of birth ");
 		int year2 = sc.nextInt();
-		Citizen c = new Citizen(name2, id2, isQuarentined, hasMask, year2);
+		if (checkAge(year2, yearOfElections) == -1) {
+			Solider s = new Solider(name2, id2, year2);
+			return s;
+		} else {
+			Citizen c = new Citizen(name2, id2, year2);
+			return c;
+		}
 
-		return c;
+	}
+
+	public static int checkAge(int YearOfBirth, int yearOfElections) {
+		int age = yearOfElections - YearOfBirth;
+		if (age >= 18 && age <= 21) {
+			return -1;
+		}
+		return age;
+	}
+
+	public static Citizen createSickCitizen(int yearOfElections) throws Exception {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("enter name ");
+		String name2 = sc.nextLine();
+		System.out.println("enter id ");
+		String id2 = sc.next();
+		System.out.println("enter year of birth ");
+		int year2 = sc.nextInt();
+		System.out.println("enter days of sickness ");
+		int days = sc.nextInt();
+		if (checkAge(year2, yearOfElections) == -1) {
+			SickSolider s = new SickSolider(name2, id2, year2, days);
+			return s;
+		} else {
+			SickCitizen c = new SickCitizen(name2, id2, year2, days);
+			return c;
+		}
+
 	}
 
 	private static PoliticalOpinion switchOpinion(int choise) {
@@ -118,8 +139,15 @@ public class MainElectionRunner {
 						BallotType tempT = e.getCitizens().get(i).getBallotbox().getType();
 						if ((tempT != BallotType.FOR_SICK) && (tempT != BallotType.FOR_SICK_SOLIDERS))
 							e.getCitizens().get(i).setPartyChosen(e.getParties().get(select).getName());
-						else if (e.getCitizens().get(i).hasMask()) {
-							e.getCitizens().get(i).setPartyChosen(e.getParties().get(select).getName());
+						else {
+							System.out.println("enter 1 if you have mask else 0 ");
+							int boolchoose2 = sc.nextInt();
+							if (boolchoose2 != 1 && boolchoose2 != 0)
+								throw new Exception("must be 1 or 0 ");
+							if (boolchoose2 == 1 && e.getCitizens().get(i) instanceof Sickable) {
+								((Sickable) e.getCitizens().get(i)).setHasMask(true);
+								e.getCitizens().get(i).setPartyChosen(e.getParties().get(select).getName());
+							}
 							System.out.println("can't vote without mask");
 
 						}
@@ -154,8 +182,8 @@ public class MainElectionRunner {
 
 	}
 
-	public static Candidate createCandidate(Party p) throws Exception {
-		Candidate c = new Candidate(createCitizen());
+	public static Candidate createCandidate(Party p, int yearOfElection) throws Exception {
+		Candidate c = new Candidate(createCitizen(yearOfElection));
 		c.setPartyBelong(p);
 		return c;
 	}
@@ -204,9 +232,21 @@ public class MainElectionRunner {
 				isValid1 = false;
 				while (!isValid1) {
 					try {
-						if (systemE.getElections()[currentElectionIndex].addCitizens(createCitizen()))
+						System.out.println("enter 1 if you are sick else 0 ");
+						int boolchoose1 = sc.nextInt();
+						if (boolchoose1 != 1 && boolchoose1 != 0)
+							throw new Exception("must be 1 or 0 ");
+						if (boolchoose1 == 0) {
+						if (systemE.getElections()[currentElectionIndex].addCitizens(
+								createCitizen(systemE.getElections()[currentElectionIndex].getYearOfElections())))
 							System.out.println("added succsessfully");
 						isValid1 = true;
+						}else
+							if (systemE.getElections()[currentElectionIndex].addCitizens(
+									createSickCitizen(systemE.getElections()[currentElectionIndex].getYearOfElections())))
+								System.out.println("added succsessfully");
+							isValid1 = true;
+							
 					} catch (Exception x) {
 						System.out.println(x.getMessage());
 					}
@@ -232,7 +272,8 @@ public class MainElectionRunner {
 							System.out.println("choose your party number");
 							systemE.getElections()[currentElectionIndex].showPartiesNames();
 							if (systemE.getElections()[currentElectionIndex].addCandidate(createCandidate(
-									systemE.getElections()[currentElectionIndex].getParties().get(sc.nextInt() - 1))))
+									systemE.getElections()[currentElectionIndex].getParties().get(sc.nextInt() - 1),
+									systemE.getElections()[currentElectionIndex].getYearOfElections())))
 								System.out.println("added succsessfully");
 							isValid1 = true;
 						} catch (Exception x) {

@@ -11,9 +11,8 @@ public class Candidate extends Citizen implements Comparable<Candidate> {
 
 	}
 
-	public Candidate(String name, String id, boolean isQuarentied, boolean hasMask, int yearOfBirth, Party party)
-			throws Exception {
-		super(name, id, isQuarentied, hasMask, yearOfBirth);
+	public Candidate(String name, String id, int yearOfBirth, Party party) throws Exception {
+		super(name, id, yearOfBirth);
 		this.partyBelong = party;
 		this.numOfVotes = 0;
 

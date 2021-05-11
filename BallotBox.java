@@ -3,7 +3,7 @@ package id314022914_id206921777;
 
 import java.util.ArrayList;
 
-public class BallotBox {
+public class BallotBox<T> {
 	private BallotType ballotType;
 	private int serialNumber;
 	private static int serialCounter = 1000;

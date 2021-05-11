@@ -1,15 +1,16 @@
 package id314022914_id206921777;
 
-public class SickCitizen extends Citizen implements Sickable {
+public class SickCandidate extends Candidate implements Sickable {
 	private int daysOfSickness;
 	private boolean hasMask;
 
-	public SickCitizen(Citizen c, int daysOfSickness) throws Exception {
-		super(c);
+	public SickCandidate(String name, String id, int yearOfBirth, Party party, int daysOfSickness) throws Exception {
+		super(name, id, yearOfBirth, party);
 		this.daysOfSickness = daysOfSickness;
 	}
-	public SickCitizen(String name, String id,  int yearOfBirth, int daysOfSickness) throws Exception {
-		super(name,id,yearOfBirth);
+
+	public SickCandidate(Citizen c, int daysOfSickness) throws Exception {
+		super(c);
 		this.daysOfSickness = daysOfSickness;
 	}
 

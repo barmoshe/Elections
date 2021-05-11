@@ -87,8 +87,8 @@ public class Election {
 
 	private boolean setVoterToBallotBox(Citizen c) throws Exception {
 		for (int i = 0; i < this.ballotBoxCounter; i++) {
-			if (c.isQuarentied()) {
-				if (c instanceof Solider) {
+			if (c instanceof Sickable) {
+				if (c instanceof SickSolider) {
 					if (this.ballotBoxes.get(i).getType() == BallotType.FOR_SICK_SOLIDERS) {
 						this.ballotBoxes.get(i).addCitizen(c);
 						c.setBallotBox(ballotBoxes.get(i));
@@ -127,32 +127,21 @@ public class Election {
 	}
 
 	public boolean addCitizens(Citizen c) throws Exception {
-		Citizen temp1 = null;
-		int age = this.checkAge(c.getYearOfBirth());
-		if (age == -1) {
-			throw new Exception("too young");
-		}
 		int indexOfCitizen = this.citizens.exist(c);
 		if (indexOfCitizen != -1) {
 			this.citizens.replace(indexOfCitizen, c);
 			return true;
-		}
-		if (age <= 21) {
-			Solider temp = new Solider(c, false);
-			this.citizens.add(temp);
-		} else {
-			temp1 = new Citizen(c);
-			this.citizens.add(temp1);
-		}
+		} else
+			citizens.add(c);
+
 		this.setVoterToBallotBox(this.citizens.get(this.citizenCounter));
 		this.citizenCounter = this.citizenCounter + 1;
 		return true;
 
 	}
 
-	public void addCitizensHadCoded(String name, String id, boolean isQuarentied, boolean hasMask, int yearOfBirth)
-			throws Exception {
-		Citizen c = new Citizen(name, id, isQuarentied, hasMask, yearOfBirth);
+	public void addCitizensHadCoded(String name, String id, int yearOfBirth) throws Exception {
+		Citizen c = new Citizen(name, id, yearOfBirth);
 		this.addCitizens(c);
 	}
 
@@ -178,15 +167,38 @@ public class Election {
 	}
 
 	public boolean addBallotBox(String address, BallotType bType) throws Exception {
-		BallotBox b = new BallotBox(address, bType);
-
-		for (int i = 0; i < this.partyCounter; i++) {
-			String current = this.parties.get(i).getName();
-			b.addToResult(current);
+		switch (bType) {
+		case FOR_SICK, FOR_SICK_SOLIDERS:
+			BallotBox<Sickable> b = new BallotBox<Sickable>(address, bType);
+			for (int i = 0; i < this.partyCounter; i++) {
+				String current = this.parties.get(i).getName();
+				b.addToResult(current);
+			}
+			this.ballotBoxes.add(b);
+			this.ballotBoxCounter = this.ballotBoxCounter + 1;
+			return true;
+		case REGULAR:
+			BallotBox<Citizen> b1 = new BallotBox<Citizen>(address, bType);
+			for (int i = 0; i < this.partyCounter; i++) {
+				String current = this.parties.get(i).getName();
+				b1.addToResult(current);
+			}
+			this.ballotBoxes.add(b1);
+			this.ballotBoxCounter = this.ballotBoxCounter + 1;
+			return true;
+		case FOR_SOLIDERS:
+			BallotBox<Solider> b2 = new BallotBox<Solider>(address, bType);
+			for (int i = 0; i < this.partyCounter; i++) {
+				String current = this.parties.get(i).getName();
+				b2.addToResult(current);
+			}
+			this.ballotBoxes.add(b2);
+			this.ballotBoxCounter = this.ballotBoxCounter + 1;
+			return true;
+		default:
+			return false;
 		}
-		this.ballotBoxes.add(b);
-		this.ballotBoxCounter = this.ballotBoxCounter + 1;
-		return true;
+
 	}
 
 	public boolean addCandidate(Candidate c) throws Exception {
@@ -208,8 +220,7 @@ public class Election {
 		return true;
 	}
 
-	public void addCandidateHardCoded(String name, String id, boolean isQuarentied, boolean hasMask, int yearOfBirth,
-			String partyname) throws Exception {
+	public void addCandidateHardCoded(String name, String id, int yearOfBirth, String partyname) throws Exception {
 		Party p = null;
 		for (int i = 0; i < this.partyCounter; i++) {
 			if (this.parties.get(i).getName() == partyname) {
@@ -217,7 +228,7 @@ public class Election {
 				break;
 			}
 		}
-		Candidate c = new Candidate(name, id, isQuarentied, hasMask, yearOfBirth, p);
+		Candidate c = new Candidate(name, id, yearOfBirth, p);
 		this.addCandidate(c);
 	}
 
