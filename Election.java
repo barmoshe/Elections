@@ -241,6 +241,19 @@ public class Election {
 		this.addCandidate(c);
 	}
 
+	public void addSickCandidateHardCoded(String name, String id, int yearOfBirth, String partyname, int daysOfSickness)
+			throws Exception {
+		Party p = null;
+		for (int i = 0; i < this.partyCounter; i++) {
+			if (this.parties.get(i).getName() == partyname) {
+				p = this.parties.get(i);
+				break;
+			}
+		}
+		SickCandidate c = new SickCandidate(name, id, yearOfBirth, p, daysOfSickness);
+		this.addCandidate(c);
+	}
+
 	public void showParties() {
 		for (int i = 0; i < this.partyCounter; i++) {
 			System.out.println("Party" + (i + 1) + " " + parties.get(i).toString());

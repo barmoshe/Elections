@@ -51,13 +51,13 @@ public class MainElectionRunner {
 			e.addCandidateHardCoded("Galya Micheli", "111111121", 1980, "Yesh Atid");
 			e.addCandidateHardCoded("Noa Kirel", "121113111", 1984, "Yesh Atid");
 			e.addCandidateHardCoded("Benjamin Netanyaho", "111113331", 1980, "Yamina");
-			e.addCandidateHardCoded("yossi Levi", "121999921", 1984, "Yamina");
-			e.addCandidateHardCoded("Yossi Benayoun", "111111911", 1980, "Likud");
-			e.addCandidateHardCoded("Mor Silver", "111113191", 1945, "Likud");
-			e.addCandidateHardCoded("Itay Hason", "111111199", 1980, "Yesh Atid");
-			e.addCandidateHardCoded("Yotam Keren", "121993111", 1984, "Yesh Atid");
-			e.addCandidateHardCoded("Elor Koren", "111993331", 1980, "Yamina");
-			e.addCandidateHardCoded("Ofri Maane", "199132212", 1984, "Yamina");
+			e.addSickCandidateHardCoded("yossi Levi", "121999921", 1984, "Yamina", 5);
+			e.addSickCandidateHardCoded("Yossi Benayoun", "111111911", 1980, "Likud", 3);
+			e.addSickCandidateHardCoded("Mor Silver", "111113191", 1945, "Likud", 3);
+			e.addSickCandidateHardCoded("Itay Hason", "111111199", 1980, "Yesh Atid", 2);
+			e.addSickCandidateHardCoded("Yotam Keren", "121993111", 1984, "Yesh Atid", 0);
+			e.addSickCandidateHardCoded("Elor Koren", "111993331", 1980, "Yamina", 8);
+			e.addSickCandidateHardCoded("Ofri Maane", "199132212", 1984, "Yamina", 7);
 		} catch (Exception x) {
 			System.out.println(x.getMessage());
 

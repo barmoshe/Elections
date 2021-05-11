@@ -1,6 +1,6 @@
 package id314022914_id206921777;
 
-public class Solider extends Citizen implements CarryWeaponable {
+public class Solider extends Citizen {
 	private boolean carryWeapon;
 	private String typeOfWeapon;
 
@@ -16,15 +16,17 @@ public class Solider extends Citizen implements CarryWeaponable {
 		this.carryWeapon = false;
 	}
 
-	public void addweapon(String typeOfWeapon) {
+	public void addWeaponToSoliders(String typeOfWeapon) {
 		this.typeOfWeapon = typeOfWeapon;
 		this.carryWeapon = true;
 
 	}
 
-	@Override
-	public boolean CarryWeapon() {
-		return carryWeapon;
+	public void CarryWeapon() {
+		if (this.typeOfWeapon != null)
+			System.out.println(this.typeOfWeapon);
+		else
+			System.out.println("has no weapon");
 	}
 
 	@Override
