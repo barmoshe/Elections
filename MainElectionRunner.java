@@ -188,6 +188,13 @@ public class MainElectionRunner {
 		return c;
 	}
 
+	public static SickCandidate createSickCandidate(Party p, int yearOfElection) throws Exception {
+		SickCandidate c = new SickCandidate((SickCitizen) createSickCitizen(yearOfElection));
+		c.setPartyBelong(p);
+
+		return c;
+	}
+
 	public static void main(String[] args) {
 		int year, month;
 		ElectionsSystem systemE = new ElectionsSystem();
@@ -237,16 +244,15 @@ public class MainElectionRunner {
 						if (boolchoose1 != 1 && boolchoose1 != 0)
 							throw new Exception("must be 1 or 0 ");
 						if (boolchoose1 == 0) {
-						if (systemE.getElections()[currentElectionIndex].addCitizens(
-								createCitizen(systemE.getElections()[currentElectionIndex].getYearOfElections())))
-							System.out.println("added succsessfully");
-						isValid1 = true;
-						}else
 							if (systemE.getElections()[currentElectionIndex].addCitizens(
-									createSickCitizen(systemE.getElections()[currentElectionIndex].getYearOfElections())))
+									createCitizen(systemE.getElections()[currentElectionIndex].getYearOfElections())))
 								System.out.println("added succsessfully");
 							isValid1 = true;
-							
+						} else if (systemE.getElections()[currentElectionIndex].addCitizens(
+								createSickCitizen(systemE.getElections()[currentElectionIndex].getYearOfElections())))
+							System.out.println("added succsessfully");
+						isValid1 = true;
+
 					} catch (Exception x) {
 						System.out.println(x.getMessage());
 					}
@@ -269,12 +275,25 @@ public class MainElectionRunner {
 					isValid1 = false;
 					while (!isValid1) {
 						try {
-							System.out.println("choose your party number");
 							systemE.getElections()[currentElectionIndex].showPartiesNames();
-							if (systemE.getElections()[currentElectionIndex].addCandidate(createCandidate(
-									systemE.getElections()[currentElectionIndex].getParties().get(sc.nextInt() - 1),
-									systemE.getElections()[currentElectionIndex].getYearOfElections())))
-								System.out.println("added succsessfully");
+							System.out.println("choose your party number");
+							int Chosen4 = sc.nextInt() - 1;
+
+							System.out.println("enter 1 if you are sick else 0 ");
+							int boolchoose1 = sc.nextInt();
+							if (boolchoose1 != 1 && boolchoose1 != 0)
+								throw new Exception("must be 1 or 0 ");
+							if (boolchoose1 == 0) {
+								if (systemE.getElections()[currentElectionIndex].addCandidate(createCandidate(
+										systemE.getElections()[currentElectionIndex].getParties().get(Chosen4),
+										systemE.getElections()[currentElectionIndex].getYearOfElections())))
+									System.out.println("added succsessfully");
+							} else {
+								if (systemE.getElections()[currentElectionIndex].addCandidate(createSickCandidate(
+										systemE.getElections()[currentElectionIndex].getParties().get(Chosen4),
+										systemE.getElections()[currentElectionIndex].getYearOfElections())))
+									System.out.println("added succsessfully");
+							}
 							isValid1 = true;
 						} catch (Exception x) {
 							System.out.println(x.getMessage());

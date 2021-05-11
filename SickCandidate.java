@@ -9,9 +9,8 @@ public class SickCandidate extends Candidate implements Sickable {
 		this.daysOfSickness = daysOfSickness;
 	}
 
-	public SickCandidate(Citizen c, int daysOfSickness) throws Exception {
+	public SickCandidate(SickCitizen c) throws Exception {
 		super(c);
-		this.daysOfSickness = daysOfSickness;
 	}
 
 	public int getDaysOfSickness() {

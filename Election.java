@@ -154,7 +154,7 @@ public class Election {
 			return false;
 		this.parties.add(p);
 		for (int i = 0; i < this.ballotBoxCounter; i++) {
-			BallotBox current = this.ballotBoxes.get(i);
+			BallotBox<?> current = this.ballotBoxes.get(i);
 			current.addToResult(p.getName());
 		}
 		this.partyCounter = this.partyCounter + 1;
@@ -168,13 +168,22 @@ public class Election {
 
 	public boolean addBallotBox(String address, BallotType bType) throws Exception {
 		switch (bType) {
-		case FOR_SICK, FOR_SICK_SOLIDERS:
-			BallotBox<Sickable> b = new BallotBox<Sickable>(address, bType);
+		case FOR_SICK:
+			BallotBox<SickCitizen> b = new BallotBox<SickCitizen>(address, bType);
 			for (int i = 0; i < this.partyCounter; i++) {
 				String current = this.parties.get(i).getName();
 				b.addToResult(current);
 			}
 			this.ballotBoxes.add(b);
+			this.ballotBoxCounter = this.ballotBoxCounter + 1;
+			return true;
+		case FOR_SICK_SOLIDERS:
+			BallotBox<SickSolider> b3 = new BallotBox<SickSolider>(address, bType);
+			for (int i = 0; i < this.partyCounter; i++) {
+				String current = this.parties.get(i).getName();
+				b3.addToResult(current);
+			}
+			this.ballotBoxes.add(b3);
 			this.ballotBoxCounter = this.ballotBoxCounter + 1;
 			return true;
 		case REGULAR:
