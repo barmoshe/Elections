@@ -1,5 +1,7 @@
 package id314022914_id206921777;
 
+import id314022914_id206921777.exceptions.WrongTypeException;
+
 public class SetForElections<T> {
 	private final int ENLARGE_FACTOR = 2;
 	private T[] set;
@@ -27,17 +29,16 @@ public class SetForElections<T> {
 				this.currentSize++;
 				return true;
 			}
-			System.out.println("already exist");
 			return false;
 		} else
-			throw new Exception("wrong object type");
+			throw new WrongTypeException();
 	}
 
 	public void replace(int index, T t) throws Exception {
 		if (t instanceof Citizen)
-			this.set[index] =(T) t;
+			this.set[index] = (T) t;
 		else
-			throw new Exception("wrong object type");
+			throw new WrongTypeException();
 
 	}
 

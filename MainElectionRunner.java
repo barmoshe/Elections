@@ -253,7 +253,7 @@ public class MainElectionRunner {
 						System.out.println("enter 1 if you are sick else 0 ");
 						int boolchoose1 = sc.nextInt();
 						if (boolchoose1 != 1 && boolchoose1 != 0)
-							throw new Exception("must be 1 or 0 ");
+							throw new BoolCheakException();
 						if (boolchoose1 == 0) {
 							if (systemE.getElections()[currentElectionIndex].addCitizens(
 									createCitizen(systemE.getElections()[currentElectionIndex].getYearOfElections())))
@@ -293,7 +293,7 @@ public class MainElectionRunner {
 							System.out.println("enter 1 if you are sick else 0 ");
 							int boolchoose1 = sc.nextInt();
 							if (boolchoose1 != 1 && boolchoose1 != 0)
-								throw new Exception("must be 1 or 0 ");
+								throw new BoolCheakException();
 							if (boolchoose1 == 0) {
 								if (systemE.getElections()[currentElectionIndex].addCandidate(createCandidate(
 										systemE.getElections()[currentElectionIndex].getParties().get(Chosen4),

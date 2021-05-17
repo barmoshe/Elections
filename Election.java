@@ -1,13 +1,19 @@
 package id314022914_id206921777;
 
 import java.util.ArrayList;
+import java.util.Vector;
+
+import id314022914_id206921777.exceptions.BallotBoxException;
+import id314022914_id206921777.exceptions.ValidMonthException;
+import id314022914_id206921777.exceptions.ValidYearException;
 
 public class Election {
+	private final int ballotTypesAmount = 4;
 	private int yearOfElections;
 	private int monthOfElections;
 	private SetForElections<Citizen> citizens;
 	private ArrayList<Party> parties;
-	private ArrayList<BallotBox> ballotBoxes;
+	private Vector<ArrayList<BallotBox>> ballotBoxes;
 	private int citizenCounter;
 	private int partyCounter;
 	private int ballotBoxCounter;
@@ -17,11 +23,19 @@ public class Election {
 		setYearOfElections(yearOfElections);
 		this.citizens = new SetForElections<Citizen>();
 		this.parties = new ArrayList<Party>();
-		this.ballotBoxes = new ArrayList<BallotBox>();
+		this.ballotBoxes = new Vector<ArrayList<BallotBox>>();
+		this.setTypesOfBallotBox();
 		this.citizenCounter = 0;
 		this.partyCounter = 0;
 		this.ballotBoxCounter = 0;
 
+	}
+
+	private void setTypesOfBallotBox() {
+		for (int i = 0; i < this.ballotTypesAmount; i++) {
+			ArrayList<BallotBox> a = new ArrayList<BallotBox>();
+			this.ballotBoxes.add(a);
+		}
 	}
 
 	public int getYearOfElections() {
@@ -40,7 +54,7 @@ public class Election {
 		return parties;
 	}
 
-	public ArrayList<BallotBox> getBallotBoxes() {
+	public Vector<ArrayList<BallotBox>> getBallotBoxes() {
 		return ballotBoxes;
 	}
 
@@ -72,7 +86,7 @@ public class Election {
 		if (year >= 1900 && year < 2100) {
 			this.yearOfElections = year;
 		} else
-			throw new Exception("year must be between 1900-2100");
+			throw new ValidYearException();
 		return true;
 
 	}
@@ -81,41 +95,39 @@ public class Election {
 		if (year > 0 && year < 13) {
 			this.yearOfElections = year;
 		} else
-			throw new Exception("Month must be between 1-12");
+			throw new ValidMonthException();
 		return true;
 	}
 
 	private boolean setVoterToBallotBox(Citizen c) throws Exception {
-		for (int i = 0; i < this.ballotBoxCounter; i++) {
-			if (c instanceof Sickable) {
-				if (c instanceof SickSolider) {
-					if (this.ballotBoxes.get(i).getType().equals(BallotType.FOR_SICK_SOLIDERS)) {
-						this.ballotBoxes.get(i).addCitizen(c);
-						c.setBallotBox(ballotBoxes.get(i));
-						return true;
-					}
-				} else if (this.ballotBoxes.get(i).getType().equals(BallotType.FOR_SICK)) {
-					this.ballotBoxes.get(i).addCitizen(c);
-					c.setBallotBox(ballotBoxes.get(i));
-					return true;
-				}
+		int random;
+		if (c instanceof Sickable) {
+			if (c instanceof SickSolider) {
+				random = (int) (Math.random() * this.ballotBoxes.get(0).size());
+				this.ballotBoxes.get(0).get(random).addCitizen(c);
+				c.setBallotBox(ballotBoxes.get(0).get(random));
+				return true;
 
-			} else if (c instanceof Solider) {
-				if (this.ballotBoxes.get(i).getType().equals(BallotType.FOR_SOLIDERS)) {
-					this.ballotBoxes.get(i).addCitizen(c);
-					c.setBallotBox(ballotBoxes.get(i));
-					return true;
-				}
-			} else {
-				if (this.ballotBoxes.get(i).getType().equals(BallotType.REGULAR)) {
-					this.ballotBoxes.get(i).addCitizen(c);
-					c.setBallotBox(ballotBoxes.get(i));
-					return true;
-				}
-			}
+			} else
+				random = (int) (Math.random() * this.ballotBoxes.get(1).size());
+
+			this.ballotBoxes.get(1).get(random).addCitizen(c);
+			c.setBallotBox(ballotBoxes.get(1).get(random));
+			return true;
+
+		} else if (c instanceof Solider) {
+			random = (int) (Math.random() * this.ballotBoxes.get(2).size());
+			this.ballotBoxes.get(2).get(random).addCitizen(c);
+			c.setBallotBox(ballotBoxes.get(2).get(random));
+			return true;
+		} else {
+			random = (int) (Math.random() * this.ballotBoxes.get(3).size());
+			this.ballotBoxes.get(3).get(random).addCitizen(c);
+			c.setBallotBox(ballotBoxes.get(3).get(random));
+			return true;
 
 		}
-		throw new Exception("error set voter to ballot box");
+
 	}
 
 	public boolean addCitizens(Citizen c) throws Exception {
@@ -160,9 +172,11 @@ public class Election {
 		if (cheakIfPartyExist(p))
 			return false;
 		this.parties.add(p);
-		for (int i = 0; i < this.ballotBoxCounter; i++) {
-			BallotBox<?> current = this.ballotBoxes.get(i);
-			current.addToResult(p.getName());
+		for (int j = 0; j < this.ballotTypesAmount; j++) {
+			for (int i = 0; i < this.ballotBoxCounter; i++) {
+				BallotBox<Citizen> current = this.ballotBoxes.get(j).get(i);
+				current.addToResult(p.getName());
+			}
 		}
 		this.partyCounter = this.partyCounter + 1;
 		return true;
@@ -175,31 +189,22 @@ public class Election {
 
 	public boolean addBallotBox(String address, BallotType bType) throws Exception {
 		switch (bType) {
-		case FOR_SICK:
-			BallotBox<SickCitizen> b = new BallotBox<SickCitizen>(address, bType);
-			for (int i = 0; i < this.partyCounter; i++) {
-				String current = this.parties.get(i).getName();
-				b.addToResult(current);
-			}
-			this.ballotBoxes.add(b);
-			this.ballotBoxCounter = this.ballotBoxCounter + 1;
-			return true;
 		case FOR_SICK_SOLIDERS:
 			BallotBox<SickSolider> b3 = new BallotBox<SickSolider>(address, bType);
 			for (int i = 0; i < this.partyCounter; i++) {
 				String current = this.parties.get(i).getName();
 				b3.addToResult(current);
 			}
-			this.ballotBoxes.add(b3);
+			this.ballotBoxes.get(0).add(b3);
 			this.ballotBoxCounter = this.ballotBoxCounter + 1;
 			return true;
-		case REGULAR:
-			BallotBox<Citizen> b1 = new BallotBox<Citizen>(address, bType);
+		case FOR_SICK:
+			BallotBox<SickCitizen> b = new BallotBox<SickCitizen>(address, bType);
 			for (int i = 0; i < this.partyCounter; i++) {
 				String current = this.parties.get(i).getName();
-				b1.addToResult(current);
+				b.addToResult(current);
 			}
-			this.ballotBoxes.add(b1);
+			this.ballotBoxes.get(1).add(b);
 			this.ballotBoxCounter = this.ballotBoxCounter + 1;
 			return true;
 		case FOR_SOLIDERS:
@@ -208,9 +213,19 @@ public class Election {
 				String current = this.parties.get(i).getName();
 				b2.addToResult(current);
 			}
-			this.ballotBoxes.add(b2);
+			this.ballotBoxes.get(2).add(b2);
 			this.ballotBoxCounter = this.ballotBoxCounter + 1;
 			return true;
+		case REGULAR:
+			BallotBox<Citizen> b1 = new BallotBox<Citizen>(address, bType);
+			for (int i = 0; i < this.partyCounter; i++) {
+				String current = this.parties.get(i).getName();
+				b1.addToResult(current);
+			}
+			this.ballotBoxes.get(3).add(b1);
+			this.ballotBoxCounter = this.ballotBoxCounter + 1;
+			return true;
+
 		default:
 			return false;
 		}
@@ -218,7 +233,7 @@ public class Election {
 	}
 
 	public boolean addCandidate(Candidate c) throws Exception {
-	
+
 		int temp = citizens.existById(c.getId());
 		if (temp != -1) {
 			c.setBallotBox(citizens.get(temp).ballotbox);
@@ -279,23 +294,30 @@ public class Election {
 	}
 
 	public void showBallotBoxes() {
-		for (int i = 0; i < ballotBoxCounter; i++) {
-			System.out.println((i + 1) + ") " + ballotBoxes.get(i).toString() + "\n");
+		int tempCounter = 1;
+		for (int i = 0; i < this.ballotTypesAmount; i++) {
+			for (int j = 0; j < this.ballotBoxes.get(i).size(); j++) {
+				System.out.println((tempCounter) + ") " + ballotBoxes.get(i).get(j).toString() + "\n");
+				tempCounter++;
+			}
 		}
 	}
 
 	public void calculateResultInEachBallotbox() {
-		for (int i = 0; i < this.ballotBoxCounter; i++) {// calculate result in each ballotbox
-			this.ballotBoxes.get(i).voteResultsAndPercentage();
+		for (int i = 0; i < this.ballotTypesAmount; i++) {
+			for (int j = 0; j < this.ballotBoxes.get(i).size(); j++) {// calculate result in each ballotbox
+				this.ballotBoxes.get(i).get(j).voteResultsAndPercentage();
+			}
 		}
 	}
 
 	public void calculateResultInEachparty() {
 		for (int j = 0; j < this.partyCounter; j++) {
 			int temp = 0;
-			for (int i = 0; i < this.ballotBoxCounter; i++) {
-
-				temp = temp + this.ballotBoxes.get(i).getResultForParty(this.parties.get(j).getName());
+			for (int i = 0; i < this.ballotTypesAmount; i++) {
+				for (int k = 0; k < this.ballotBoxes.get(i).size(); k++) {
+					temp = temp + this.ballotBoxes.get(i).get(k).getResultForParty(this.parties.get(k).getName());
+				}
 			}
 			this.parties.get(j).setNumOfVotes(temp);
 		}
@@ -303,8 +325,10 @@ public class Election {
 
 	public void showResult() {
 
-		for (int i = 0; i < this.ballotBoxCounter; i++) {
-			this.ballotBoxes.get(i).showResult();
+		for (int i = 0; i < this.ballotTypesAmount; i++) {
+			for (int k = 0; k < this.ballotBoxes.get(i).size(); k++) {
+				this.ballotBoxes.get(i).get(k).showResult();
+			}
 		}
 		System.out.println();
 		for (int i = 0; i < this.partyCounter; i++) {

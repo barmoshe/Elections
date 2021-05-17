@@ -10,7 +10,7 @@ public class ElectionsSystem {
 		this.electionCounter = 0;
 	}
 
-	public void copyAndMultiplyBallotBox() {
+	public void copyAndMultiplyElectionsArray() {
 		if (this.elections[this.elections.length - 1] != null) {
 			Election[] temp = new Election[this.elections.length * 2];
 			for (int i = 0; i < this.elections.length; i++) {
@@ -29,7 +29,7 @@ public class ElectionsSystem {
 	}
 
 	public void createElection(int year, int month) throws Exception {
-		copyAndMultiplyBallotBox();
+		copyAndMultiplyElectionsArray();
 		try {
 			this.elections[this.electionCounter] = new Election(year, month);
 		} catch (Exception e) {
