@@ -2,12 +2,12 @@ package id314022914_id206921777;
 
 import id314022914_id206921777.exceptions.WrongTypeException;
 
-public class SetForElections<T> {
+public class CitizenSet<T> {
 	private final int ENLARGE_FACTOR = 2;
 	private T[] set;
 	private int currentSize;
 
-	public SetForElections() {
+	public CitizenSet() {
 		this.set = (T[]) new Object[ENLARGE_FACTOR];
 		this.currentSize = 0;
 	}

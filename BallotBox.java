@@ -8,7 +8,7 @@ public class BallotBox<T> {
 	private int serialNumber;
 	private static int serialCounter = 1000;
 	private String address;
-	private SetForElections<T> citizenInBallotBox;
+	private CitizenSet<T> citizenInBallotBox;
 	private double votePresentage;
 	private ArrayList<Result> resultsForThisBallotBox;
 	private int resultCount;
@@ -27,7 +27,7 @@ public class BallotBox<T> {
 	public BallotBox(String address, BallotType ballotType) {
 		this.serialNumber = serialCounter++;
 		this.address = address;
-		this.citizenInBallotBox = new SetForElections<T>();
+		this.citizenInBallotBox = new CitizenSet<T>();
 		this.votePresentage = 0;
 		this.resultsForThisBallotBox = new ArrayList<Result>();
 		this.resultCount = 0;

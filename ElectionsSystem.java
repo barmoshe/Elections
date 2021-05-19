@@ -1,26 +1,18 @@
 package id314022914_id206921777;
 
+import java.util.Vector;
+
 public class ElectionsSystem {
 
-	private Election[] elections;
+	private Vector<Election> elections;
 	private int electionCounter;
 
 	public ElectionsSystem() {
-		this.elections = new Election[10];
+		this.elections = new Vector<Election>();
 		this.electionCounter = 0;
 	}
 
-	public void copyAndMultiplyElectionsArray() {
-		if (this.elections[this.elections.length - 1] != null) {
-			Election[] temp = new Election[this.elections.length * 2];
-			for (int i = 0; i < this.elections.length; i++) {
-				temp[i] = this.elections[i];
-			}
-			this.elections = temp;
-		}
-	}
-
-	public Election[] getElections() {
+	public Vector<Election> getElections() {
 		return elections;
 	}
 
@@ -29,9 +21,9 @@ public class ElectionsSystem {
 	}
 
 	public void createElection(int year, int month) throws Exception {
-		copyAndMultiplyElectionsArray();
 		try {
-			this.elections[this.electionCounter] = new Election(year, month);
+			Election temp = new Election(year, month);
+			this.elections.add(temp);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -47,7 +39,7 @@ public class ElectionsSystem {
 		StringBuffer str = new StringBuffer("welcome to the election system \n this is our data:\n");
 
 		for (int i = 0; i < this.electionCounter; i++) {
-			str.append((i + 1) + ") " + this.elections[i].toString() + "\n");
+			str.append((i + 1) + ") " + this.elections.get(i).toString() + "\n");
 		}
 		return str.toString();
 	}

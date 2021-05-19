@@ -152,20 +152,27 @@ public class MainElectionRunner {
 							+ " choose your vote number.\nIf you do not want to vote please enter 0");
 					e.showPartiesNames();
 					select = sc.nextInt() - 1;
-					if ((select <= -1) || (select >= e.getPartyCounter()))
+					if ((select < -1) || (select >= e.getPartyCounter()))
 						throw new OutOfBoundException();
+					else if (select != -1) {
 
-					try {
-						if (boolchoose2 == 1) {
-							if (e.getCitizens().get(i) instanceof Sickable)
-								((Sickable) e.getCitizens().get(i)).setHasMask(true);
-							e.getCitizens().get(i).setPartyChosen(e.getParties().get(select).getName());
-						} else if (select != -1 || boolchoose2 == 0)
-							throw new MaskException();
+						try {
+							if (boolchoose2 == 1) {
+								if (e.getCitizens().get(i) instanceof Sickable)
+									((Sickable) e.getCitizens().get(i)).setHasMask(true);
+								e.getCitizens().get(i).setPartyChosen(e.getParties().get(select).getName());
+							} else if (select != -1 || boolchoose2 == 0)
+								throw new MaskException();
 
+							isValid = true;
+						} catch (MaskException x) {
+							System.out.println(x.getMessage());
+							isValid = true;
+
+						}
+					} else if (select + 1 == 0) {
 						isValid = true;
-					} catch (MaskException x) {
-						System.out.println(x.getMessage());
+						e.getCitizens().get(i).setPartyChosen(null);
 					}
 				} catch (OutOfBoundException x) {
 					System.out.println(x.getMessage());
@@ -225,7 +232,7 @@ public class MainElectionRunner {
 			}
 		}
 		isValid1 = true;
-		addHardCoded(systemE.getElections()[currentElectionIndex]);
+		addHardCoded(systemE.getElections().get(currentElectionIndex));
 		int choise = menu();
 		while (choise != 11) {
 			switch (choise) {
@@ -240,7 +247,7 @@ public class MainElectionRunner {
 				System.out.println("enter number of type from the menu above:");
 
 				try {
-					if (systemE.getElections()[currentElectionIndex].addBallotBox(address, types[sc.nextInt() - 1]))
+					if (systemE.getElections().get(currentElectionIndex).addBallotBox(address, types[sc.nextInt() - 1]))
 						System.out.println("added succsessfully");
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
@@ -255,12 +262,12 @@ public class MainElectionRunner {
 						if (boolchoose1 != 1 && boolchoose1 != 0)
 							throw new BoolCheakException();
 						if (boolchoose1 == 0) {
-							if (systemE.getElections()[currentElectionIndex].addCitizens(
-									createCitizen(systemE.getElections()[currentElectionIndex].getYearOfElections())))
+							if (systemE.getElections().get(currentElectionIndex).addCitizens(createCitizen(
+									systemE.getElections().get(currentElectionIndex).getYearOfElections())))
 								System.out.println("added succsessfully");
 							isValid1 = true;
-						} else if (systemE.getElections()[currentElectionIndex].addCitizens(
-								createSickCitizen(systemE.getElections()[currentElectionIndex].getYearOfElections())))
+						} else if (systemE.getElections().get(currentElectionIndex).addCitizens(createSickCitizen(
+								systemE.getElections().get(currentElectionIndex).getYearOfElections())))
 							System.out.println("added succsessfully");
 						isValid1 = true;
 
@@ -273,7 +280,7 @@ public class MainElectionRunner {
 				isValid1 = false;
 				while (!isValid1) {
 					try {
-						if (systemE.getElections()[currentElectionIndex].addParty(createParty()))
+						if (systemE.getElections().get(currentElectionIndex).addParty(createParty()))
 							System.out.println("added succsessfully");
 						isValid1 = true;
 					} catch (Exception x) {
@@ -282,11 +289,11 @@ public class MainElectionRunner {
 				}
 				break;
 			case 4:
-				if (systemE.getElections()[currentElectionIndex].getPartyCounter() > 0) {
+				if (systemE.getElections().get(currentElectionIndex).getPartyCounter() > 0) {
 					isValid1 = false;
 					while (!isValid1) {
 						try {
-							systemE.getElections()[currentElectionIndex].showPartiesNames();
+							systemE.getElections().get(currentElectionIndex).showPartiesNames();
 							System.out.println("choose your party number");
 							int Chosen4 = sc.nextInt() - 1;
 
@@ -295,14 +302,18 @@ public class MainElectionRunner {
 							if (boolchoose1 != 1 && boolchoose1 != 0)
 								throw new BoolCheakException();
 							if (boolchoose1 == 0) {
-								if (systemE.getElections()[currentElectionIndex].addCandidate(createCandidate(
-										systemE.getElections()[currentElectionIndex].getParties().get(Chosen4),
-										systemE.getElections()[currentElectionIndex].getYearOfElections())))
+								if (systemE.getElections().get(currentElectionIndex)
+										.addCandidate(createCandidate(
+												systemE.getElections().get(currentElectionIndex).getParties()
+														.get(Chosen4),
+												systemE.getElections().get(currentElectionIndex).getYearOfElections())))
 									System.out.println("added succsessfully");
 							} else {
-								if (systemE.getElections()[currentElectionIndex].addCandidate(createSickCandidate(
-										systemE.getElections()[currentElectionIndex].getParties().get(Chosen4),
-										systemE.getElections()[currentElectionIndex].getYearOfElections())))
+								if (systemE.getElections().get(currentElectionIndex)
+										.addCandidate(createSickCandidate(
+												systemE.getElections().get(currentElectionIndex).getParties()
+														.get(Chosen4),
+												systemE.getElections().get(currentElectionIndex).getYearOfElections())))
 									System.out.println("added succsessfully");
 							}
 							isValid1 = true;
@@ -314,20 +325,20 @@ public class MainElectionRunner {
 					System.out.println("there is no parties");
 				break;
 			case 5:
-				systemE.getElections()[currentElectionIndex].showBallotBoxes();
+				systemE.getElections().get(currentElectionIndex).showBallotBoxes();
 				break;
 			case 6:
-				systemE.getElections()[currentElectionIndex].showCitizens();
+				systemE.getElections().get(currentElectionIndex).showCitizens();
 				break;
 			case 7:
-				systemE.getElections()[currentElectionIndex].showParties();
+				systemE.getElections().get(currentElectionIndex).showParties();
 				break;
 			case 8:
-				citizensChoose(systemE.getElections()[currentElectionIndex]);
-				systemE.getElections()[currentElectionIndex].electionStart();
+				citizensChoose(systemE.getElections().get(currentElectionIndex));
+				systemE.getElections().get(currentElectionIndex).electionStart();
 				break;
 			case 9:
-				systemE.getElections()[currentElectionIndex].showResult();
+				systemE.getElections().get(currentElectionIndex).showResult();
 				break;
 			case 10:
 				currentElectionIndex = systemE.getElectionCounter();
@@ -344,7 +355,7 @@ public class MainElectionRunner {
 						ex.getMessage();
 					}
 				}
-				addHardCoded(systemE.getElections()[currentElectionIndex]);
+				addHardCoded(systemE.getElections().get(currentElectionIndex));
 
 				break;
 			case 11:

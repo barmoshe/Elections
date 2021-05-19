@@ -11,7 +11,7 @@ public class Election {
 	private final int ballotTypesAmount = 4;
 	private int yearOfElections;
 	private int monthOfElections;
-	private SetForElections<Citizen> citizens;
+	private CitizenSet<Citizen> citizens;
 	private ArrayList<Party> parties;
 	private Vector<ArrayList<BallotBox>> ballotBoxes;
 	private int citizenCounter;
@@ -21,7 +21,7 @@ public class Election {
 	public Election(int yearOfElections, int monthOfElections) throws Exception {
 		setMonthOfElections(monthOfElections);
 		setYearOfElections(yearOfElections);
-		this.citizens = new SetForElections<Citizen>();
+		this.citizens = new CitizenSet<Citizen>();
 		this.parties = new ArrayList<Party>();
 		this.ballotBoxes = new Vector<ArrayList<BallotBox>>();
 		this.setTypesOfBallotBox();
@@ -46,7 +46,7 @@ public class Election {
 		return monthOfElections;
 	}
 
-	public SetForElections<Citizen> getCitizens() {
+	public CitizenSet<Citizen> getCitizens() {
 		return citizens;
 	}
 

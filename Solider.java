@@ -26,7 +26,7 @@ public class Solider extends Citizen {
 		if (this.typeOfWeapon != null)
 			return this.typeOfWeapon;
 		else
-			return " no weapon";
+			return "no weapon";
 	}
 
 	@Override
