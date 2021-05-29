@@ -1,8 +1,10 @@
 package id314022914_id206921777;
 
+import java.io.Serializable;
+
 import id314022914_id206921777.exceptions.WrongTypeException;
 
-public class CitizenSet<T> {
+public class CitizenSet<T> implements Serializable {
 	private final int ENLARGE_FACTOR = 2;
 	private T[] set;
 	private int currentSize;
@@ -73,7 +75,7 @@ public class CitizenSet<T> {
 
 	@Override
 	public String toString() {
-		StringBuffer str = new StringBuffer("The " + this.getClass().getSimpleName() + " are :  " + ": \n" + "\n");
+		StringBuffer str = new StringBuffer("The citizens are :  " +" \n" + "\n");
 		for (int i = 0; i < this.currentSize; i++) {
 			str.append("________-" + (i + 1) + "-________\n" + this.set[i].toString() + "\n\n");
 		}

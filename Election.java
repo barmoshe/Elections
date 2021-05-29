@@ -1,13 +1,13 @@
 package id314022914_id206921777;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Vector;
 
-import id314022914_id206921777.exceptions.BallotBoxException;
 import id314022914_id206921777.exceptions.ValidMonthException;
 import id314022914_id206921777.exceptions.ValidYearException;
 
-public class Election {
+public class Election implements Serializable {
 	private final int ballotTypesAmount = 4;
 	private int yearOfElections;
 	private int monthOfElections;
@@ -91,9 +91,9 @@ public class Election {
 
 	}
 
-	public boolean setMonthOfElections(int year) throws Exception {
-		if (year > 0 && year < 13) {
-			this.yearOfElections = year;
+	public boolean setMonthOfElections(int month) throws Exception {
+		if (month > 0 && month < 13) {
+			this.monthOfElections = month;
 		} else
 			throw new ValidMonthException();
 		return true;
@@ -316,7 +316,7 @@ public class Election {
 			int temp = 0;
 			for (int i = 0; i < this.ballotTypesAmount; i++) {
 				for (int k = 0; k < this.ballotBoxes.get(i).size(); k++) {
-					temp = temp + this.ballotBoxes.get(i).get(k).getResultForParty(this.parties.get(k).getName());
+					temp = temp + this.ballotBoxes.get(i).get(k).getResultForParty(this.parties.get(j).getName());
 				}
 			}
 			this.parties.get(j).setNumOfVotes(temp);
@@ -375,6 +375,14 @@ public class Election {
 		else
 			return false;
 
+	}
+
+	public int getMonth() {
+		return this.monthOfElections;
+	}
+
+	public int getYear() {
+		return this.yearOfElections;
 	}
 
 }

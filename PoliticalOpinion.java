@@ -1,5 +1,7 @@
 package id314022914_id206921777;
 
-public enum PoliticalOpinion {
+import java.io.Serializable;
+
+public enum PoliticalOpinion implements Serializable {
 	RIGHT, LEFT, CENTER;
 }

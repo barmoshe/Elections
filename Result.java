@@ -1,6 +1,8 @@
 package id314022914_id206921777;
 
-public class Result {
+import java.io.Serializable;
+
+public class Result implements Serializable{
 
 	private int numOfvotes;
 	private String partyName;

@@ -1,10 +1,11 @@
 package id314022914_id206921777;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Party {
+public class Party implements Serializable {
 	private String name;
 	private PoliticalOpinion PoliticalOpinion;
 	private LocalDate dateOfEstablishment;

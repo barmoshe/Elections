@@ -1,6 +1,8 @@
 package id314022914_id206921777;
 
-public abstract class Person {
+import java.io.Serializable;
+
+public abstract class Person implements Serializable {
 	protected String name;
 	protected String id;
 	protected int yearOfBirth;

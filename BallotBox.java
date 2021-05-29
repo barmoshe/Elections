@@ -1,9 +1,10 @@
 
 package id314022914_id206921777;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class BallotBox<T> {
+public class BallotBox<T> implements Serializable{
 	private BallotType ballotType;
 	private int serialNumber;
 	private static int serialCounter = 1000;

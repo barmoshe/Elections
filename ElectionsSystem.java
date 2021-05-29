@@ -1,18 +1,23 @@
 package id314022914_id206921777;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Vector;
 
-public class ElectionsSystem {
+public class ElectionsSystem  implements Serializable{
 
-	private Vector<Election> elections;
+	private ArrayList<Election> elections;
 	private int electionCounter;
-
+	
+	public void printElectionsRound(int answer2) {
+		System.out.println(elections.get(answer2));
+	}
 	public ElectionsSystem() {
-		this.elections = new Vector<Election>();
+		this.elections = new ArrayList<Election>();
 		this.electionCounter = 0;
 	}
 
-	public Vector<Election> getElections() {
+	public ArrayList<Election> getElections() {
 		return elections;
 	}
 
